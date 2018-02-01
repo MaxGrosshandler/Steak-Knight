@@ -1,0 +1,22 @@
+{
+  "name": "steakknight",
+  "version": "1.0.0",
+  "description": "used to do things",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxgrosshandler/steak-knight.git"
+  },
+  "keywords": [
+    "bot"
+  ],
+  "author": "max grosshandler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maxgrosshandler/steak-knight/issues"
+  },
+  "homepage": "https://github.com/maxgrosshandler/steak-knight#readme"
+}
