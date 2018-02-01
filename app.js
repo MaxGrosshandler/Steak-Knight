@@ -38,18 +38,6 @@ bot.on("ready", () => { // When the bot is ready
 
 bot.registerCommandAlias("halp", "help"); // Alias !halp to !help
 
-/*
-
-bot.registerCommand('ping', msg => {
-    msg.channel.createMessage('Pong!').then(m => {
-        let time = m.timestamp - msg.timestamp;
-        return m.edit(`Pong! **${time}**ms`);
-    });
-}, {
-    description: "Ping",
-    fullDescription: "This command tests for latency."
-});
-*/
 bot.registerCommand("p", (msg, args) => {
     let file = fs.readFileSync('./steak.jpg');
     if (args[0] == "steak") {
