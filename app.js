@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
 });
 connection.connect();
 
-
+//testing
 // Replace BOT_TOKEN with your bot account's token
 var bot = new Eris.CommandClient(config.token, {}, {
     description: "A test bot made with Eris",
