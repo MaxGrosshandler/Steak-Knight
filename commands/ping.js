@@ -5,9 +5,12 @@ class PingCommand extends Command {
   }
 
   async execute(msg) {
-    await msg.channel.createMessage('Pong!');
+    await msg.channel.createMessage('Pong!').then(m => {
+        let time = m.timestamp - msg.timestamp;
+        return m.edit(`Pong! **${time}**ms`);
+    });
+}
     // so on and so forth
   }
-}
 
 module.exports = PingCommand;

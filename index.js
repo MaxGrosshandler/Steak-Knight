@@ -3,6 +3,7 @@ var Raven = require('raven');
 Raven.config('https://10cedb5c913647ff82c39805f60ff3a0:597b61d426aa4312857e22dca9bde566@sentry.io/277301').install();
 const Eris = require("eris");
 const fs = require("fs");
+
 const droll = require('droll');
 //testing
 // Replace BOT_TOKEN with your bot account's token
@@ -15,10 +16,7 @@ var bot = new Eris.CommandClient(config.token, {}, {
 const commands = {};
 commands.ping = new (require('./commands/ping.js'))(bot);
 commands.hug = new (require('./commands/hug.js'))(bot);
-commands.kick = new (require('./commands/kick.js'))(bot);
-commands.ban = new (require('./commands/ban.js'))(bot);
-commands.clean = new (require('./commands/clean.js'))(bot);
-commands.role = new (require('./commands/role.js'))(bot);
+
 bot.on("ready", () => { // When the bot is ready
     console.log("Ready!"); // Log "Ready!"
     console.log(bot.guilds.size)
@@ -53,7 +51,6 @@ bot.registerCommand("p", (msg, args) => {
     argsRequired: true,
     guildOnly: true
 });
-/*
 bot.registerCommand("kick",(msg, args) => {
     if (msg.member.permission.has("kickMembers")==true){
         try {
@@ -66,28 +63,32 @@ bot.registerCommand("kick",(msg, args) => {
     }
 }
 )
-bot.registerCommand("role", (msg, args) => {
-    for (var [key, value] of msg.channel.guild.roles) {
-        if (args[1] == msg.channel.guild.roles.get(key).name)
-            //try {
-                bot.addGuildMemberRole(msg.channel.guild.id, msg.mentions[0].id, (msg.channel.guild.roles.get(key).id));
-            //}
-        //catch (DiscordRESTError) {
-        //    msg.channel.createMessage("Something went wrong! I probably don't have permission to do this!")
-        //}
-
+bot.registerCommand("ban",(msg, args) => {
+    if (msg.member.permission.has("banMembers")==true){
+        bot.banGuildMember(msg.channel.guild.id, msg.mentions[0].id, 0, args.join(" "))
     }
+}
+)
+
+bot.registerCommand("clean", (msg, args) => {
+
+    if ((msg.author.id == config.owner) || (msg.member.permission.has("banMembers") == true))
+        msg.channel.getMessages(parseInt(args[0] + 1)).then(m => {
+            for (let message of m) {
+                if (message.author.id == bot.user.id) {
+                    message.channel.deleteMessage(message.id);
+                }
+            }
+        });
 }, {
-    requirements: {
-        "manageRoles": true
-    },
-    argsRequired: true,
+    description: "Cleanup!",
+    fullDescription: "Used to cleanup only the bot's messages, requires at least Ban Member permissions",
+    usage: "\`sk clean 20\`",
+    deleteCommand: true,
     guildOnly: true,
-    description: "Gives a user a role!",
-    fullDescription: "Gives a user a role. Make sure the bot has the needed perms.",
-    usage: "`sk role @user rolename`"
-})
-*/
+    argsRequired: true
+});
+
 bot.registerCommand("purge", (msg, args) => {
 
     if ((msg.author.id == config.owner) || (msg.member.permission.has("banMembers") == true))
@@ -116,7 +117,7 @@ bot.registerCommand("support", (msg, args) => {
     description: "Get support!",
     fullDescription: "Provides an invite to the bot's support server"
 })
-/*
+
 var tagCommand = bot.registerCommand("tag", (msg, args) => {
     connection.query("SELECT * from `tags`", function(error, db, fields) {
         for (object of db) {
@@ -140,7 +141,7 @@ tagCommand.registerSubcommand("create", (msg, args) => {
     };
     msg.channel.createMessage('It worked and/or did not error!');
 });
-
+/*
 bot.registerCommand("prefix", (msg, args) => {
     if ((msg.author.id == config.owner) || (msg.member.permission.has("banMembers") == true)) {
         let postfix = args[0];
@@ -198,6 +199,29 @@ bot.registerCommand("h2b", (msg,args) =>{
 }
 
 );
+
+bot.registerCommand("role", (msg, args) => {
+    for (var [key, value] of msg.channel.guild.roles) {
+        if (args[1] == msg.channel.guild.roles.get(key).name)
+            try {
+                bot.addGuildMemberRole(msg.channel.guild.id, msg.mentions[0].id, (msg.channel.guild.roles.get(key).id));
+            }
+        catch (DiscordRESTError) {
+            msg.channel.createMessage("Something went wrong! I probably don't have permission to do this!")
+        }
+
+    }
+}, {
+    requirements: {
+        "manageRoles": true
+    },
+    argsRequired: true,
+    guildOnly: true,
+    description: "Gives a user a role!",
+    fullDescription: "Gives a user a role. Make sure the bot has the needed perms.",
+    usage: "`sk role @user rolename`"
+})
+
 /*
 bot.registerCommand('hug', (msg, args) => {
     if (!args[0]) msg.channel.createMessage("You need to specify someone to hug!");
@@ -218,7 +242,7 @@ bot.registerCommand('hug', (msg, args) => {
 });
 */
 bot.registerCommand("invite", (msg, args) => {
-    msg.channel.createMessage("Invite me with <https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=-1&scope=bot>")
+    msg.channel.createMessage("Invite me with <https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot>")
 }, {
     description: "Invite the bot to your server!"
 })
@@ -245,7 +269,7 @@ bot.registerCommand("eval", (msg, args) => {
     hidden: true
 });
 var echoCommand = bot.registerCommand("echo", (msg, args) => {
-    if (msg.author.id !== config.id) return; // Make an echo command
+    if (msg.author.id !== config.owner) return; // Make an echo command
     if (args.length === 0) { // If the user just typed "!echo", say "Invalid input"
         return "Invalid input";
     }
