@@ -7,7 +7,7 @@ class kickCommand extends Command {
 async execute(msg, args) {
   if (msg.member.permission.has("kickMembers")==true){
         try {
-        msg.channel.guild.kickGuildMember(msg.channel.guild.id,msg.mentions[0].id,args.join(" "))
+        bot.kickGuildMember(msg.channel.guild.id,msg.mentions[0].id,args.join(" "))
 
         }
         catch (error){

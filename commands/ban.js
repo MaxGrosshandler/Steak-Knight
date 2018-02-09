@@ -9,7 +9,7 @@ async execute(msg, args) {
    
 
 if (msg.member.permission.has("banMembers")==true){
-    this.bot.banGuildMember(msg.channel.guild.id, msg.mentions[0].id, 0, args.join(" "))
+    bot.banGuildMember(msg.channel.guild.id, msg.mentions[0].id, 0, args.join(" "))
 }
 
 

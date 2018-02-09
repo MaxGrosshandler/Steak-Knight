@@ -19,6 +19,9 @@ commands.kick = new (require('./commands/kick.js'))(bot);
 commands.ban = new (require('./commands/ban.js'))(bot);
 commands.clean = new (require('./commands/clean.js'))(bot);
 commands.role = new (require('./commands/role.js'))(bot);
+commands.support = new (require('./commands/support.js'))(bot);
+commands.purge = new (require('./commands/purge.js'))(bot);
+commands.roll = new (require('./commands/roll.js'))(bot);
 bot.on("ready", () => { // When the bot is ready
     console.log("Ready!"); // Log "Ready!"
     console.log(bot.guilds.size)
@@ -26,7 +29,7 @@ bot.on("ready", () => { // When the bot is ready
 });
 
 bot.registerCommandAlias("halp", "help"); // Alias !halp to !help
-
+bot.registerCommand("one","two")
 bot.registerCommand("p", (msg, args) => {
     let file = fs.readFileSync('./steak.jpg');
     if (args[0] == "steak") {
@@ -87,7 +90,7 @@ bot.registerCommand("role", (msg, args) => {
     fullDescription: "Gives a user a role. Make sure the bot has the needed perms.",
     usage: "`sk role @user rolename`"
 })
-*/
+
 bot.registerCommand("purge", (msg, args) => {
 
     if ((msg.author.id == config.owner) || (msg.member.permission.has("banMembers") == true))
@@ -104,19 +107,20 @@ bot.registerCommand("purge", (msg, args) => {
 bot.registerCommand("list", (msg, args) => {
     if (msg.author.id = config.owner) {
         for (var [key, value] of bot.guilds) {
-            console.log(bot.guilds.get(key).name)
+            msg.channel.createMessage(bot.guilds.get(key).name)
         }
     }
 }, {
     hidden: true
 })
+
 bot.registerCommand("support", (msg, args) => {
     msg.channel.createMessage("My support server can be found at https://discord.gg/4Bk8JZs")
 }, {
     description: "Get support!",
     fullDescription: "Provides an invite to the bot's support server"
 })
-/*
+
 var tagCommand = bot.registerCommand("tag", (msg, args) => {
     connection.query("SELECT * from `tags`", function(error, db, fields) {
         for (object of db) {
@@ -166,7 +170,7 @@ bot.registerCommand("prefix", (msg, args) => {
     guildOnly: true,
     argsRequired: true
 });
-*/
+
 bot.registerCommand("r", (msg, args) => {
     try {
         let result = droll.roll(args[0]);
@@ -198,7 +202,7 @@ bot.registerCommand("h2b", (msg,args) =>{
 }
 
 );
-/*
+
 bot.registerCommand('hug', (msg, args) => {
     if (!args[0]) msg.channel.createMessage("You need to specify someone to hug!");
 
