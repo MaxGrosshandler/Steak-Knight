@@ -9,7 +9,7 @@ var bot = new Eris.CommandClient(config.token, {}, {
     prefix: ["sk ", "Sk ", "bend over and ", "Bend over and"],
     ignoreBots: true
 });
-//much thanks to jtsshieh
+//much thanks to jtsshieh and DAPI in general
 fs.readdir('./commands', (err, files) => {
     if (err) console.error(err);
     console.log(`Attempting to load a total of ${files.length} commands into the memory.`, false);
