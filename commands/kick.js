@@ -1,22 +1,14 @@
 
-const Command = require('./command.js');
-class kickCommand extends Command {
-  constructor(bot) {
-    super('kick', bot);
-  }
-async execute(msg, args) {
-  if (msg.member.permission.has("kickMembers")==true){
-        try {
-        bot.kickGuildMember(msg.channel.guild.id,msg.mentions[0].id,args.join(" "))
+  module.exports = {
+    func: async (msg, args) => {if (msg.member.permission.has("kickMembers")==true){
+      try {
+      msg.channel.guild.kickMember(msg.mentions[0].id,args.join(" "))
 
-        }
-        catch (error){
-            msg.channel.createMessage("That didn't work!")
-        }
-    }
+      }
+      catch (error){
+          msg.channel.createMessage("That didn't work!")
+      }
+  }},
+    options: {},
+    name: "kick"
 }
-    // so on and so forth
-  }
-
-
-module.exports = kickCommand;

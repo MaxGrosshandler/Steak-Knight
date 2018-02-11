@@ -1,14 +1,7 @@
 
-
-
-
-const Command = require('./command.js');
-class HugCommand extends Command {
-  constructor(bot) {
-    super('hug', bot);
-  }
-async execute(msg, args) {
-   if (!args[0]) msg.channel.createMessage("You need to specify someone to hug!");
+module.exports = {
+  func: async (msg, args) => {
+    if (!args[0]) msg.channel.createMessage("You need to specify someone to hug!");
 
     else {
         try {
@@ -18,7 +11,7 @@ async execute(msg, args) {
         }
 }
     // so on and so forth
-  }
+  },
+  options: {},
+  name: "hug"
 }
-
-module.exports = HugCommand;

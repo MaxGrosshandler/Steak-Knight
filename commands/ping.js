@@ -1,16 +1,12 @@
-const Command = require('./command.js');
-class PingCommand extends Command {
-  constructor(bot) {
-    super('ping', bot);
-  }
 
-  async execute(msg) {
-    await msg.channel.createMessage('Pong!').then(m => {
+
+  module.exports = {
+    func: async (msg, args) => {
+      await msg.channel.createMessage('Pong!').then(m => {
         let time = m.timestamp - msg.timestamp;
         return m.edit(`Pong! **${time}**ms`);
     });
+    },
+    options: {},
+    name: "ping"
 }
-    // so on and so forth
-  }
-
-module.exports = PingCommand;

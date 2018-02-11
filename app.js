@@ -4,6 +4,7 @@ Raven.config('https://10cedb5c913647ff82c39805f60ff3a0:597b61d426aa4312857e22dca
 const Eris = require("eris");
 const fs = require("fs");
 const droll = require('droll');
+
 //testing
 // Replace BOT_TOKEN with your bot account's token
 var bot = new Eris.CommandClient(config.token, {}, {
@@ -12,7 +13,31 @@ var bot = new Eris.CommandClient(config.token, {}, {
     prefix: ["sk ", "Sk ", "bend over and ", "Bend over and"],
     ignoreBots: true
 });
-const commands = {};
+//const commands = {};
+fs.readdir('./commands', (err, files) => {
+    if (err) console.error(err);
+    console.log(`Attempting to load a total of ${files.length} commands into the memory.`, false);
+    files.forEach(file => {
+      try {
+        const command = require(`./commands/${file}`);
+        console.log(`Attempting to load the command "${command.name}".`, false);
+        bot.registerCommand(command.name,command.func, command.options);
+        /*
+        command.conf.aliases.forEach(alias => {
+          bot.aliases.set(alias, command.help.name);
+          console.blue(`Attempting to load "${alias}" as an alias for "${command.help.name}"`, false);
+        });
+        */
+      }
+      catch (err) {
+        console.log('An error has occured trying to load a command. Here is the error.');
+        console.log(err.stack);
+      }
+    });
+    console.log('Command Loading complete!');
+    console.log('\n');
+  });
+  /*
 commands.ping = new (require('./commands/ping.js'))(bot);
 commands.hug = new (require('./commands/hug.js'))(bot);
 commands.kick = new (require('./commands/kick.js'))(bot);
@@ -21,7 +46,12 @@ commands.clean = new (require('./commands/clean.js'))(bot);
 commands.role = new (require('./commands/role.js'))(bot);
 commands.support = new (require('./commands/support.js'))(bot);
 commands.purge = new (require('./commands/purge.js'))(bot);
-commands.roll = new (require('./commands/roll.js'))(bot);
+let file = require('./commands/dice.js');
+//commands.roll = new (require('./commands/roll.js'))(bot);
+bot.registerCommand(file.name, file.func, file.options);
+*/
+
+
 bot.on("ready", () => { // When the bot is ready
     console.log("Ready!"); // Log "Ready!"
     console.log(bot.guilds.size)
