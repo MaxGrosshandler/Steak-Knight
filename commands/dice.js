@@ -41,7 +41,11 @@ module.exports = {
       },
       options:
       {
-          hidden: true
+        description: "Rolls dice!",
+        fullDescription: "Rolls dice using the lib droll",
+        usage: "Usage: \`sk r 1d20+5\` OR \`sk r 2d6\`",
+        guildOnly: true,
+        argsRequired: true
       },
       name: "r"
     

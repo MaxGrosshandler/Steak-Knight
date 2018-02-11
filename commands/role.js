@@ -13,6 +13,15 @@ module.exports = {
     
         }
     },
-    options: {},
+    options: {
+        requirements: {
+            "manageRoles": true
+        },
+        argsRequired: true,
+        guildOnly: true,
+        description: "Gives a user a role!",
+        fullDescription: "Gives a user a role. Make sure the bot has the needed perms.",
+        usage: "`sk role @user rolename`"
+    },
     name: "role"
 }

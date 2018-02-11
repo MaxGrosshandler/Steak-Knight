@@ -12,6 +12,13 @@ module.exports = {
 }
     // so on and so forth
   },
-  options: {},
+  options: 
+  {
+    description: "Gives a user a hug!",
+    fullDescription: "Provides a user with a steak-filled hug!",
+    usage: "Usage: \`sk hug @xamtheking\`",
+    argsRequired: true,
+    guildOnly: true
+  },
   name: "hug"
 }

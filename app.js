@@ -3,17 +3,13 @@ var Raven = require('raven');
 Raven.config('https://10cedb5c913647ff82c39805f60ff3a0:597b61d426aa4312857e22dca9bde566@sentry.io/277301').install();
 const Eris = require("eris");
 const fs = require("fs");
-const droll = require('droll');
-
-//testing
-// Replace BOT_TOKEN with your bot account's token
 var bot = new Eris.CommandClient(config.token, {}, {
     description: "A test bot made with Eris",
     owner: "Xamtheking",
     prefix: ["sk ", "Sk ", "bend over and ", "Bend over and"],
     ignoreBots: true
 });
-//const commands = {};
+//much thanks to jtsshieh
 fs.readdir('./commands', (err, files) => {
     if (err) console.error(err);
     console.log(`Attempting to load a total of ${files.length} commands into the memory.`, false);
@@ -22,12 +18,6 @@ fs.readdir('./commands', (err, files) => {
         const command = require(`./commands/${file}`);
         console.log(`Attempting to load the command "${command.name}".`, false);
         bot.registerCommand(command.name,command.func, command.options);
-        /*
-        command.conf.aliases.forEach(alias => {
-          bot.aliases.set(alias, command.help.name);
-          console.blue(`Attempting to load "${alias}" as an alias for "${command.help.name}"`, false);
-        });
-        */
       }
       catch (err) {
         console.log('An error has occured trying to load a command. Here is the error.');
@@ -37,29 +27,14 @@ fs.readdir('./commands', (err, files) => {
     console.log('Command Loading complete!');
     console.log('\n');
   });
-  /*
-commands.ping = new (require('./commands/ping.js'))(bot);
-commands.hug = new (require('./commands/hug.js'))(bot);
-commands.kick = new (require('./commands/kick.js'))(bot);
-commands.ban = new (require('./commands/ban.js'))(bot);
-commands.clean = new (require('./commands/clean.js'))(bot);
-commands.role = new (require('./commands/role.js'))(bot);
-commands.support = new (require('./commands/support.js'))(bot);
-commands.purge = new (require('./commands/purge.js'))(bot);
-let file = require('./commands/dice.js');
-//commands.roll = new (require('./commands/roll.js'))(bot);
-bot.registerCommand(file.name, file.func, file.options);
-*/
-
-
 bot.on("ready", () => { // When the bot is ready
     console.log("Ready!"); // Log "Ready!"
     console.log(bot.guilds.size)
 
 });
 
-bot.registerCommandAlias("halp", "help"); // Alias !halp to !help
-bot.registerCommand("one","two")
+bot.registerCommandAlias("halp", "help");
+/*
 bot.registerCommand("p", (msg, args) => {
     let file = fs.readFileSync('./steak.jpg');
     if (args[0] == "steak") {
@@ -86,95 +61,6 @@ bot.registerCommand("p", (msg, args) => {
     argsRequired: true,
     guildOnly: true
 });
-/*
-bot.registerCommand("kick",(msg, args) => {
-    if (msg.member.permission.has("kickMembers")==true){
-        try {
-        bot.kickGuildMember(msg.channel.guild.id,msg.mentions[0].id,args.join(" "))
-
-        }
-        catch (error){
-            msg.channel.createMessage("That didn't work!")
-        }
-    }
-}
-)
-bot.registerCommand("role", (msg, args) => {
-    for (var [key, value] of msg.channel.guild.roles) {
-        if (args[1] == msg.channel.guild.roles.get(key).name)
-            //try {
-                bot.addGuildMemberRole(msg.channel.guild.id, msg.mentions[0].id, (msg.channel.guild.roles.get(key).id));
-            //}
-        //catch (DiscordRESTError) {
-        //    msg.channel.createMessage("Something went wrong! I probably don't have permission to do this!")
-        //}
-
-    }
-}, {
-    requirements: {
-        "manageRoles": true
-    },
-    argsRequired: true,
-    guildOnly: true,
-    description: "Gives a user a role!",
-    fullDescription: "Gives a user a role. Make sure the bot has the needed perms.",
-    usage: "`sk role @user rolename`"
-})
-
-bot.registerCommand("purge", (msg, args) => {
-
-    if ((msg.author.id == config.owner) || (msg.member.permission.has("banMembers") == true))
-        msg.channel.purge(parseInt(args[0]) + 2)
-}, {
-    description: "PURGE THE WEAK!",
-    fullDescription: "Purges messages, requires at least Ban Member permissions",
-    usage: "\`sk purge 20\`",
-    deleteCommand: true,
-    guildOnly: true,
-    argsRequired: true
-});
-
-bot.registerCommand("list", (msg, args) => {
-    if (msg.author.id = config.owner) {
-        for (var [key, value] of bot.guilds) {
-            msg.channel.createMessage(bot.guilds.get(key).name)
-        }
-    }
-}, {
-    hidden: true
-})
-
-bot.registerCommand("support", (msg, args) => {
-    msg.channel.createMessage("My support server can be found at https://discord.gg/4Bk8JZs")
-}, {
-    description: "Get support!",
-    fullDescription: "Provides an invite to the bot's support server"
-})
-
-var tagCommand = bot.registerCommand("tag", (msg, args) => {
-    connection.query("SELECT * from `tags`", function(error, db, fields) {
-        for (object of db) {
-            if (object.tag == args[0]) msg.channel.createMessage(object.value);
-
-        }
-    });
-}, {
-    description: "meme picker!",
-    fullDescription: "Picks a meme!",
-    guildOnly: true,
-    argsRequired: true
-});
-
-
-tagCommand.registerSubcommand("create", (msg, args) => {
-    var arr1 = msg.content.split(" ");
-    let arr2 = arr1.slice(4)
-    connection.query("INSERT INTO tags (tag, value) VALUES (\'" + args[0] + "\', \'" + arr2.toString() + "\')"), + function(error, results, fields) {
-        if (error) msg.channel.createMessage("It errored!");
-    };
-    msg.channel.createMessage('It worked and/or did not error!');
-});
-
 bot.registerCommand("prefix", (msg, args) => {
     if ((msg.author.id == config.owner) || (msg.member.permission.has("banMembers") == true)) {
         let postfix = args[0];
@@ -199,56 +85,6 @@ bot.registerCommand("prefix", (msg, args) => {
     usage: "\`sk prefix ^^\`",
     guildOnly: true,
     argsRequired: true
-});
-
-bot.registerCommand("r", (msg, args) => {
-    try {
-        let result = droll.roll(args[0]);
-        if (result.rolls[0] == 1) {
-            msg.channel.createMessage("You critically failed!");
-        } else if (result.rolls[0] == 20) {
-            msg.channel.createMessage("You critically succeeded!");
-        } else {
-            msg.channel.createMessage("Total rolled: " + result);
-        }
-    } catch (Error) {
-        Raven.captureException(Error);
-        msg.channel.createMessage("No borking!");
-    }
-}, {
-    description: "Rolls dice!",
-    fullDescription: "Rolls dice using the lib droll",
-    usage: "Usage: \`sk r 1d20+5\` OR \`sk r 2d6\`",
-    guildOnly: true,
-    argsRequired: true
-});
-
-bot.registerCommand("h2b", (msg,args) =>{
-    msg.channel.createMessage("Learn how to make a bot at https://discord.gg/6SXT7Rp");
-},
-{
-    description: "Learn bots!",
-    fullDescription: "Provides an invite to a server where you can learn how to make a Discord Bot"
-}
-
-);
-
-bot.registerCommand('hug', (msg, args) => {
-    if (!args[0]) msg.channel.createMessage("You need to specify someone to hug!");
-
-    else {
-        try {
-            msg.channel.createMessage(msg.mentions[0].username + ", you have been hugged!\nhttps://i.imgur.com/O3f6NoJ.gif");
-        } catch (Error) {
-            msg.channel.createMessage("You need to mention someone to hug!");
-        }
-    }
-}, {
-    description: "Gives a user a hug!",
-    fullDescription: "Provides a user with a steak-filled hug!",
-    usage: "Usage: \`sk hug @xamtheking\`",
-    argsRequired: true,
-    guildOnly: true
 });
 */
 bot.registerCommand("invite", (msg, args) => {

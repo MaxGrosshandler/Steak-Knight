@@ -7,6 +7,10 @@
         return m.edit(`Pong! **${time}**ms`);
     });
     },
-    options: {},
+    options: {
+      description: "Ping!",
+      fullDesc: "Returns the bot's latency!",
+      usage: "`sk ping`"
+    },
     name: "ping"
 }

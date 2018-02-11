@@ -7,6 +7,10 @@ module.exports = {
 }
 
 },
-  options: {},
+  options: {
+    description: "Bans people!",
+    fullDesc: "Bans a user from your server.",
+    usage: "`sk ban @user <reason>"
+  },
   name: "ban"
 }
