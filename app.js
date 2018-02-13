@@ -1,6 +1,8 @@
 const config = require("./config.json");
 var Raven = require('raven');
-Raven.config('https://10cedb5c913647ff82c39805f60ff3a0:597b61d426aa4312857e22dca9bde566@sentry.io/277301').install();
+const Cryptr = require('cryptr')
+cryptr = new Cryptr('myTotallySecretKey');
+Raven.config(config.ravenConfig).install();
 const Eris = require("eris");
 const fs = require("fs");
 var bot = new Eris.CommandClient(config.token, {}, {
@@ -34,6 +36,21 @@ bot.on("ready", () => { // When the bot is ready
 });
 
 bot.registerCommandAlias("halp", "help");
+var cryptoCommand = bot.registerCommand("crypto", (msg, args) =>{
+
+
+
+}
+)
+cryptoCommand.registerSubcommand("e", (msg, args) =>{
+msg.channel.createMessage(cryptr.encrypt(args.join(" ")))
+}
+)
+cryptoCommand.registerSubcommand("d", (msg, args) =>{
+    msg.channel.createMessage(cryptr.decrypt(args.join(" ")))
+}
+)
+
 /*
 bot.registerCommand("p", (msg, args) => {
     let file = fs.readFileSync('./steak.jpg');
