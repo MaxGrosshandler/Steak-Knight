@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/maxgrosshandler/steak-knight#readme",
   "dependencies": {
+    "commander": "^2.14.1",
     "droll": "^0.2.1",
     "eris": "^0.8.4",
+    "express": "^4.16.2",
     "fs": "0.0.1-security",
-    "raven": "^2.4.1"
+    "ifttt": "^0.1.2",
+    "raven": "^2.4.1",
+    "termite": "0.0.0"
   }
 }

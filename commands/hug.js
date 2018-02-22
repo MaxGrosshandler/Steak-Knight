@@ -1,9 +1,10 @@
 
 module.exports = {
   func: async (msg, args) => {
+    // checks for mention
     if (!args[0]) msg.channel.createMessage("You need to specify someone to hug!");
-
-    else {
+ 
+    else { // hugs the user
         try {
             msg.channel.createMessage(msg.mentions[0].username + ", you have been hugged!\nhttps://i.imgur.com/O3f6NoJ.gif");
         } catch (Error) {

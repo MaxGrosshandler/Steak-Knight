@@ -2,7 +2,9 @@
 
 module.exports = {
   func: async (msg, args) => {
+    // checks to see if the user has the needed permissions
     if (msg.member.permission.has("banMembers")==true){
+      // bans the member
       msg.channel.guild.banMember(msg.mentions[0].id, 0, args.join(" "))
 }
 

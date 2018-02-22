@@ -1,4 +1,5 @@
 const config = require("./config.json");
+var program = require('commander');
 var Raven = require('raven');
 const Cryptr = require('cryptr')
 cryptr = new Cryptr('myTotallySecretKey');
@@ -50,7 +51,16 @@ cryptoCommand.registerSubcommand("d", (msg, args) =>{
     msg.channel.createMessage(cryptr.decrypt(args.join(" ")))
 }
 )
-
+/*
+program
+  .version('0.1.0')
+  .option('-p, --peppers', 'Add peppers')
+  .option('-c, --cheese [type]', 'Add the specified type of cheese [marble]', 'marble')
+  .parse(process.argv);
+ 
+console.log('you ordered a pizza with:');
+if (program.peppers) console.log('  - peppers');
+console.log('  - %s cheese', program.cheese);
 /*
 bot.registerCommand("p", (msg, args) => {
     let file = fs.readFileSync('./steak.jpg');
@@ -104,6 +114,14 @@ bot.registerCommand("prefix", (msg, args) => {
     argsRequired: true
 });
 */
+bot.registerCommand("list", (msg) =>{
+for (item of bot.guilds){
+    console.log(item.name)
+}
+
+
+}
+)
 bot.registerCommand("invite", (msg, args) => {
     msg.channel.createMessage("Invite me with <https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=-1&scope=bot>")
 }, {
@@ -115,14 +133,20 @@ bot.registerCommand("donate", (msg, args) => {
 }, {
     description: "Donate to the bot's creator!"
 });
-bot.registerCommand("eval", (msg, args) => {
+//below made by ratismal, the best boi
+bot.registerCommand("eval", async (msg, args) => {
     if (msg.author.id == config.id) {
-        if (args[0] == "config.token") {
-            msg.channel.createMessage("I\'m not that stupid, I think.");
-        } else if (args[0] == "midna") {
-            msg.channel.createMessage("best girl");
-
-        } else msg.channel.createMessage(eval(args.join(" ")));
+        let toExecute;
+        let code = args.join(' ');
+        if (code.split('\n').length === 1)
+            toExecute = eval(`async () => ${code}`);
+        else toExecute = eval(`async () => { ${code} }`);
+        toExecute.bind(this);
+        try {
+            msg.channel.createMessage(await toExecute());
+          } catch (err) {
+            msg.channel.createMessage(err.stack);
+          }
     }
 }, {
     description: "Eval!",
@@ -131,6 +155,31 @@ bot.registerCommand("eval", (msg, args) => {
     argsRequired: true,
     hidden: true
 });
+
+
+
+/*
+bot.registerCommand("eval", (message, args) => {
+
+/*function codeBlock(code) {
+    if(!lang) lang = "";
+    return `\n\`\`\`${lang}\n${content}\n\`\`\``;
+}
+
+let guild = message.channel.guild, channel = message.channel, author = message.author, member = message.member;
+try {
+    let output = eval(`(async function(){${message.args[0].replace(/“|”/g, "\"")}}).call()`);
+    output = util.inspect(output, { depth: 0 }).substring(0, 1900);
+    return `**Out:** ${(output, "js")}`;
+} catch(error) {
+    console.log(error)
+    return `**Error:** ${(error, "js")}`;
+}
+}
+)
+*/
+
+
 var echoCommand = bot.registerCommand("echo", (msg, args) => {
     if (msg.author.id !== config.id) return; // Make an echo command
     if (args.length === 0) { // If the user just typed "!echo", say "Invalid input"

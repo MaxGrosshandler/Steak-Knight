@@ -1,7 +1,9 @@
 
   module.exports = {
+    // checks permissions
     func: async (msg, args) => {if (msg.member.permission.has("kickMembers")==true){
       try {
+        // kicks the user
       msg.channel.guild.kickMember(msg.mentions[0].id,args.join(" "))
 
       }
