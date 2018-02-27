@@ -17,9 +17,9 @@
     },
     argsRequired: true,
     guildOnly: true,
-    description: "Gives a user a role!",
-    fullDescription: "Gives a user a role. Make sure the bot has the needed perms.",
-    usage: "`sk role @user rolename`"
+    description: "Kicks a user!",
+    fullDescription: "Kicks a user! Make sure the bot has the needed perms.",
+    usage: "`sk kick @user reason`"
     },
     name: "kick"
 }

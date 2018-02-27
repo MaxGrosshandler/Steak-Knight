@@ -6,12 +6,32 @@ cryptr = new Cryptr('myTotallySecretKey');
 Raven.config(config.ravenConfig).install();
 const Eris = require("eris");
 const fs = require("fs");
+var pm2 = require("pm2")
+
+/*
+pm2.connect(function(err) {
+  if (err) {
+    console.error(err);
+    process.exit(2);
+  }
+  
+  pm2.start({
+    script    : 'app.js' // Optional: Restarts your app if it reaches 100Mo
+  }, function(err, apps) {
+    pm2.disconnect();   // Disconnects from PM2
+    if (err) throw err
+  });
+  
+});
+*/
 var bot = new Eris.CommandClient(config.token, {}, {
     description: "A test bot made with Eris",
     owner: "Xamtheking",
     prefix: ["sk ", "Sk ", "bend over and ", "Bend over and"],
     ignoreBots: true
 });
+global.bot = bot;
+
 //much thanks to jtsshieh and DAPI in general
 fs.readdir('./commands', (err, files) => {
     if (err) console.error(err);
@@ -51,6 +71,17 @@ cryptoCommand.registerSubcommand("d", (msg, args) =>{
     msg.channel.createMessage(cryptr.decrypt(args.join(" ")))
 }
 )
+bot.registerCommand("restart", (msg) =>{
+    msg.channel.createMessage("Going under, changes made, working now!")
+},
+{
+    requirements:{
+        userIDs: "107563269484490752"
+    }
+    
+});
+
+
 /*
 program
   .version('0.1.0')
@@ -113,15 +144,14 @@ bot.registerCommand("prefix", (msg, args) => {
     guildOnly: true,
     argsRequired: true
 });
-*/
+
 bot.registerCommand("list", (msg) =>{
 for (item of bot.guilds){
-    console.log(item.name)
+    console.log(get)
 }
 
+*/
 
-}
-)
 bot.registerCommand("invite", (msg, args) => {
     msg.channel.createMessage("Invite me with <https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=-1&scope=bot>")
 }, {
@@ -214,3 +244,4 @@ echoCommand.registerSubcommand("reverse", (msg, args) => { // Make a reverse sub
 echoCommand.registerSubcommandAlias("backwards", "reverse"); // Alias "!echo backwards" to "!echo reverse"
 
 bot.connect();
+module.exports = bot;
