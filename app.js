@@ -71,12 +71,12 @@ cryptoCommand.registerSubcommand("d", (msg, args) =>{
     msg.channel.createMessage(cryptr.decrypt(args.join(" ")))
 }
 )
-bot.registerCommand("restart", (msg) =>{
-    msg.channel.createMessage("Going under, changes made, working now!")
+bot.registerCommand("gay", (msg) =>{
+    msg.channel.createMessage("amy")
 },
 {
     requirements:{
-        userIDs: "107563269484490752"
+        userIDs: ["107563269484490752", "128316294742147072"] 
     }
     
 });
@@ -153,7 +153,7 @@ for (item of bot.guilds){
 */
 
 bot.registerCommand("invite", (msg, args) => {
-    msg.channel.createMessage("Invite me with <https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=-1&scope=bot>")
+    msg.channel.createMessage("Invite me with <https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot>")
 }, {
     description: "Invite the bot to your server!"
 })
