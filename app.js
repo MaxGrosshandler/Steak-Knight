@@ -55,6 +55,16 @@ bot.on("ready", () => { // When the bot is ready
     console.log(bot.guilds.size)
 
 });
+bot.on('messageCreate', msg => {
+    if (msg.author.id == "228574821590499329"){
+        if (msg.content == "bend over and ping me up the ass"){
+            msg.channel.createMessage("Sery, that's lewd!")
+        }
+    }
+    if (msg.content == "Who is undeniably the best girl?"){
+        msg.channel.createMessage("Midna is the best girl.")
+    }
+})
 
 bot.registerCommandAlias("halp", "help");
 var cryptoCommand = bot.registerCommand("crypto", (msg, args) =>{
@@ -80,7 +90,10 @@ bot.registerCommand("gay", (msg) =>{
     }
     
 });
-
+bot.registerCommand("maxi", (msg) => {
+msg.channel.createMessage("Ultra gay!")
+}
+);
 
 /*
 program

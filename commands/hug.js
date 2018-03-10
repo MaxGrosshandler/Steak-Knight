@@ -6,7 +6,15 @@ module.exports = {
  
     else { // hugs the user
         try {
-            msg.channel.createMessage(msg.mentions[0].username + ", you have been hugged!\nhttps://i.imgur.com/O3f6NoJ.gif");
+            msg.channel.createMessage(
+              {
+                  content: msg.mentions[0].username + ", you have been hugged! ",
+                  embed: {
+                 image: {
+                     url: "https://i.imgur.com/O3f6NoJ.gif"
+                 }
+              }
+          })
         } catch (Error) {
             msg.channel.createMessage("You need to mention someone to hug!");
         }
