@@ -8,6 +8,7 @@ const Eris = require("eris");
 const fs = require("fs");
 var pm2 = require("pm2")
 
+
 /*
 pm2.connect(function(err) {
   if (err) {
@@ -94,6 +95,7 @@ bot.registerCommand("maxi", (msg) => {
 msg.channel.createMessage("Ultra gay!")
 }
 );
+
 
 /*
 program

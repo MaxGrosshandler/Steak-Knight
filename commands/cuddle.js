@@ -4,15 +4,15 @@ module.exports = {
 
   func: async (msg, args) => {
     // checks for mention
-    if (!args[0]) msg.channel.createMessage("You need to specify someone to lick!");
+    if (!args[0]) msg.channel.createMessage("You need to specify someone to cuddle!");
  
-    else { // licks the user
+    else { // cuddles the user
         try {
-            snekfetch.get('https://rra.ram.moe/i/r?type=lick').then(res => {
+            snekfetch.get('https://rra.ram.moe/i/r?type=cuddle').then(res => {
                 let url = 'https://rra.ram.moe' + res.body.path;
                 msg.channel.createMessage(
                     {
-                        content: msg.mentions[0].username + ", you have been licked! ",
+                        content: msg.mentions[0].username + ", you have been cuddled! ",
                         embed: {
                        image: {
                            url: url
@@ -24,18 +24,18 @@ module.exports = {
                 })
         });
         } catch (Error) {
-            msg.channel.createMessage("You need to mention someone to lick!");
+            msg.channel.createMessage("You need to mention someone to cuddle!");
         }
 }
     // so on and so forth
   },
   options: 
   {
-    description: "Licks a user!",
-    fullDescription: "Provides a user with a lick!",
-    usage: "Usage: \`sk lick @xamtheking\`",
+    description: "Cuddles a user!",
+    fullDescription: "Provides a user with a cuddle!",
+    usage: "Usage: \`sk cuddle @xamtheking\`",
     argsRequired: true,
     guildOnly: true
   },
-  name: "lick"
+  name: "cuddle"
 }
