@@ -4,7 +4,8 @@ module.exports = {
 
   func: async (msg, args) => {
     // checks for mention
-    if (!args[0]) msg.channel.createMessage("You need to specify someone to pat!");
+    let words = msg.content.split(/\s+/);
+    if (!words[2]) msg.channel.createMessage("You need to specify someone to pat!");
  
     else { // patss the user
         try {

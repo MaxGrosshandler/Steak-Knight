@@ -3,9 +3,8 @@ module.exports = {
 
 
   func: async (msg, args) => {
-    // checks for mention
-    if (!args[0]) msg.channel.createMessage("You need to specify someone to cuddle!");
- 
+    let words = msg.content.split(/\s+/);
+    if (!words[2]) msg.channel.createMessage("You need to specify someone to cuddle!");
     else { // cuddles the user
         try {
             snekfetch.get('https://rra.ram.moe/i/r?type=cuddle').then(res => {
