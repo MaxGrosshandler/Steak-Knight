@@ -2,7 +2,8 @@
 module.exports = {
   func: async (msg, args) => {
     // checks for mention
-    if (!args[0]) msg.channel.createMessage("You need to specify someone to hug!");
+    let words = msg.content.split(/\s+/);
+    if (!words[2]) msg.channel.createMessage("You need to specify someone to hug!");
  
     else { // hugs the user
         try {
