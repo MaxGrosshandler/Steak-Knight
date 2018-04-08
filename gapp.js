@@ -7,10 +7,10 @@ Raven.config(config.ravenConfig).install();
 const Eris = require("eris");
 const fs = require("fs");
 var pm2 = require("pm2")
-var bot = new Eris.CommandClient(config.token, {}, {
+var bot = new Eris.CommandClient(config.gtoken, {}, {
     description: "A test bot made with Eris",
     owner: "Xamtheking",
-    prefix: ["sk ", "Sk ", "bend over and ", "Bend over and"],
+    prefix: ["gb ", "Gb ", "bend over and ", "Bend over and"],
     ignoreBots: true
 });
 global.bot = bot;
@@ -73,70 +73,25 @@ msg.channel.createMessage("Ultra gay!")
 }
 );
 
+/*
 bot.registerCommand("p", (msg, args) => {
-    let file = fs.readFileSync('./pictures/steak.jpg');
+    let file = fs.readFileSync('/pictures/steak.jpg');
     if (args[0] == "steak") {
         msg.channel.createMessage('', {
             file,
             name: 'steak.jpg'
         });
     } else if (args[0] == "knife") {
-        file = fs.readFileSync('./pictures/knife.jpg');
+        file = fs.readFileSync('./knife.jpg');
         msg.channel.createMessage('', {
             file,
             name: 'knife.jpg'
         });
     } else if (args[0] == "hack") {
+        msg.channel.createMessage('https://i.imgur.com/iVHfwLc.gif');
 
-        try {
-            msg.channel.createMessage(
-              {
-                  embed: {
-                 image: {
-                     url: "https://i.imgur.com/iVHfwLc.gif"
-                 }
-              }
-          })
-
-    }catch (Error) {
-        msg.channel.createMessage("Something went wrong");
-    }
- } else if (args[0] == "ree")
-    {
-        
-        try {
-            msg.channel.createMessage(
-              {
-                  embed: {
-                 image: {
-                     url: "https://cdn.discordapp.com/attachments/133441659198373889/402667691648745472/Snapchat-1199464898.jpg"
-                 }
-              }
-          })
-
-    }catch (Error) {
-        msg.channel.createMessage("Something went wrong");
-    }
-
-    }
-    else if(args[0] == "party") 
-    {
-        
-        try {
-            msg.channel.createMessage(
-              {
-                  embed: {
-                 image: {
-                     url: "https://media1.tenor.com/images/43d6b59a8559a4f84afd6c185ba4df19/tenor.gif"
-                 }
-              }
-          })
-
-    }catch (Error) {
-        msg.channel.createMessage("Something went wrong");
-    }
-        
-}
+    } else if (args[0] == "ree") msg.channel.createMessage('https://cdn.discordapp.com/attachments/133441659198373889/402667691648745472/Snapchat-1199464898.jpg');
+    else if (args[0] == "party") msg.channel.createMessage("https://media1.tenor.com/images/43d6b59a8559a4f84afd6c185ba4df19/tenor.gif");
 }, {
     description: "Picture command!",
     fullDescription: "Looks for a picture in the storage and posts it. Current pictures are \`steak\`, \`knife\`" +
@@ -145,7 +100,6 @@ bot.registerCommand("p", (msg, args) => {
     argsRequired: true,
     guildOnly: true
 });
-/*
 bot.registerCommand("prefix", (msg, args) => {
     if ((msg.author.id == config.owner) || (msg.member.permission.has("banMembers") == true)) {
         let postfix = args[0];

@@ -26,6 +26,7 @@
     "express": "^4.16.2",
     "fs": "0.0.1-security",
     "ifttt": "^0.1.2",
+    "phantomjs-prebuilt": "^2.1.16",
     "raven": "^2.4.1",
     "termite": "0.0.0"
   }
