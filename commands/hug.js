@@ -4,7 +4,7 @@ module.exports = {
     // checks for mention
     let words = msg.content.split(/\s+/);
     if (!words[2]) msg.channel.createMessage("You need to specify someone to hug!");
- 
+
     else { // hugs the user
         try {
             msg.channel.createMessage(

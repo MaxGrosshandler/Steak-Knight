@@ -11,7 +11,7 @@ var bot = new Eris.CommandClient(config.token, {}, {
     owner: "Xamtheking#2099",
     prefix: ["sk ", "Sk "],
     ignoreBots: true,
-    defaultHelpCommand: true
+    defaultHelpCommand: false
 });
 global.bot = bot;
 /*
@@ -59,11 +59,23 @@ bot.on('messageCreate', msg => {
     }
 })
 
+bot.registerCommandAlias("halp", "help");
+var cryptoCommand = bot.registerCommand("crypto", (msg, args) =>{
+
+
+
+}
+)
+cryptoCommand.registerSubcommand("e", (msg, args) =>{
+msg.channel.createMessage(cryptr.encrypt(args.join(" ")))
+}
+)
+cryptoCommand.registerSubcommand("d", (msg, args) =>{
+    msg.channel.createMessage(cryptr.decrypt(args.join(" ")))
+}
+)
 bot.registerCommand("github", (msg) =>{
     msg.channel.createMessage("https://github.com/MaxGrosshandler/Steak-Knight")
-},
-{
-description: "See my codebase!"
 }
 )
 bot.registerCommand("p", (msg, args) => {

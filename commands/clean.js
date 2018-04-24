@@ -15,6 +15,10 @@ module.exports = {
     },
     options: {
 
+        description: "Cleans messages",
+        fullDescription: "Clean `X` amount of messages",
+        argsRequired: true,
+        guildOnly: true
     },
     name: "clean"
 }
