@@ -133,7 +133,7 @@ bot.registerCommand("p", (msg, args) => {
     argsRequired: true,
     guildOnly: true
 });
-
+//thanks wolke
 bot.registerCommand('prefix', (msg, args)=>{
 var sql = "INSERT INTO ?? VALUES(?,?);";
 var newprefix = args[0]
