@@ -1,9 +1,9 @@
 global.config = require("./config.json");
-var Raven = require("raven");
+let Raven = require("raven");
 Raven.config(config.ravenConfig).install();
 const Eris = require("eris");
 const fs = require("fs");
-var pm2 = require("pm2");
+let pm2 = require("pm2");
 const sf = require("snekfetch");
 const { Client } = require("pg");
 const client = new Client({
@@ -15,7 +15,7 @@ const client = new Client({
 });
 client.connect();
 
-var bot = new Eris.CommandClient(
+let bot = new Eris.CommandClient(
   config.token,
   {},
   {
@@ -27,7 +27,7 @@ var bot = new Eris.CommandClient(
   }
 );
 global.bot = bot;
-var commandNames = [];
+let commandNames = [];
 //much thanks to jtsshieh and DAPI in general
 fs.readdir("./commands", (err, files) => {
   files.forEach(file => {
@@ -117,8 +117,8 @@ bot.registerCommand("prefix", (msg, args) => {
     .catch(e => console.error(e.stack));
 });
 
-var prof = bot.registerCommand("profile", (msg, args) => {
-  var profCheck = false;
+let prof = bot.registerCommand("profile", (msg, args) => {
+  let profCheck = false;
   const plquery = {
     // give the query a unique name
     name: "fetch-profile",
@@ -204,7 +204,7 @@ bot.registerCommand(
   }
 );
 
-var bottle = bot.registerCommand(
+let bottle = bot.registerCommand(
   "bottle",
   (msg, args) => {
     if (args[0] == "opt-in") {
@@ -220,7 +220,7 @@ var bottle = bot.registerCommand(
     }
     if (args[0] == "opt-out") {
       const bdText = "DELETE FROM bottles where id = $1";
-      var bdVals = [msg.author.id];
+      let bdVals = [msg.author.id];
       client
         .query(bdText, bdVals)
         .then(res => {
@@ -233,14 +233,14 @@ var bottle = bot.registerCommand(
   {}
 );
 bottle.registerSubcommand("send", (msg, args) => {
-  var names = [];
-  var send = false;
+  let names = [];
+  let send = false;
   client.query("SELECT * FROM bottles").then(res => {
     for (item of res.rows) {
       names.push(item.id);
     }
     console.log(names);
-    var dmID = names[Math.floor(Math.random() * names.length)];
+    let dmID = names[Math.floor(Math.random() * names.length)];
     do {
       dmID = names[Math.floor(Math.random() * names.length)];
     } while (dmID == msg.author.id);
