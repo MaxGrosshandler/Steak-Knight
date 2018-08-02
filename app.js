@@ -64,12 +64,25 @@ bot.on("ready", () => {
   postStats();
   bot.editStatus("online", { name: "sk help" });
 });
+let casting = false;
 
 bot.on("messageCreate", msg => {
   if (msg.content == "Who is undeniably the best girl?") {
     msg.channel.createMessage("Midna is the best girl.");
   }
+  if (msg.content == "spellbound" && msg.author.id == config.id) {
+    casting = true;
+    msg.channel.createMessage("Spellbook opened.");
+  }
+  if (msg.content == "starstruck" && msg.author.id == config.id) {
+    casting = false;
+    msg.channel.createMessage("Spellbook closed.");
+  }
+  if (msg.content == "eris" && casting && msg.author.id == config.id) {
+    msg.channel.createMessage("https://abal.moe/Eris/");
+  }
 });
+
 client.query("SELECT * FROM prefixes").then(res => {
   for (item of res.rows) {
     console.log(item);
@@ -117,43 +130,6 @@ bot.registerCommand("prefix", (msg, args) => {
     .catch(e => console.error(e.stack));
 });
 
-let prof = bot.registerCommand("profile", (msg, args) => {
-  let profCheck = false;
-  const plquery = {
-    // give the query a unique name
-    name: "fetch-profile",
-    text: "SELECT * FROM profiles"
-  };
-  client.query(plquery).then(res => {
-    for (item of res.rows) {
-      if (item.id == args[0]) {
-        msg.channel.createMessage(
-          "Profile found! \nThe user is called " + item.name
-        );
-        profCheck = true;
-        return;
-      }
-    }
-    if (profCheck == false) {
-      msg.channel.createMessage("Profile not found.");
-    }
-  });
-});
-
-prof.registerSubcommand("create", async (msg, args) => {
-  const pcquery = {
-    name: "create-profile",
-    text: "INSERT INTO profiles(id, name) VALUES ($1, $2) RETURNING *",
-    values: [msg.author.id, msg.author.username]
-  };
-  try {
-    let res = await client.query(pcquery);
-    await msg.channel.createMessage("Profile created.");
-    console.log(res.rows[0]);
-  } catch (e) {
-    console.error(e.stack);
-  }
-});
 bot.registerCommand(
   "invite",
   (msg, args) => {
@@ -208,6 +184,15 @@ let bottle = bot.registerCommand(
   "bottle",
   (msg, args) => {
     if (args[0] == "opt-in") {
+      const idText = "DELETE FROM bottles where id = $1";
+      let idVals = [msg.author.id];
+      client
+        .query(idText, idVals)
+        .then(res => {
+          console.log(res.rows[0]);
+        })
+        .catch(e => console.error(e.stack));
+
       const bolText = "INSERT INTO bottles(id) VALUES($1) RETURNING *";
       const bolVals = [msg.author.id];
       client
@@ -232,30 +217,47 @@ let bottle = bot.registerCommand(
   },
   {}
 );
-bottle.registerSubcommand("send", (msg, args) => {
-  let names = [];
-  let send = false;
-  client.query("SELECT * FROM bottles").then(res => {
-    for (item of res.rows) {
-      names.push(item.id);
-    }
-    console.log(names);
-    let dmID = names[Math.floor(Math.random() * names.length)];
-    do {
-      dmID = names[Math.floor(Math.random() * names.length)];
-    } while (dmID == msg.author.id);
-    for (item of res.rows) {
-      if (msg.author.id == item.id) {
-        send = true;
+bottle.registerSubcommand(
+  "send",
+  (msg, args) => {
+    let names = [];
+    let send = false;
+    client.query("SELECT * FROM bottles").then(res => {
+      for (item of res.rows) {
+        names.push(item.id);
       }
-    }
-    if (send) {
-      bot.getDMChannel(dmID).then(function(result) {
-        bot.createMessage(result.id, args.join(" "));
-      });
-    }
-  });
-});
+      console.log(names);
+      let dmID = names[Math.floor(Math.random() * names.length)];
+      do {
+        dmID = names[Math.floor(Math.random() * names.length)];
+      } while (dmID == msg.author.id);
+      for (item of res.rows) {
+        if (msg.author.id == item.id) {
+          send = true;
+        }
+      }
+      if (send) {
+        bot.getDMChannel(dmID).then(function(result) {
+          if (result.id !== msg.author.id) {
+            bot.createMessage(
+              result.id,
+              "**You got a bottle:** " + args.join(" ")
+            );
+            msg.channel.createMessage("Message sent!");
+          }
+        });
+      }
+    });
+  },
+  {
+    description: "Send a message in a bottle!",
+    fullDescription:
+      "Sends a message to a user on the bottles list, requires sender to also be on bottles list.",
+    usage: "sk bottle send <your message here>",
+    cooldown: 20000,
+    cooldownMessage: "You're using this too fast!"
+  }
+);
 
 bot.connect();
-module.exports = bot;
+module.exports = { bot, lastID };
