@@ -24,3 +24,13 @@ Woah there! If you want to try to get up and running as soon as possible, follow
 5.  comment out any lines relating to postgres or snekfetch
 6.  node app.js
 7.  good job
+
+# For a more thorough install
+
+1.  Make sure [Node](https://nodejs.org/en/) is installed
+2.  Make sure[Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)is installed
+3.  install all the dependencies as listed above
+4.  Git clone the repository
+5.  Alright, postgres stuffs. You can adjust the name of the database to your liking, but make sure to reflect that in app.js. The schema I use is:
+    TABLE prefixes with COLUMNS id (varchar 25) and list (varchar 25)
+    TABLE bottles with COLUMN id (varchar 25)
