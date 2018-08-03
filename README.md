@@ -18,7 +18,7 @@ The other popular library is Discord.js, which I personally don't like, but what
 Woah there! If you want to try to get up and running as soon as possible, follow these steps:
 
 1.  Make sure [Node](https://nodejs.org/en/) is installed (either version is fine)
-2.  Make sure [Git]() is installed (to clone the repo)
+2.  Make sure [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) is installed (to clone the repo)
 3.  In terms of dependencies, only install Eris and fs if you want to go fast
 4.  Git clone the repository
 5.  comment out any lines relating to postgres or snekfetch
