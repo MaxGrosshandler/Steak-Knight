@@ -23,9 +23,9 @@ Woah there! If you want to try to get up and running as soon as possible, follow
 4.  Git clone the repository
 5.  comment out any lines relating to postgres or snekfetch, because those require a bit more work to set up
 6.  Also, make sure to generate a config.json file with these properties:
-    id (your id)
-    altid (this is for when I'm using my alt, just set this to an empty string if you don't have an alt you are using this with)
-    token (because you don't want to put your token in the main file)
+    - id (your id)
+    - altid (this is for when I'm using my alt, just set this to an empty string if you don't have an alt you are using this with)
+    - token (because you don't want to put your token in the main file)
 7.  Make sure you're in the Steak-Knight folder and run `node app.js`
 8.  good job
 
@@ -40,9 +40,10 @@ Woah there! If you want to try to get up and running as soon as possible, follow
     TABLE bottles with COLUMN id (varchar 25)
 6.  Also, I like using pm2 to keep my bot up, but use what you like. Screen or tmux also work.
 7.  Make sure you have a config.json file made with the following:
-    id (your id)
-    altid (if you have an alt you use this bot with, leave it as an empty string if this doesn't apply)
-    token (because you don't want your token in the main file)
+    - id (your id)
+    - altid (if you have an alt you use this bot with, leave it as an empty string if this doesn't apply)
+    - token (because you don't want your token in the main file)
+    - dbots (if you're uploading stats to dbots)
 8.  Make sure you're in the Steak-Knight folder and run `node app.js`
 
 If you run into issues installing, please yell at me at Xamtheking#2099 or MaxGrosshandler#6592
