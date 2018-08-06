@@ -73,13 +73,14 @@ bot.on("ready", () => {
   console.log("Ready!");
   console.log(bot.guilds.size);
   postStats();
+
   bot.editStatus("online", { name: "sk help" });
 });
 //set a bunch of variables to be used later in the program
 
 //used for hunt
 let huntIDs = [];
-//let huntOwners = [];
+let huntOwners = [];
 
 //used for spellcasting
 let casting = false;
@@ -94,8 +95,8 @@ let index = 0;
 bot.on("messageReactionAdd", (message, emoji, userID) => {
   if (
     huntIDs.includes(message.id) &&
-    userID !== "397898847906430976" //&&
-    //huntOwners.includes(userID) == false
+    userID !== "397898847906430976" &&
+    huntOwners.includes(userID) == false
   ) {
     message.channel.createMessage(
       "Congratulations, <@" + userID + "> won the hunt!"
@@ -247,6 +248,7 @@ bot.registerCommand(
     hidden: true
   }
 );
+
 // the bottle command
 let bottle = bot.registerCommand(
   "bottle",
@@ -274,7 +276,7 @@ let bottle = bot.registerCommand(
       //  }
 
       msg.channel.createMessage(
-        "Opted into bottles! You can now send and receive bottles. Use `sk bottle send <your message here>` to send your first bottle. \nDisclaimer: I do not check for content (please submit PRs to help fix), so be wary and keep your NSFW filters on if you so desire. Happy bottling!"
+        "Opted into bottles! You can now send and receive bottles. Use `sk bottle send <your message here>` to send your first bottle. \nDisclaimer: I do not check for content (except for filtering out invites), so be wary and keep your NSFW filters on if you so desire. Happy bottling!"
       );
     }
     if (args[0] == "opt-out") {
@@ -319,6 +321,18 @@ bottle.registerSubcommand(
 
       if (send) {
         bot.getDMChannel(dmID).then(function(result) {
+          if (args[0] == null) {
+            msg.channel.createMessage("You gotta send a message, breh!");
+            return;
+          }
+          let str = args.join(" ");
+          let regexp = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g;
+          if (regexp.test(str)) {
+            msg.channel.createMessage(
+              "No putting invites in bottles! This isn't an advertising service!"
+            );
+            return;
+          }
           if (result.id !== msg.author.id) {
             try {
               bot.createMessage(
@@ -334,7 +348,7 @@ bottle.registerSubcommand(
         });
       } else {
         msg.channel.createMessage(
-          "You aren't on the bottle list so you can't send messages!"
+          "You aren't on the bottle list so you can't send messages! You can join the list with `sk bottle opt-in`"
         );
       }
     });
