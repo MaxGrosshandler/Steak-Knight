@@ -122,14 +122,14 @@ bot.on("messageCreate", msg => {
     msg.channel.createMessage("https://abal.moe/Eris/");
   }
 });
-/*
+
 //queries the database to set prefixes per guild
 client.query("SELECT * FROM prefixes").then(res => {
   for (item of res.rows) {
     bot.registerGuildPrefix(item.id, item.list);
   }
 });
-*/
+
 //displays link to the github repository
 bot.registerCommand(
   "github",
