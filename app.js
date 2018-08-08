@@ -276,7 +276,7 @@ let bottle = bot.registerCommand(
       //  }
 
       msg.channel.createMessage(
-        "Opted into bottles! You can now send and receive bottles. Use `sk bottle send <your message here>` to send your first bottle. \nDisclaimer: I do not check for content (except for filtering out invites), so be wary and keep your NSFW filters on if you so desire. Happy bottling!"
+        "Opted into bottles! You can now send and receive bottles. Use `sk bottle send <your message here>` to send your first bottle. \nIf you get a bottle that contains advertisements or prohibited content, please DM Xamtheking#2099 or MaxGrosshandler#6592 so I can take care of the issue. Happy bottling!"
       );
     }
     if (args[0] == "opt-out") {
@@ -326,11 +326,16 @@ bottle.registerSubcommand(
             return;
           }
           let str = args.join(" ");
-          let regexp = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g;
-          if (regexp.test(str)) {
+          let invite = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g;
+          let link = /(https?:\/\/[^\s]+)/g;
+          if (invite.test(str)) {
             msg.channel.createMessage(
               "No putting invites in bottles! This isn't an advertising service!"
             );
+            return;
+          }
+          if (link.test(str)) {
+            msg.channel.createMessage("No links at all for right now.");
             return;
           }
           if (result.id !== msg.author.id) {
@@ -340,6 +345,14 @@ bottle.registerSubcommand(
                 "**You got a bottle:** " + args.join(" ")
               );
               msg.channel.createMessage("Message sent!");
+              let report =
+                "Sent by: " +
+                msg.author.id +
+                "\nRecieved By: " +
+                dmID +
+                "\nContent: " +
+                args.join(" ");
+              bot.createMessage("476118129806671882", report);
             } catch (e) {
               console.log(e);
               msg.channel.createMessage("Message not sent for some reason.");
