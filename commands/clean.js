@@ -6,7 +6,8 @@ module.exports = {
       msg.author.id == "195156669108322313" ||
       msg.member.permission.has("banMembers") == true
     )
-      msg.channel.getMessages(parseInt(args[0] + 1)).then(m => {
+      // super duper messy but works, deletes its own messages
+      msg.channel.getMessages(parseInt(args[0])).then(m => {
         for (let message of m) {
           if (message.author.id == "397898847906430976") {
             message.channel.deleteMessage(message.id);
@@ -15,10 +16,9 @@ module.exports = {
       });
   },
   options: {
-    description: "Cleans messages",
+    description: "Cleans some messages",
     fullDescription: "Clean `X` amount of messages",
-    argsRequired: true,
-    guildOnly: true
+    usage: "`sk clean X`"
   },
   name: "clean"
 };
