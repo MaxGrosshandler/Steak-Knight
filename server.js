@@ -71,28 +71,7 @@ bot.on("messageCreate", msg => {
   if (msg.content == "Who is undeniably the best girl?") {
     msg.channel.createMessage("Midna is the best girl.");
   }
-  /*
-  if (msg.content.startsWith(config.prefix)) {
-    let args = msg.content.split("config.prefix");
-    let command = args[1].toLowerCase();
-    let commandFile = require(`./commands/${command}.js`);
-    let snake = commandFile.func(msg, args).then(result => {
-      msg.channel.createMessage(result);
-    });
-  }
-  */
 });
-bot.registerCommand(
-  "github",
-  msg => {
-    msg.channel.createMessage(
-      "https://github.com/MaxGrosshandler/Steak-Knight"
-    );
-  },
-  {
-    description: "See my codebase!"
-  }
-);
 async function postStats() {
   try {
     await sf
@@ -104,17 +83,6 @@ async function postStats() {
     console.error(err);
   }
 }
-bot.registerCommand(
-  "invite",
-  (msg, args) => {
-    msg.channel.createMessage(
-      "Invite me with <https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot>"
-    );
-  },
-  {
-    description: "Invite the bot to your server!"
-  }
-);
 let str = "";
 bot.registerCommand("help", (msg, args) => {
   if (typeof args[0] == "undefined") {
@@ -140,66 +108,6 @@ bot.registerCommand("help", (msg, args) => {
     }
   }
 });
-bot.registerCommand(
-  "donate",
-  (msg, args) => {
-    msg.channel.createMessage(
-      "If you want to help speed up development and make me feel like I'm worth something," +
-        "\nplease consider donating to me at https://www.paypal.me/MaxGrosshandler. Every little bit is appreciated."
-    );
-  },
-  {
-    description: "Donate to the bot's creator!"
-  }
-);
-/*
-bot.registerCommand(
-  "prefix",
-  (msg, args) => {
-    if (
-      msg.author.id == "195156669108322313" ||
-      msg.member.permission.has("banMembers") == true
-    ) {
-      const text = "INSERT INTO prefixes(id, list) VALUES($1, $2) RETURNING *";
-      const values = [msg.channel.guild.id, args[0]];
-      if (args[0] == "") {
-        msg.channel.createMessage("You need to have a prefix!");
-        return;
-      }
-      if (args[0] == "reset") {
-        const delText = "DELETE FROM prefixes WHERE ID = $1";
-        const delVals = [values[0]];
-        client
-          .query(delText, delVals)
-          .then(res => {
-            bot.registerGuildPrefix(msg.channel.guild.id, [
-              "paladin ",
-              "Paladin "
-            ]);
-            msg.channel.createMessage("Your prefix has been reset.");
-            console.log("prefixes deleted successfully");
-          })
-          .catch(e => console.error(e.stack));
-        return;
-      }
-      client
-        .query(text, values)
-        .then(res => {
-          bot.registerGuildPrefix(msg.channel.guild.id, args[0]);
-          msg.channel.createMessage("Your new prefix is " + args[0]);
-        })
-        .catch(e => console.error(e.stack));
-    } else {
-      msg.channel.createMessage("You don't got perms!");
-    }
-  },
-  {
-    description: "Prefix management",
-    fullDescription: "Set or reset a custom prefix",
-    usage: "`sk prefix customprefix` and `customprefix reset`"
-  }
-);
-*/
 bot.connect();
 bot.on("ready", () => {
   console.log("Ready!");
@@ -208,71 +116,6 @@ bot.on("ready", () => {
   bot.editStatus("online", { name: "sk help" });
 });
 
-bot.registerCommand(
-  "eval",
-  async (msg, args) => {
-    if (config.ids.includes(msg.author.id)) {
-      let toExecute;
-      let code = args.join(" ");
-      if (code.split("\n").length === 1)
-        toExecute = eval(`async () => ${code}`);
-      else toExecute = eval(`async () => { ${code} }`);
-      toExecute.bind(this);
-      try {
-        msg.channel.createMessage(await toExecute());
-      } catch (err) {
-        msg.channel.createMessage(err.stack);
-      }
-    }
-  },
-  {
-    description: "Eval!",
-    fullDescription: "For evaluating things! Owner only.",
-    guildOnly: true,
-    argsRequired: true,
-    hidden: true
-  }
-);
-var echoCommand = bot.registerCommand(
-  "echo",
-  (msg, args) => {
-    // Make an echo command
-    if (args.length === 0) {
-      // If the user just typed "!echo", say "Invalid input"
-      return "Invalid input";
-    }
-    var text = args.join(" "); // Make a string of the text after the command label
-    return text; // Return the generated string
-  },
-  {
-    description: "Make the bot say something",
-    fullDescription: "The bot will echo whatever is after the command label.",
-    usage: "<text>"
-  }
-);
-
-echoCommand.registerSubcommand(
-  "reverse",
-  (msg, args) => {
-    // Make a reverse subcommand under echo
-    if (args.length === 0) {
-      // If the user just typed "!echo reverse", say "Invalid input"
-      return "Invalid input";
-    }
-    var text = args.join(" "); // Make a string of the text after the command label
-    text = text
-      .split("")
-      .reverse()
-      .join(""); // Reverse the string
-    return text; // Return the generated string
-  },
-  {
-    description: "Make the bot say something in reverse",
-    fullDescription:
-      "The bot will echo, in reverse, whatever is after the command label.",
-    usage: "<text>"
-  }
-);
 module.exports.client = client;
 module.exports.bot = bot;
 echoCommand.registerSubcommandAlias("backwards", "reverse"); // Alias "!echo backwards" to "!echo reverse"
