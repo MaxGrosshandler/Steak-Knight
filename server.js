@@ -118,7 +118,6 @@ bot.on("ready", () => {
 
 module.exports.client = client;
 module.exports.bot = bot;
-echoCommand.registerSubcommandAlias("backwards", "reverse"); // Alias "!echo backwards" to "!echo reverse"
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "jade");
