@@ -36,7 +36,7 @@ let helpCommands = [];
 fs.readdir("./commands", (err, files) => {
   if (err) console.error(err);
   console.log(
-    `Loading a total of ${files.length} commands into the memory.`,
+    `Loading a total of ${files.length} commands into memory.`,
     false
   );
   files.forEach(file => {
