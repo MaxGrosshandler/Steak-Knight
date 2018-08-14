@@ -1,3 +1,5 @@
+const serv = require("../server.js");
+const bot = serv.bot;
 module.exports = {
   func: async (msg, args) => {
     if (
