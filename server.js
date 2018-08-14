@@ -89,7 +89,7 @@ bot.registerCommand("help", (msg, args) => {
     helpCommands.forEach(cmd => {
       str += "sk " + cmd[0] + " - " + cmd[1] + "\n";
     });
-    str += "";
+    str += "Use `sk help <command>` for more detailed information.";
     msg.channel.createMessage(str);
     str = "";
   } else if (typeof args[0] !== "undefined") {
@@ -97,7 +97,6 @@ bot.registerCommand("help", (msg, args) => {
     helpCommands.forEach(c => {
       if (c[0] == args[0]) {
         cmd = c;
-        console.log(cmd);
         return;
       }
     });
