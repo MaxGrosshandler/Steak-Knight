@@ -3,6 +3,10 @@
 Thanks for looking at my bot!
 Let me show you around.
 
+# IMPORTANT NEWS
+
+This readme is currently going through changes due to the switch to using Pivotal Web Services as my primary hoster
+
 # Dependencies
 
 You've got a few of these bad boys to install via npm or your preferred package manager.
