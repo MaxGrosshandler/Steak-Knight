@@ -5,6 +5,7 @@ module.exports = {
       try {
         // kicks the user
         msg.channel.guild.kickMember(msg.mentions[0].id, args.join(" "));
+        msg.channel.createMessage("Member kicked.");
       } catch (error) {
         msg.channel.createMessage("That didn't work!");
       }
