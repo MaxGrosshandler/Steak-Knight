@@ -16,7 +16,12 @@ var bot = new Eris.CommandClient(
     defaultHelpCommand: false
   }
 );
-
+bot.on("guildCreate", guild => {
+  if (guild.members.filter(m => m.bot).length / guild.memberCount >= 0.5) {
+    console.log("oh no");
+    bot.leaveGuild(guild.id);
+  }
+});
 let client = new pg.Client(config.url);
 client.connect(function(err) {
   if (err) {
