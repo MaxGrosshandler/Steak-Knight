@@ -120,11 +120,26 @@ bot.registerCommand("help", (msg, args) => {
     if (typeof cmd !== "undefined") {
       msg.channel.createMessage({
         embed: {
-          description: "**" + cmd[0] + "**\n" + cmd[2] + "\n" + cmd[3]
+          title: "**" + cmd[0] + "**",
+          description: cmd[2] + "\n" + cmd[3]
         }
       });
     }
   }
+});
+
+bot.registerCommand("info", msg => {
+  msg.channel.createMessage({
+    embed: {
+      title: "Information about Steak Knight",
+      description:
+        "Server count: " +
+        bot.guilds.size +
+        "\nUptime: " +
+        bot.uptime +
+        " milliseconds\nLibrary: Eris\nGithub: [here](https://github.com/MaxGrosshandler/Steak-Knight) \nDonate: [please I need money](https://paypal.me/MaxGrosshandler)"
+    }
+  });
 });
 
 bot.connect();
