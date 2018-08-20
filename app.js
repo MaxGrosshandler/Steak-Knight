@@ -27,7 +27,7 @@ let bot = new Eris.CommandClient(
   {
     description: "Steak Knight: A bot for all your steak needs!",
     owner: "Xamtheking#2099",
-    prefix: ["sk ", "Sk "],
+    prefix: ["sk ", "Sk ", "sK "]
     ignoreBots: true,
     defaultHelpCommand: true
   }
