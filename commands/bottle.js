@@ -92,12 +92,12 @@ module.exports = {
                 console.log(e);
                 msg.channel.createMessage("Message not sent for some reason.");
               }
-            } else {
-              msg.channel.createMessage(
-                "You aren't on the bottle list so you can't send messages! You can join the list with `sk bottle opt-in`"
-              );
             }
           });
+        } else {
+          msg.channel.createMessage(
+            "You aren't on the bottle list so you can't send messages! You can join the list with `sk bottle opt-in`"
+          );
         }
       });
     }

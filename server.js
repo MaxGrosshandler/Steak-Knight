@@ -12,14 +12,23 @@ var bot = new Eris.CommandClient(
   {
     description: "A bot for all your steak needs!",
     owner: "Xamtheking#2099 and MaxGrosshandler#6592",
-    prefix: ["sk ", "Sk "],
+    prefix: ["sk ", "Sk ", "bend over and ", "Bend over and "],
     defaultHelpCommand: false
   }
 );
-bot.on("guildCreate", guild => {
-  if (guild.members.filter(m => m.bot).length / guild.memberCount >= 0.5) {
+bot.on("guildCreate", async guild => {
+  if (guild.members.filter(m => m.bot).length / guild.memberCount > 0.5) {
     console.log("oh no");
     bot.leaveGuild(guild.id);
+  }
+  for (const channel of guild.channels) {
+    try {
+      await bot.createMessage(
+        channel[0],
+        "Hi, my name is Steak Knight! You can see my commands with `sk help` !"
+      );
+      break;
+    } catch (err) {}
   }
 });
 let client = new pg.Client(config.url);
@@ -93,7 +102,12 @@ bot.registerCommand("help", (msg, args) => {
       str += "sk " + cmd[0] + " - " + cmd[1] + "\n";
     });
     str += "Use `sk help <command>` for more detailed information.";
-    msg.channel.createMessage(str);
+    msg.channel.createMessage({
+      embed: {
+        description: str,
+        title: "My help command"
+      }
+    });
     str = "";
   } else if (typeof args[0] !== "undefined") {
     let cmd;
@@ -104,12 +118,15 @@ bot.registerCommand("help", (msg, args) => {
       }
     });
     if (typeof cmd !== "undefined") {
-      msg.channel.createMessage(
-        "**" + cmd[0] + "**\n" + cmd[2] + "\n" + cmd[3]
-      );
+      msg.channel.createMessage({
+        embed: {
+          description: "**" + cmd[0] + "**\n" + cmd[2] + "\n" + cmd[3]
+        }
+      });
     }
   }
 });
+
 bot.connect();
 bot.on("ready", () => {
   console.log("Ready!");
