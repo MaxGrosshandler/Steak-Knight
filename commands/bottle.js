@@ -66,7 +66,7 @@ module.exports = {
             }
             args.shift();
             let str = args.join(" ");
-            let invite = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g;
+            let invite = /(?:discord(?:(?:.|.?dot.?)(?:gg|me|li|to|io)|app(?:.|.?dot.?)com\/invite)|(invite|disco)(?:.|.?dot.?)gg)\/[\da-z]+/igm;
             if (invite.test(str)) {
               msg.channel.createMessage(
                 "No putting invites in bottles! This isn't an advertising service!"
