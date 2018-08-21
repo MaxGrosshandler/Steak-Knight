@@ -4,7 +4,8 @@ module.exports = {
   func: async (msg, args) => {
     if (
       msg.author.id == "107563269484490752" ||
-      msg.author.id == "195156669108322313"
+      msg.author.id == "195156669108322313" ||
+      msg.author.id == "457250790751600652"
     ) {
       let toExecute;
       let code = args.join(" ");
