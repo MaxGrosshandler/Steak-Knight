@@ -66,7 +66,7 @@ module.exports = {
             }
             args.shift();
             let str = args.join(" ");
-            let invite = /(?:discord(?:(?:.|.?dot.?)(?:gg|me|li|to|io)|app(?:.|.?dot.?)com\/invite)|(invite|disco)(?:.|.?dot.?)gg)\/[\da-z]+/igm;
+            let invite = /(?:discord(?:(?:.|.?dot.?)(?:gg|me|li|to|io)|app(?:.|.?dot.?)com\/invite)|(invite|disco)(?:.|.?dot.?)gg)\/[\da-z]+/gim;
             if (invite.test(str)) {
               msg.channel.createMessage(
                 "No putting invites in bottles! This isn't an advertising service!"
@@ -87,7 +87,7 @@ module.exports = {
                   dmID +
                   "\nContent: " +
                   args.join(" ");
-                bot.createMessage("476118129806671882", report);
+                bot.createMessage("481255776644497423", report);
               } catch (e) {
                 console.log(e);
                 msg.channel.createMessage("Message not sent for some reason.");
