@@ -11,7 +11,7 @@ module.exports = {
           content: msg.mentions[0].username + ", you have been hugged! ",
           embed: {
             image: {
-              url: "https://i.imgur.com/O3f6NoJ.gif"
+              url: "https://media.giphy.com/media/9UyZI216ic5vG/giphy.gif"
             }
           }
         });
