@@ -1,7 +1,7 @@
 module.exports = {
   func: async (msg, args) => {
     msg.channel.createMessage(
-      "My support server can be found at https://discord.gg/4Bk8JZs"
+      "My support server can be found at **<https://discord.gg/4xbwxe6>**. Come say hello!"
     );
   },
   options: {
