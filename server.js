@@ -148,7 +148,7 @@ bot.registerCommand("info", msg => {
         seconds +
         " seconds" +
         " \nLibrary: Eris\nGithub: [here](https://github.com/MaxGrosshandler/Steak-Knight) \nDonate: [please I need money](https://paypal.me/MaxGrosshandler)" +
-        "\nSupport Server: [here](https://discord.gg/VX9GBc)\nInvite me: [here](https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot)"
+        "\nSupport Server: [here](https://discord.gg/4xbwxe6)\nInvite me: [here](https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot)"
     }
   });
 });
