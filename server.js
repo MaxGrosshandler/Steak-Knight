@@ -128,31 +128,6 @@ bot.registerCommand("help", (msg, args) => {
     }
   }
 });
-/*
-bot.registerCommand("info", msg => {
-  let time = moment.duration(moment() - bot.startTime);
-  let hours = time.hours();
-  let minutes = time.minutes();
-  let seconds = time.seconds();
-  msg.channel.createMessage({
-    embed: {
-      title: "Information about Steak Knight",
-      description:
-        "Server count: " +
-        bot.guilds.size +
-        "\nUptime: " +
-        hours +
-        " hours " +
-        minutes +
-        " minutes " +
-        seconds +
-        " seconds" +
-        " \nLibrary: Eris\nGithub: [here](https://github.com/MaxGrosshandler/Steak-Knight) \nDonate: [please I need money](https://paypal.me/MaxGrosshandler)" +
-        "\nSupport Server: [here](https://discord.gg/4xbwxe6)\nInvite me: [here](https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot)"
-    }
-  });
-});
-*/
 
 bot.connect();
 bot.on("ready", () => {
