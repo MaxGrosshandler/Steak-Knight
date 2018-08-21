@@ -4,6 +4,7 @@ const bot = serv.bot;
 module.exports = {
   func: async (msg, args) => {
     if ( config.ids.includes(msg.author.id)
+
     ) {
       let toExecute;
       let code = args.join(" ");
