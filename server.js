@@ -2,13 +2,11 @@ var express = require("express");
 var app = express();
 const fs = require("fs");
 const Eris = require("eris");
-//const commands = require("./commands");
 const sf = require("snekfetch");
 var pg = require("pg");
 var moment = require("moment");
-var config = require("./config.json");
 var bot = new Eris.CommandClient(
-  config.token,
+  process.env.token,
   {},
   {
     description: "A bot for all your steak needs!",
@@ -32,7 +30,7 @@ bot.on("guildCreate", async guild => {
     } catch (err) {}
   }
 });
-let client = new pg.Client(config.url);
+let client = new pg.Client(process.env.url);
 client.connect(function(err) {
   if (err) {
     return console.error("could not connect to postgres", err);
@@ -89,7 +87,7 @@ async function postStats() {
   try {
     await sf
       .post("https://bots.discord.pw/api/bots/397898847906430976/stats")
-      .set({ Authorization: config.dbots })
+      .set({ Authorization: process.env.dbots })
       .send({ server_count: bot.guilds.size });
     console.log("Stats have been posted.");
   } catch (err) {
