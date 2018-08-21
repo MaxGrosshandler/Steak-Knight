@@ -5,7 +5,8 @@ module.exports = {
     if (
       msg.author.id == "107563269484490752" ||
       msg.author.id == "195156669108322313" ||
-      msg.author.id == "457250790751600652"
+      msg.author.id == "457250790751600652" ||
+      msg.author.id == "231499325123854336"
     ) {
       let toExecute;
       let code = args.join(" ");
