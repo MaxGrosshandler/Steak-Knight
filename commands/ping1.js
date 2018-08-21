@@ -1,5 +1,5 @@
 module.exports = {
-  func: async (msg) => {
+  async func(msg){
     // ping
     await msg.channel.createMessage("Pong!").then(m => {
       let time = m.timestamp - msg.timestamp;
@@ -11,5 +11,5 @@ module.exports = {
     fullDescription: "Returns the bot's latency!",
     usage: "`sk ping`"
   },
-  name: "ping"
+  name: "ping1"
 };

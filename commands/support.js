@@ -1,13 +1,19 @@
 module.exports = {
-  func: async (msg, args) => {
-    msg.channel.createMessage(
-      "My support server can be found at **<https://discord.gg/4xbwxe6>**. Come say hello!"
-    );
+  func() {
+return "this ran without args"
+
+  }, 
+  argError (){
+    return "you shouldn't have arguments"
   },
-  options: {
-    description: "Get support!",
-    fullDescription: "Provides an invite to the bot's support server",
-    usage: "`sk support`"
+  argMiss (){
+    return "you are missing arguments!"
   },
-  name: "support"
-};
+options: {
+  description: "Get support!",
+  fullDescription: "Provides an invite to the bot's support server",
+  usage: "`sk support`",
+  argsReq: false
+},
+name: "support"
+}

@@ -5,6 +5,7 @@ const Eris = require("eris");
 const sf = require("snekfetch");
 var pg = require("pg");
 var moment = require("moment");
+
 var bot = new Eris.CommandClient(
   process.env.token,
   {},
@@ -30,6 +31,8 @@ bot.on("guildCreate", async guild => {
     } catch (err) {}
   }
 });
+
+
 let client = new pg.Client(process.env.url);
 client.connect(function(err) {
   if (err) {
@@ -43,7 +46,9 @@ client.connect(function(err) {
     //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
   });
 });
+
 let helpCommands = [];
+let commands = [];
 fs.readdir("./commands", (err, files) => {
   if (err) console.error(err);
   console.log(
@@ -53,6 +58,7 @@ fs.readdir("./commands", (err, files) => {
   files.forEach(file => {
     try {
       const command = require(`./commands/${file}`);
+     
       console.log(`Attempting to load the command "${command.name}".`, false);
       let newCommand = [
         command.name,
@@ -61,28 +67,47 @@ fs.readdir("./commands", (err, files) => {
         command.options.usage,
         command.func
       ];
+      commands.push(command)
       helpCommands.push(newCommand);
-      bot.registerCommand(command.name, command.func, command.options);
-    } catch (err) {
+     } catch (err) {
       console.log(
         "An error has occured trying to load a command. Here is the error."
       );
       console.log(err.stack);
     }
-  });
+  }
+   );
   console.log("Command Loading complete!");
   console.log("\n");
 });
+
 client.query("SELECT * FROM prefixes").then(res => {
   for (item of res.rows) {
     bot.registerGuildPrefix(item.id, item.list);
   }
 });
+
 bot.on("messageCreate", msg => {
   if (msg.content == "Who is undeniably the best girl?") {
     msg.channel.createMessage("Midna is the best girl.");
   }
+  if (msg.content.startsWith(bot.commandOptions.prefix[0]) ||
+   msg.content.startsWith(bot.commandOptions.prefix[1]))
+   {
+     let stuff = msg.content.split(" ")
+     let c = stuff[1];
+     stuff.shift();
+     stuff.shift();
+     console.log(stuff)
+       commands.forEach(function(command){
+        if (command.name == c){
+          command.func(msg, stuff)
+       }
+      }
+      )
+  }
 });
+
 async function postStats() {
   try {
     await sf
@@ -94,6 +119,7 @@ async function postStats() {
     console.error(err);
   }
 }
+
 let str = "";
 bot.registerCommand("help", (msg, args) => {
   if (typeof args[0] == "undefined") {

@@ -1,10 +1,9 @@
 const serv = require("../server.js");
-//const config = require("../config.json")
 const bot = serv.bot;
 module.exports = {
   func: async (msg, args) => {
-    if ( process.env.ids.includes(msg.author.id)
-
+   if ( process.env.ids.includes(msg.author.id)
+ 
     ) {
       let toExecute;
       let code = args.join(" ");
