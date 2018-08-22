@@ -1,13 +1,6 @@
 module.exports = {
-  func() {
-return "this ran without args"
-
-  }, 
-  argError (){
-    return "you shouldn't have arguments"
-  },
-  argMiss (){
-    return "you are missing arguments!"
+  func(msg) {
+    msg.channel.createMessage("Join my support server at https://discord.gg/4xbwxe6")
   },
 options: {
   description: "Get support!",

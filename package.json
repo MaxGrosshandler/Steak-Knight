@@ -4,6 +4,7 @@
   "dependencies": {
     "async": "^2.6.1",
     "eris": "^0.9.0",
+    "eris-additions": "^1.2.5",
     "express": "^4.16.2",
     "fs": "0.0.1-security",
     "moment": "^2.4.0",

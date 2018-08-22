@@ -1,10 +1,12 @@
 var express = require("express");
 var app = express();
 const fs = require("fs");
-const Eris = require("eris");
+const Eris = (require("eris"))
+
 const sf = require("snekfetch");
 var pg = require("pg");
 var moment = require("moment");
+
 
 var bot = new Eris.CommandClient(
   process.env.token,
@@ -17,19 +19,22 @@ var bot = new Eris.CommandClient(
   }
 );
 bot.on("guildCreate", async guild => {
-  if (guild.members.filter(m => m.bot).length / guild.memberCount > 0.5) {
-    console.log("oh no");
+  if (guild.members.filter(m => m.bot).length / guild.memberCount > 0.7) {
     bot.leaveGuild(guild.id);
   }
+  
   for (const channel of guild.channels) {
-    try {
-      await bot.createMessage(
-        channel[0],
-        "Hi, my name is Steak Knight! You can see my commands with `sk help` !"
-      );
-      break;
-    } catch (err) {}
+     try { bot.getMessages(channel[0], 1).then(async msg => {
+      if (msg[0].channel.permissionsOf("474601951393480704").has("sendMessages")){
+        await msg[0].channel.createMessage("hi im a dog")
+      }
+    })
+    break;
+  } catch (err) {
+
   }
+  
+}
 });
 
 
@@ -119,6 +124,7 @@ async function postStats() {
     console.error(err);
   }
 }
+
 
 let str = "";
 bot.registerCommand("help", (msg, args) => {
