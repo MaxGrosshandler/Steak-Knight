@@ -124,6 +124,18 @@ async function postStats() {
     console.error(err);
   }
 }
+async function carbon(){
+  try{
+    await sf
+    .post("https://www.carbonitex.net/discord/data/botdata.php")
+    .set({key: process.env.carbon})
+    .send({servercount: bot.guilds.size});
+    console.log("Carbon!")
+  }
+  catch(err){
+    console.error(err);
+  }
+}
 
 
 let str = "";
@@ -158,12 +170,19 @@ bot.registerCommand("help", (msg, args) => {
     }
   }
 });
+bot.registerCommand("lastJoin", (msg => {
+  if (process.env.ids.includes(msg.author.id)){
+
+  msg.channel.createMessage("Last server joined was: " + bot.guilds[bot.guilds.size-1].name)
+  }
+}))
 
 bot.connect();
 bot.on("ready", () => {
   console.log("Ready!");
   console.log(bot.guilds.size);
   postStats();
+  carbon();
   bot.editStatus("online", { name: "sk help" });
 });
 
