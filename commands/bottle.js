@@ -5,7 +5,6 @@ module.exports = {
   func: async (msg, args) => {
 
     // prefix should be 0, invoke should be 1
-      let invoke = msg.content.split(" ")[1]
 
     if (args[0] == "opt-in") {
       const idText = "DELETE FROM bottles where id = $1";
@@ -30,7 +29,7 @@ module.exports = {
       //  }
 
       msg.channel.createMessage(
-        "Opted into bottles! You can now send and receive bottles. Use `sk bottle send <your message here>` to send your first bottle. \nIf you get a bottle that contains advertisements or prohibited content, please DM Xamtheking#2099 or MaxGrosshandler#6592 so I can take care of the issue. Happy bottling!"
+        "Opted into bottles! You can now send and receive bottles. You can use either `sk bottle send <message>` or `sb <message>` to send your first bottle. \nIf you get a bottle that contains advertisements or prohibited content, please DM Xamtheking#2099 or MaxGrosshandler#6592 so I can take care of the issue. Happy bottling!"
       );
     }
     if (args[0] == "opt-out") {
@@ -48,7 +47,7 @@ module.exports = {
     let names = [];
     let send = false;
     let invite = true;
-    if (args[0] == "send" || invoke == "sb") {
+    if (args[0] == "send") {
       client.query("SELECT * FROM bottles").then(res => {
         for (item of res.rows) {
           names.push(item.id);
@@ -113,6 +112,5 @@ module.exports = {
     usage:
       "`sk bottle opt-in`, `sk bottle opt-out`, or `sk bottle send <yourmessagehere>`"
   },
-  name: "bottle",
-  aliases: ["sb"]
+  name: "bottle"
 };

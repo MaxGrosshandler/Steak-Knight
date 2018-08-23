@@ -101,6 +101,20 @@ client.query("SELECT * FROM prefixes").then(res => {
 });
 
 bot.on("messageCreate", msg => {
+  if (msg.author.bot)return;
+  if (msg.content.startsWith("sb ") || msg.content.startsWith("Sb ")){
+    
+    let command = commands.find(function (cmd) {
+      return cmd.name == "bottle"
+    })
+    let snakes = msg.content.split(' ')
+    snakes.shift();
+    let spoops = snakes.join(" ")
+    let potato = "send " + spoops;
+    let args = potato.split(" ")
+    command.func(msg, args)
+    return;
+  }
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
@@ -114,12 +128,6 @@ bot.on("messageCreate", msg => {
         commands.forEach(function (command) {
                 if (command.name == c) {
                     command.func(msg, stuff)
-                } else if (command.aliases) {
-                    command.aliases.forEach((alias) => {
-                        if (command.name == alias) {
-                            command.func(msg, stuff)
-                        }
-                    })
                 }
             }
         )
