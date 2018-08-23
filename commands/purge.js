@@ -7,7 +7,8 @@ module.exports = {
       msg.author.permission.has("banMembers") == true
     )
       // purges messages
-      msg.channel.purge(parseInt(args[0]) + 2);
+      //msg.channel.purge(parseInt(args[0]) + 2);
+      msg.channel.createMessage("purge is disabled right now")
   },
   options: {
     description: "PURGE THE WEAK!",

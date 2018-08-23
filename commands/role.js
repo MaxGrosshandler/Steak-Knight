@@ -2,8 +2,9 @@ const server = require("../server.js");
 const bot = server.bot;
 module.exports = {
   func: async (msg, args) => {
+    if (msg.member.permission.has("banMembers")){
     for (var [key, value] of msg.channel.guild.roles) {
-      if (args[1] == msg.channel.guild.roles.get(key).name)
+      if (args[1] == msg.channel.guild.roles.get(key).name) 
         try {
           bot.addGuildMemberRole(
             msg.channel.guild.id,
@@ -17,7 +18,11 @@ module.exports = {
           );
         }
     }
-  },
+  }
+  else{ 
+    msg.channel.createMessage("You don't got perms son")
+  }
+},
   options: {
     description: "Gives a user a role!",
     fullDescription:

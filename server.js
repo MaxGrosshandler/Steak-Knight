@@ -195,7 +195,7 @@ bot.registerCommand("help", (msg, args) => {
 bot.registerCommand("lastJoin", (msg => {
   if (process.env.ids.includes(msg.author.id)){
     let map1 = bot.guilds.map(object => object.values)
-    let sharp = map1[bot.guilds.size-1]
+    let sharp = map1[0]
     msg.channel.createMessage("i am a spoople of " + sharp)
   }
 }))
