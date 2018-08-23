@@ -61,13 +61,29 @@ module.exports = {
             send = true;
           }
         }
+        
         if (send) {
+          let colorPrefix = "```";
+          let colorSuffix = "```";
           bot.getDMChannel(dmID).then(function(result) {
+            args.shift();
             if (args[0] == null) {
               msg.channel.createMessage("You gotta send a message, breh!");
               return;
             }
-            args.shift();
+            if (args[0] == "color"){
+              args.shift()
+              if (args[0] == "bash"){
+                args.shift()
+                colorPrefix = "```bash\n"
+              }
+              else if (args[0] == "css") {
+                args.shift()
+                colorPrefix = "```css\n"
+              }
+              }
+            
+            
             let str = args.join(" ");
             let invite = /(?:discord(?:(?:.|.?dot.?)(?:gg|me|li|to|io)|app(?:.|.?dot.?)com\/invite)|(invite|disco)(?:.|.?dot.?)gg)\/[\da-z]+/gim;
             if (invite.test(str)) {
@@ -80,7 +96,7 @@ module.exports = {
               try {
                 bot.createMessage(
                   result.id,
-                  "**You got a bottle:** " + args.join(" ")
+                  "**You got a bottle:** \n"+colorPrefix + args.join(" ")+colorSuffix
                 );
                 msg.channel.createMessage("Message sent!");
                 let report =
@@ -89,7 +105,7 @@ module.exports = {
                   "\nRecieved By: " +
                   dmID +
                   "\nContent: " +
-                  args.join(" ");
+              colorPrefix + args.join(" ") + colorSuffix;
                 bot.createMessage("481255776644497423", report);
               } catch (e) {
                 console.log(e);

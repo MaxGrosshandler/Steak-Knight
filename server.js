@@ -3,6 +3,8 @@ var app = express();
 const fs = require("fs");
 const Eris = (require("eris"))
 const GoogleImages = require('google-images');
+var Bing = require('node-bing-api')({accKey: '815633e9101a46529a64fac7b11575d3'});
+
 
 const gclient = new GoogleImages(process.env.CSE_ID, process.env.CSE_API_KEY);
 const sf = require("snekfetch");
@@ -103,16 +105,19 @@ client.query("SELECT * FROM prefixes").then(res => {
 });
 
 bot.on("messageCreate", msg => {
+let c = "";
+let snorlax = "send "
   if (msg.author.bot)return;
   if (msg.content.startsWith("sbs ") || msg.content.startsWith("Sbs ")){
     
     let command = commands.find(function (cmd) {
       return cmd.name == "bottle"
     })
-    let snakes = msg.content.split(' ')
-    snakes.shift();
+
+ let snakes = msg.content.split(" ")
+   snakes.shift();
     let spoops = snakes.join(" ")
-    let potato = "send " + spoops;
+    let potato = snorlax + spoops;
     let args = potato.split(" ")
     command.func(msg, args)
     return;
@@ -211,31 +216,16 @@ bot.registerCommand("help", (msg, args) => {
     }
 });
 bot.registerCommand("steak", (msg) => {
-    gclient.search('steak')
-	.then(images => {
-		/*
-		[{
-			"url": "http://steveangello.com/boss.jpg",
-			"type": "image/jpeg",
-			"width": 1024,
-			"height": 768,
-			"size": 102451,
-			"thumbnail": {
-				"url": "http://steveangello.com/thumbnail.jpg",
-				"width": 512,
-				"height": 512
-			}
-		}]
-		 */
-        msg.channel.createMessage( {
-            embed:
-            {
-                image: {
-                    url: images[0].url
-                }
+    Bing.images("Filet Mignon", {count: 10}, function(error, res, body){
+        msg.channel.createMessage({
+            embed: {
+                image:{
+                    url: body.value[parseInt(Math.random()* 10)].contentUrl
+                } 
             }
-        })
-	});
+        });
+    });
+
 
 })
 
