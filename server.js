@@ -185,10 +185,11 @@ bot.registerCommand("help", (msg, args) => {
     }
 });
 bot.registerCommand("lastJoin", (msg => {
-    if (process.env.ids.includes(msg.author.id)) {
-
-        msg.channel.createMessage("Last server joined was: " + bot.guilds[bot.guilds.size - 1].name)
-    }
+  if (process.env.ids.includes(msg.author.id)){
+    let map1 = bot.guilds.map(object => object.values)
+    let sharp = map1[bot.guilds.size-1]
+    msg.channel.createMessage("i am a spoople of " + sharp)
+  }
 }))
 
 bot.connect();

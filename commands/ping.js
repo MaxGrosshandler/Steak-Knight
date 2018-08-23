@@ -5,7 +5,7 @@ module.exports = {
       let time = msg.timestamp - m.timestamp;
       return m.edit(`Pong! **${time}**ms`);
     });
-  },
+},
   options: {
     description: "Ping!",
     fullDescription: "Returns the bot's latency!",
