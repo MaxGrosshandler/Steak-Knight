@@ -1,11 +1,16 @@
 global.config = require("./config.json");
-let Raven = require("raven");
-Raven.config(config.ravenConfig).install();
+//let Raven = require("raven");
+//Raven.config(config.ravenConfig).install();
 const Eris = require("eris");
+//Eris is needed to connect to discord
 const fs = require("fs");
-let pm2 = require("pm2");
+//fs is needed for loading commands in
+//let pm2 = require("pm2");
 const sf = require("snekfetch");
+//sf is used for pushing stats to the dbots api and weeb.sh commands
+//sf will be replaced with node-fetch when I get around to it
 const { Client } = require("pg");
+//used to interact with the postgresql database
 const client = new Client({
   user: "postgres",
   host: "localhost",
@@ -14,21 +19,25 @@ const client = new Client({
   port: 5432
 });
 client.connect();
-
+let ownerIDs = config.ids;
+//connects to the postgresql database
 let bot = new Eris.CommandClient(
   config.token,
   {},
   {
     description: "Steak Knight: A bot for all your steak needs!",
     owner: "Xamtheking#2099",
-    prefix: ["sk ", "Sk "],
+    prefix: ["sk ", "Sk ", "sK "]
     ignoreBots: true,
     defaultHelpCommand: true
   }
 );
 global.bot = bot;
+//initializes the bot
 let commandNames = [];
 //much thanks to jtsshieh and DAPI in general
+//command loader
+
 fs.readdir("./commands", (err, files) => {
   files.forEach(file => {
     try {
@@ -47,6 +56,7 @@ fs.readdir("./commands", (err, files) => {
 });
 
 async function postStats() {
+  //posts stats to bots.discord.pw
   try {
     await sf
       .post("https://bots.discord.pw/api/bots/397898847906430976/stats")
@@ -59,17 +69,35 @@ async function postStats() {
 }
 
 bot.on("ready", () => {
+  //what the bot does when it starts up
   console.log("Ready!");
   console.log(bot.guilds.size);
   postStats();
+
   bot.editStatus("online", { name: "sk help" });
 });
+//set a bunch of variables to be used later in the program
+
+//used for hunt
 let huntIDs = [];
+let huntOwners = [];
+
+//used for spellcasting
 let casting = false;
+
+//used for hunt
 let index = 0;
-let freqOn = true;
+
+//let freqOn = true;
+
+//needed for hunt to work the way it does
+
 bot.on("messageReactionAdd", (message, emoji, userID) => {
-  if (huntIDs.includes(message.id) && userID !== "397898847906430976") {
+  if (
+    huntIDs.includes(message.id) &&
+    userID !== "397898847906430976" &&
+    huntOwners.includes(userID) == false
+  ) {
     message.channel.createMessage(
       "Congratulations, <@" + userID + "> won the hunt!"
     );
@@ -78,47 +106,32 @@ bot.on("messageReactionAdd", (message, emoji, userID) => {
   }
 });
 
+//some non-commands that I check for, mostly for fun
 bot.on("messageCreate", msg => {
   if (msg.content == "Who is undeniably the best girl?") {
     msg.channel.createMessage("Midna is the best girl.");
   }
-  if (
-    msg.content == "spellbound" &&
-    (msg.author.id == config.id || msg.author.id == config.altid)
-  ) {
+  if (msg.content == "spellbound" && onwerIDs.includes(msg.author.id)) {
     casting = true;
     msg.channel.createMessage("Spellbook opened.");
   }
-  if (
-    msg.content == "starstruck" &&
-    (msg.author.id == config.id || msg.author.id == config.altid)
-  ) {
+  if (msg.content == "starstruck" && config.ids.includes(msg.author.id)) {
     casting = false;
     msg.channel.createMessage("Spellbook closed.");
   }
-  if (
-    msg.content == "eris" &&
-    casting &&
-    (msg.author.id == config.id || msg.author.id == config.altid)
-  ) {
+  if (msg.content == "eris" && casting && config.ids.includes(msg.author.id)) {
     msg.channel.createMessage("https://abal.moe/Eris/");
-  }
-  if (
-    msg.content == "frequency" &&
-    casting &&
-    (msg.author.id == config.id || msg.author.id == config.altid)
-  ) {
-    freqOn = !freqOn;
-    msg.channel.createMessage("Switch flipped.");
   }
 });
 
+//queries the database to set prefixes per guild
 client.query("SELECT * FROM prefixes").then(res => {
   for (item of res.rows) {
     bot.registerGuildPrefix(item.id, item.list);
   }
 });
 
+//displays link to the github repository
 bot.registerCommand(
   "github",
   msg => {
@@ -132,15 +145,18 @@ bot.registerCommand(
 );
 
 //thanks wolke
-
+//command to register a guild-specific prefix, locked behind permissions
 bot.registerCommand("prefix", (msg, args) => {
   if (
-    msg.author.id == "107563269484490752" ||
-    msg.author.id == "195156669108322313" ||
+    config.ids.includes(msg.author.id) ||
     msg.member.permission.has("banMembers") == true
   ) {
     const text = "INSERT INTO prefixes(id, list) VALUES($1, $2) RETURNING *";
     const values = [msg.channel.guild.id, args[0]];
+    if (args[0] == "") {
+      msg.channel.createMessage("You need to have a prefix!");
+      return;
+    }
     if (args[0] == "reset") {
       const delText = "DELETE FROM prefixes WHERE ID = $1";
       const delVals = [values[0]];
@@ -165,7 +181,7 @@ bot.registerCommand("prefix", (msg, args) => {
     msg.channel.createMessage("You don't got perms!");
   }
 });
-
+//dispays the invite link for the bot
 bot.registerCommand(
   "invite",
   (msg, args) => {
@@ -177,6 +193,8 @@ bot.registerCommand(
     description: "Invite the bot to your server!"
   }
 );
+
+//displays my paypal link
 bot.registerCommand(
   "donate",
   (msg, args) => {
@@ -189,12 +207,13 @@ bot.registerCommand(
     description: "Donate to the bot's creator!"
   }
 );
-
+//the hunt command, will elaborate more later
 bot.registerCommand(
   "hunt",
   (msg, args) => {
     msg.channel.getMessage(args[0]).then(function(result) {
       huntIDs.push(result.id);
+      huntOwners.push(msg.author.id);
       let hint = args.slice(1).join(" ");
       msg.channel.addMessageReaction(result.id, "🍖");
       msg.channel.createMessage("The hunt is on!\nThe hint is: " + hint);
@@ -202,11 +221,12 @@ bot.registerCommand(
   },
   {}
 );
+//eval command, evalutes code from within discord. only usable by owner.
 //below made by ratismal, the best boi
 bot.registerCommand(
   "eval",
   async (msg, args) => {
-    if (msg.author.id == config.id || msg.author.id == config.altid) {
+    if (ownerIDs.includes(msg.author.id)) {
       let toExecute;
       let code = args.join(" ");
       if (code.split("\n").length === 1)
@@ -229,6 +249,7 @@ bot.registerCommand(
   }
 );
 
+// the bottle command
 let bottle = bot.registerCommand(
   "bottle",
   (msg, args) => {
@@ -255,7 +276,7 @@ let bottle = bot.registerCommand(
       //  }
 
       msg.channel.createMessage(
-        "Opted into bottles! You can now send and receive bottles. Use `sk bottle send <your message here>` to send your first bottle. \nDisclaimer: I do not check for content (please submit PRs to help fix), so be wary and keep your NSFW filters on if you so desire. Happy bottling!"
+        "Opted into bottles! You can now send and receive bottles. Use `sk bottle send <your message here>` to send your first bottle. \nIf you get a bottle that contains advertisements or prohibited content, please DM Xamtheking#2099 or MaxGrosshandler#6592 so I can take care of the issue. Happy bottling!"
       );
     }
     if (args[0] == "opt-out") {
@@ -300,6 +321,23 @@ bottle.registerSubcommand(
 
       if (send) {
         bot.getDMChannel(dmID).then(function(result) {
+          if (args[0] == null) {
+            msg.channel.createMessage("You gotta send a message, breh!");
+            return;
+          }
+          let str = args.join(" ");
+          let invite = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g;
+          let link = /(https?:\/\/[^\s]+)/g;
+          if (invite.test(str)) {
+            msg.channel.createMessage(
+              "No putting invites in bottles! This isn't an advertising service!"
+            );
+            return;
+          }
+          if (link.test(str)) {
+            msg.channel.createMessage("No links at all for right now.");
+            return;
+          }
           if (result.id !== msg.author.id) {
             try {
               bot.createMessage(
@@ -307,6 +345,14 @@ bottle.registerSubcommand(
                 "**You got a bottle:** " + args.join(" ")
               );
               msg.channel.createMessage("Message sent!");
+              let report =
+                "Sent by: " +
+                msg.author.id +
+                "\nRecieved By: " +
+                dmID +
+                "\nContent: " +
+                args.join(" ");
+              bot.createMessage("476118129806671882", report);
             } catch (e) {
               console.log(e);
               msg.channel.createMessage("Message not sent for some reason.");
@@ -315,7 +361,7 @@ bottle.registerSubcommand(
         });
       } else {
         msg.channel.createMessage(
-          "You aren't on the bottle list so you can't send messages!"
+          "You aren't on the bottle list so you can't send messages! You can join the list with `sk bottle opt-in`"
         );
       }
     });

@@ -1,0 +1,6 @@
+applications:
+  - name: sk
+    memory: 512M
+    instances: 1
+    random-route: true
+    buildpack: nodejs_buildpack
