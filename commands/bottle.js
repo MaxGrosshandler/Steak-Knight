@@ -3,6 +3,10 @@ let client = serv.client;
 let bot = serv.bot;
 module.exports = {
   func: async (msg, args) => {
+
+    // prefix should be 0, invoke should be 1
+      let invoke = msg.content.split(" ")[1]
+
     if (args[0] == "opt-in") {
       const idText = "DELETE FROM bottles where id = $1";
       let idVals = [msg.author.id];
@@ -44,7 +48,7 @@ module.exports = {
     let names = [];
     let send = false;
     let invite = true;
-    if (args[0] == "send") {
+    if (args[0] == "send" || invoke == "sb") {
       client.query("SELECT * FROM bottles").then(res => {
         for (item of res.rows) {
           names.push(item.id);
@@ -109,5 +113,6 @@ module.exports = {
     usage:
       "`sk bottle opt-in`, `sk bottle opt-out`, or `sk bottle send <yourmessagehere>`"
   },
-  name: "bottle"
+  name: "bottle",
+  aliases: ["sb"]
 };
