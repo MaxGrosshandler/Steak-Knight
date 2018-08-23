@@ -7,7 +7,9 @@
     "eris-additions": "^1.2.5",
     "express": "^4.16.2",
     "fs": "0.0.1-security",
-    "moment": "^2.4.0",
+    "google-images": "^2.1.0",
+    "moment": "^2.22.2",
+    "node-google-image-search": "^1.0.3",
     "pg": "^7.4.3",
     "snekfetch": "^4.0.4"
   },

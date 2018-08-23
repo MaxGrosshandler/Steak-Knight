@@ -29,7 +29,7 @@ module.exports = {
       //  }
 
       msg.channel.createMessage(
-        "Opted into bottles! You can now send and receive bottles. You can use either `sk bottle send <message>` or `sb <message>` to send your first bottle. \nIf you get a bottle that contains advertisements or prohibited content, please DM Xamtheking#2099 or MaxGrosshandler#6592 so I can take care of the issue. Happy bottling!"
+        "Opted into bottles! You can now send and receive bottles. You can use either `sk bottle send <message>` or `sbs <message>` to send your first bottle. \nIf you get a bottle that contains advertisements or prohibited content, please DM Xamtheking#2099 or MaxGrosshandler#6592 so I can take care of the issue. Happy bottling!"
       );
     }
     if (args[0] == "opt-out") {
@@ -99,7 +99,7 @@ module.exports = {
           });
         } else {
           msg.channel.createMessage(
-            "You aren't on the bottle list so you can't send messages! You can join the list with `sk bottle opt-in`"
+            "You aren't on the bottle list so you can't send messages! You can join the list with `sk bottle opt-in` or `sboi` "
           );
         }
       });
@@ -110,7 +110,7 @@ module.exports = {
     fullDescription:
       "Use this command to opt-in or opt-out of bottles, or to send a bottle.",
     usage:
-      "`sk bottle opt-in`, `sk bottle opt-out`, or `sk bottle send <yourmessagehere>`"
+      "`sk bottle opt-in` or `sboi`, `sk bottle opt-out` or `sboo`,`sk bottle send <yourmessagehere>` or `sbs <message>"
   },
   name: "bottle"
 };

@@ -2,7 +2,9 @@ var express = require("express");
 var app = express();
 const fs = require("fs");
 const Eris = (require("eris"))
+const GoogleImages = require('google-images');
 
+const gclient = new GoogleImages(process.env.CSE_ID, process.env.CSE_API_KEY);
 const sf = require("snekfetch");
 var pg = require("pg");
 var moment = require("moment");
@@ -27,9 +29,9 @@ bot.on("guildCreate", async guild => {
         try {
             bot.getMessages(channel[0], 1).then(async msg => {
                 if (msg[0].channel.permissionsOf("474601951393480704").has("sendMessages")) {
-                    await msg[0].channel.createMessage("hi im a dog")
+                    await msg[0].channel.createMessage("Hi, my name is Steak Knight! Thanks for inviting me to your server! You can look at my commands with `sk help`. If you have any trouble, come to our support server with `sk support` and be sure to ask plenty of questions! Have a steak-tastic day!")
                 }
-            })
+        })
             break;
         } catch (err) {
 
@@ -102,7 +104,7 @@ client.query("SELECT * FROM prefixes").then(res => {
 
 bot.on("messageCreate", msg => {
   if (msg.author.bot)return;
-  if (msg.content.startsWith("sb ") || msg.content.startsWith("Sb ")){
+  if (msg.content.startsWith("sbs ") || msg.content.startsWith("Sbs ")){
     
     let command = commands.find(function (cmd) {
       return cmd.name == "bottle"
@@ -114,6 +116,22 @@ bot.on("messageCreate", msg => {
     let args = potato.split(" ")
     command.func(msg, args)
     return;
+  }
+  if (msg.content == "sboi" || msg.content == "Sboi" ){
+    let command = commands.find(function (cmd) {
+      return cmd.name == "bottle"
+    })
+    let args = ["opt-in"]
+    command.func(msg, args);
+    
+  }
+  if (msg.content == "sboo" || msg.content=="Sboo"){
+    let command = commands.find(function (cmd) {
+      return cmd.name == "bottle"
+    })
+    let args = ["opt-out"]
+    command.func(msg, args);
+    
   }
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
@@ -192,13 +210,35 @@ bot.registerCommand("help", (msg, args) => {
         }
     }
 });
-bot.registerCommand("lastJoin", (msg => {
-  if (process.env.ids.includes(msg.author.id)){
-    let map1 = bot.guilds.map(object => object.values)
-    let sharp = map1[0]
-    msg.channel.createMessage("i am a spoople of " + sharp)
-  }
-}))
+bot.registerCommand("steak", (msg) => {
+    gclient.search('steak')
+	.then(images => {
+		/*
+		[{
+			"url": "http://steveangello.com/boss.jpg",
+			"type": "image/jpeg",
+			"width": 1024,
+			"height": 768,
+			"size": 102451,
+			"thumbnail": {
+				"url": "http://steveangello.com/thumbnail.jpg",
+				"width": 512,
+				"height": 512
+			}
+		}]
+		 */
+        msg.channel.createMessage( {
+            embed:
+            {
+                image: {
+                    url: images[0].url
+                }
+            }
+        })
+	});
+
+})
+
 
 bot.connect();
 bot.on("ready", () => {
