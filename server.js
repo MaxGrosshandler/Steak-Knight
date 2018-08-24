@@ -22,26 +22,19 @@ var bot = new Eris.CommandClient(
         defaultHelpCommand: false
     }
 );
+
+
 bot.on("guildCreate", async guild => {
-
-    for (const channel of guild.channels) {
-        console.log(channel[1])
-        if(channel[1]== 4) return;
-        try {
-            bot.getMessages(channel[0], 1).then(async msg => {
-                if (msg[0].channel.permissionsOf("474601951393480704").has("sendMessages")) {
-                    await msg[0].channel.createMessage("Hi, my name is Steak Knight! Thanks for inviting me to your server! You can look at my commands with `sk help`. If you have any trouble, come to our support server located at https://discord.gg/4xbwxe6 and be sure to ask plenty of questions! Have a steak-tastic day!")
-                }
-        }).catch(err => {
-            console.log(err)
-        })
-            break;
-        } catch (err) {
-            console.log(err)
+    for (const [id, channel] of guild.channels) {
+      if (channel.type === 0) { // check if text channel
+        let perms = channel.permissionsOf(bot.user.id).json;
+        if (perms.readMessages && perms.sendMessages) {
+           await channel.createMessage('Hi, my name is Steak Knight! Thanks for inviting me to your server! You can look at my commands with `sk help`. If you have any trouble, come to our support server located at https://discord.gg/4xbwxe6 and be sure to ask plenty of questions! Have a steak-tastic day!');
+        break;
         }
-
+      }
     }
-});
+  });
 
 
 let client = new pg.Client(process.env.url);
