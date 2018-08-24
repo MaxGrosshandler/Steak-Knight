@@ -41,6 +41,16 @@ module.exports = {
         })
         .catch(e => console.error(e.stack));
     }
+    if (args[0]== "help"){
+      msg.channel.createMessage({
+        embed:{
+          description: "Be on the bottle list to send and receive random messages from other users on the bottle list!"
+          +"\nHow to use: `sk bottle opt-in` or `sboi` to opt into the bottle list, `sk bottle opt-out` or `sboo` to opt out of the bottle list, and `sk bottle send <yourmessagehere>` or `sbs <yourmessagehere>` to send a message to someone on the bottle list! You can also include attachments, but no invite links."
+          +"\nAdditionally, you can use `sk bottle send sign <yourmessagehere>` or `sbss <yourmessagehere>` to send the bottle and let "
+          +"the recipient know who sent it!"
+        }
+      })
+    }
     let names = [];
     let send = false;
     if (args[0] == "send") {
@@ -144,11 +154,13 @@ module.exports = {
     }
   },
   options: {
-    description: "Main bottle command!",
+    description: "Main bottle command, used as a launching point",
     fullDescription:
-      "Use this command to opt-in or opt-out of bottles, or to send a bottle.",
+      "Use this command to opt-in or opt-out of bottles, or to send a bottle. It now supports attachments!",
     usage:
       "`sk bottle opt-in` or `sboi`, `sk bottle opt-out` or `sboo`,`sk bottle send <yourmessagehere>` or `sbs <message>"
+      +"\nAdditionally, you can use `sk bottle send sign <yourmessagehere>` or `sbss <yourmessagehere>` to send the bottle and let"
+      +"the recipient know who sent it!"
   },
   name: "bottle"
 };
