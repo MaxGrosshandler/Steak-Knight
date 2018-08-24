@@ -3,6 +3,7 @@ var app = express();
 const fs = require("fs");
 const Eris = (require("eris"))
 const GoogleImages = require('google-images');
+
 var Bing = require('node-bing-api')({accKey: process.env.bing});
 
 const gclient = new GoogleImages(process.env.CSE_ID, process.env.CSE_API_KEY);
