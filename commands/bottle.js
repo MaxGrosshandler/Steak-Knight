@@ -90,7 +90,7 @@ module.exports = {
               return;
             }
         
-              if (args[0] == "sign" && nameCheck){
+              if (args[0] == "sign"){
                 args.shift();
                 name = msg.author.username + "#" + msg.author.discriminator;
               }
@@ -155,7 +155,7 @@ module.exports = {
                   dmID +
                   "\nContent: " +
               args.join(" ") 
-              + "\nIdentity of user to sender: " + name
+              + "\nIdentity of sender: " + name
               + "\nAttachment: " + attach
  
                 bot.createMessage("481255776644497423",{
