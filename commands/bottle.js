@@ -46,7 +46,6 @@ module.exports = {
     }
     let names = [];
     let send = false;
-    let invite = true;
     if (args[0] == "send") {
       client.query("SELECT * FROM bottles").then(res => {
         for (item of res.rows) {
@@ -65,23 +64,40 @@ module.exports = {
         if (send) {
           let colorPrefix = "```";
           let colorSuffix = "```";
+          let name = "a random user";
+          let nameCheck = true;
           bot.getDMChannel(dmID).then(function(result) {
             args.shift();
             if (args[0] == null) {
               msg.channel.createMessage("You gotta send a message, breh!");
               return;
             }
+            if ((args[0] == "sign" || args[0] == "s") && nameCheck){
+              args.shift();
+              name = msg.author.username + "#" + msg.author.discriminator;
+              nameCheck = false;
+            }
             if (args[0] == "color"){
               args.shift()
-              if (args[0] == "bash"){
+              if (args[0] == "bash" || args[0] == "b"){
                 args.shift()
                 colorPrefix = "```bash\n"
               }
-              else if (args[0] == "css") {
+              else if (args[0] == "css" || args[0] == "c") {
                 args.shift()
                 colorPrefix = "```css\n"
               }
+              else if (args[0] == "prolog" || args[0] == "p") {
+                args.shift()
+                colorPrefix = "```prolog\n"
               }
+              }
+              if ((args[0] == "sign" || args[0] == "s") && nameCheck){
+                args.shift();
+                name = msg.author.username + "#" + msg.author.discriminator;
+                nameCheck = false;
+              }
+              
             
             
             let str = args.join(" ");
@@ -96,7 +112,7 @@ module.exports = {
               try {
                 bot.createMessage(
                   result.id,
-                  "**You got a bottle:** \n"+colorPrefix + args.join(" ")+colorSuffix
+                  "**You got a bottle:** \n"+colorPrefix + args.join(" ")+colorSuffix + "\nSent by: "+name
                 );
                 msg.channel.createMessage("Message sent!");
                 let report =
@@ -105,7 +121,9 @@ module.exports = {
                   "\nRecieved By: " +
                   dmID +
                   "\nContent: " +
-              colorPrefix + args.join(" ") + colorSuffix;
+              colorPrefix + args.join(" ") + colorSuffix
+              + "\nIdentity of user to sender: " + name
+
                 bot.createMessage("481255776644497423", report);
               } catch (e) {
                 console.log(e);

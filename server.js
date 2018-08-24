@@ -105,8 +105,6 @@ client.query("SELECT * FROM prefixes").then(res => {
 });
 
 bot.on("messageCreate", msg => {
-let c = "";
-let snorlax = "send "
   if (msg.author.bot)return;
   if (msg.content.startsWith("sbs ") || msg.content.startsWith("Sbs ")){
     
@@ -117,11 +115,57 @@ let snorlax = "send "
  let snakes = msg.content.split(" ")
    snakes.shift();
     let spoops = snakes.join(" ")
-    let potato = snorlax + spoops;
+    let potato = "send "+ spoops;
     let args = potato.split(" ")
     command.func(msg, args)
     return;
   }
+  ///////
+  else if (msg.content.startsWith("sbscb ") || msg.content.startsWith("Sbscb ")){
+    
+    let command = commands.find(function (cmd) {
+      return cmd.name == "bottle"
+    })
+
+ let snakes = msg.content.split(" ")
+   snakes.shift();
+    let spoops = snakes.join(" ")
+    let potato = "send color b "+ spoops;
+    let args = potato.split(" ")
+    command.func(msg, args)
+    return;
+  }
+  /////
+  else if (msg.content.startsWith("sbscc ") || msg.content.startsWith("Sbscc ")){
+    
+    let command = commands.find(function (cmd) {
+      return cmd.name == "bottle"
+    })
+
+ let snakes = msg.content.split(" ")
+   snakes.shift();
+    let spoops = snakes.join(" ")
+    let potato = "send color c "+ spoops;
+    let args = potato.split(" ")
+    command.func(msg, args)
+    return;
+  }
+  /////
+  else if (msg.content.startsWith("sbscp ") || msg.content.startsWith("Sbscp ")){
+    
+    let command = commands.find(function (cmd) {
+      return cmd.name == "bottle"
+    })
+
+ let snakes = msg.content.split(" ")
+   snakes.shift();
+    let spoops = snakes.join(" ")
+    let potato = "send color p "+ spoops;
+    let args = potato.split(" ")
+    command.func(msg, args)
+    return;
+  }
+  /////
   if (msg.content == "sboi" || msg.content == "Sboi" ){
     let command = commands.find(function (cmd) {
       return cmd.name == "bottle"
