@@ -51,6 +51,17 @@ module.exports = {
         }
       })
     }
+    if (args[0] == "stats"){
+      client.query("SELECT * from bottle_stats").then(result =>{
+        msg.channel.createMessage({
+          embed:
+          {
+            description: "I've sent " + result.rows[0].bottlenumber + " bottles"
+          }
+        })
+      })
+      
+    }
     let names = [];
     let send = false;
     if (args[0] == "send") {
@@ -122,6 +133,20 @@ module.exports = {
                 }
                 );
               }
+              
+              
+            let values = [];
+              client.query("SELECT * from bottle_stats").then(result =>{
+                values[0] = result.rows[0].bottlenumber + 1
+                console.log(values[0])
+            
+              })
+              const sText = "DELETE FROM bottle_stats";
+              client.query(sText);
+              client.query("INSERT INTO bottle_stats (bottlenumber) values ($1)", values)
+
+              
+            
                 msg.channel.createMessage("Message sent!");
                 let report =
                   "Sent by: " +
