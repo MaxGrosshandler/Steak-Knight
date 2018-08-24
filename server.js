@@ -23,9 +23,6 @@ var bot = new Eris.CommandClient(
     }
 );
 bot.on("guildCreate", async guild => {
-    if (guild.members.filter(m => m.bot).length / guild.memberCount > 0.7) {
-        bot.leaveGuild(guild.id);
-    }
 
     for (const channel of guild.channels) {
         try {
