@@ -4,7 +4,6 @@ let bot = serv.bot;
 module.exports = {
   func: async (msg, args) => {
 
-    // prefix should be 0, invoke should be 1
 
     if (args[0] == "opt-in") {
       const idText = "DELETE FROM bottles where id = $1";
@@ -18,8 +17,6 @@ module.exports = {
 
       const bolText = "INSERT INTO bottles(id) VALUES($1) RETURNING *";
       const bolVals = [msg.author.id];
-      //let i;
-      //  for (i = 0; i < 3; i++) {
       client
         .query(bolText, bolVals)
         .then(res => {
@@ -62,41 +59,21 @@ module.exports = {
         }
         
         if (send) {
-          let colorPrefix = "```";
-          let colorSuffix = "```";
+     
           let name = "a random user";
-          let nameCheck = true;
+          let attach = "no attachment";
           bot.getDMChannel(dmID).then(function(result) {
             args.shift();
             if (args[0] == null) {
               msg.channel.createMessage("You gotta send a message, breh!");
               return;
             }
-            if ((args[0] == "sign" || args[0] == "s") && nameCheck){
-              args.shift();
-              name = msg.author.username + "#" + msg.author.discriminator;
-              nameCheck = false;
-            }
-            if (args[0] == "color"){
-              args.shift()
-              if (args[0] == "bash" || args[0] == "b"){
-                args.shift()
-                colorPrefix = "```bash\n"
-              }
-              else if (args[0] == "css" || args[0] == "c") {
-                args.shift()
-                colorPrefix = "```css\n"
-              }
-              else if (args[0] == "prolog" || args[0] == "p") {
-                args.shift()
-                colorPrefix = "```prolog\n"
-              }
-              }
-              if ((args[0] == "sign" || args[0] == "s") && nameCheck){
+        
+              if (args[0] == "sign" && nameCheck){
                 args.shift();
                 name = msg.author.username + "#" + msg.author.discriminator;
-                nameCheck = false;
               }
+              
               
             
             
@@ -110,10 +87,31 @@ module.exports = {
             }
             if (result.id !== msg.author.id) {
               try {
+                if (typeof msg.attachments[0] !== 'undefined'){
+                  attach = msg.attachments[0].url
+                  bot.createMessage(
+                    result.id,
+  
+                    {embed: {
+                      description: "**You got a bottle:** \n"+ args.join(" ")+ "\nSent by: "+name,
+                      image: {
+                        url: msg.attachments[0].url
+                      }
+                    }}
+                    
+                  );
+                }
+                else{
                 bot.createMessage(
                   result.id,
-                  "**You got a bottle:** \n"+colorPrefix + args.join(" ")+colorSuffix + "\nSent by: "+name
+
+                  {embed:
+                    {
+                   description:  "**You got a bottle:** \n"+ args.join(" ")+ "\nSent by: "+name
+                  }
+                }
                 );
+              }
                 msg.channel.createMessage("Message sent!");
                 let report =
                   "Sent by: " +
@@ -121,10 +119,16 @@ module.exports = {
                   "\nRecieved By: " +
                   dmID +
                   "\nContent: " +
-              colorPrefix + args.join(" ") + colorSuffix
+              args.join(" ") 
               + "\nIdentity of user to sender: " + name
+              + "\nAttachment: " + attach
+ 
+                bot.createMessage("481255776644497423",{
+                  embed:{
+                    description: report
+                  }
 
-                bot.createMessage("481255776644497423", report);
+                } );
               } catch (e) {
                 console.log(e);
                 msg.channel.createMessage("Message not sent for some reason.");

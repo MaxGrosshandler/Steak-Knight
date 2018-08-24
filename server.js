@@ -117,8 +117,7 @@ bot.on("messageCreate", msg => {
     command.func(msg, args)
     return;
   }
-  ///////
-  else if (msg.content.startsWith("sbscb ") || msg.content.startsWith("Sbscb ")){
+  else if (msg.content.startsWith("sbss ") || msg.content.startsWith("Sbss ")){
     
     let command = commands.find(function (cmd) {
       return cmd.name == "bottle"
@@ -127,42 +126,12 @@ bot.on("messageCreate", msg => {
  let snakes = msg.content.split(" ")
    snakes.shift();
     let spoops = snakes.join(" ")
-    let potato = "send color b "+ spoops;
+    let potato = "send sign "+ spoops;
     let args = potato.split(" ")
     command.func(msg, args)
     return;
   }
-  /////
-  else if (msg.content.startsWith("sbscc ") || msg.content.startsWith("Sbscc ")){
-    
-    let command = commands.find(function (cmd) {
-      return cmd.name == "bottle"
-    })
-
- let snakes = msg.content.split(" ")
-   snakes.shift();
-    let spoops = snakes.join(" ")
-    let potato = "send color c "+ spoops;
-    let args = potato.split(" ")
-    command.func(msg, args)
-    return;
-  }
-  /////
-  else if (msg.content.startsWith("sbscp ") || msg.content.startsWith("Sbscp ")){
-    
-    let command = commands.find(function (cmd) {
-      return cmd.name == "bottle"
-    })
-
- let snakes = msg.content.split(" ")
-   snakes.shift();
-    let spoops = snakes.join(" ")
-    let potato = "send color p "+ spoops;
-    let args = potato.split(" ")
-    command.func(msg, args)
-    return;
-  }
-  /////
+ 
   if (msg.content == "sboi" || msg.content == "Sboi" ){
     let command = commands.find(function (cmd) {
       return cmd.name == "bottle"
