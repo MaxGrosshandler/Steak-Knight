@@ -147,7 +147,7 @@ module.exports = {
           });
         } else {
           msg.channel.createMessage(
-            "You aren't on the bottle list so you can't send messages! You can join the list with `sk bottle opt-in` or `sboi` "
+            "You aren't on the bottle list so you can't send messages! You can join the list with `sk bottle opt-in` or `sboi`, or use `sk bottle help` for more info"
           );
         }
       });
