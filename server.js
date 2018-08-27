@@ -67,10 +67,6 @@ fs.readdir("./commands", (err, files) => {
 
                 console.log(`Attempting to load the command "${command.name}".`, false);
 
-                let aliases = [];
-
-                if(command.aliases)
-                    aliases = command.aliases;
 
                 let newCommand = [
                     command.name,
@@ -81,7 +77,7 @@ fs.readdir("./commands", (err, files) => {
                     command.hidden
                 ];
                 commands.push(command)
-                if (command.hidden !== true){
+                if (command.name !== "weeb"){
                     helpCommands.push(newCommand);
                 }
                 
@@ -102,7 +98,7 @@ client.query("SELECT * FROM prefixes").then(res => {
         bot.registerGuildPrefix(item.id, item.list);
     }
 });
-
+let arr;
 bot.on("messageCreate", msg => {
   if (msg.author.bot)return;
   if (msg.content.startsWith("sws ") || msg.content.startsWith("Sws ")){
@@ -169,7 +165,12 @@ bot.on("messageCreate", msg => {
         let stuff = msg.content.split(" ")
         let c = stuff[1];
         stuff.shift();
-        if (typeof msg.mentions[0]!== "undefined" && c !== "hug"){
+
+         sh.getTypes().then(array => {
+            arr = array
+        });
+        if (typeof msg.mentions[0]!== "undefined" && c !== "hug" && arr.includes(c)){
+
             let command = commands.find(function (command){
                 return command.name == "weeb"
             })

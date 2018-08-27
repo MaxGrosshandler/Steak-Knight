@@ -7,7 +7,7 @@ module.exports = {
         try {
         msg.channel.createMessage({
             embed: {
-                description: msg.mentions[0].username + ", you have been slapped!",
+                description: msg.mentions[0].username + ", you have been affected by a  " + args[0]+"!",
                 image: {
                     url: array.url
                 },

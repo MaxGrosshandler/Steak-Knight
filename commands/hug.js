@@ -8,8 +8,9 @@ module.exports = {
       // hugs the user
       try {
         msg.channel.createMessage({
-          title: msg.mentions[0].username + ", you have been hugged! ",
+          
           embed: {
+            title: msg.mentions[0].username + ", you have been hugged! ",
             image: {
               url: "https://media.giphy.com/media/9UyZI216ic5vG/giphy.gif"
             }
