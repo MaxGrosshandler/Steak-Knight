@@ -13,7 +13,8 @@
     "node-bing-api": "^4.0.0",
     "node-google-image-search": "^1.0.3",
     "pg": "^7.4.3",
-    "snekfetch": "^4.0.4"
+    "snekfetch": "^4.0.4",
+    "weeb.js": "^1.6.2"
   },
   "engines": {
     "node": "10.7.0",

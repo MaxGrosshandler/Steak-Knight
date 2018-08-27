@@ -3,13 +3,15 @@ var app = express();
 const fs = require("fs");
 const Eris = (require("eris"))
 const GoogleImages = require('google-images');
+const weeb = require("weeb.js");
+ 
+const sh = new weeb(process.env.wolke);
+ 
 
 var Bing = require('node-bing-api')({accKey: process.env.bing});
-
-const gclient = new GoogleImages(process.env.CSE_ID, process.env.CSE_API_KEY);
 const sf = require("snekfetch");
 var pg = require("pg");
-var moment = require("moment");
+
 
 
 var bot = new Eris.CommandClient(
@@ -236,6 +238,8 @@ bot.registerCommand("steak", (msg) => {
 })
 
 
+
+
 bot.connect();
 bot.on("ready", () => {
     console.log("Ready!");
@@ -247,5 +251,6 @@ bot.on("ready", () => {
 
 module.exports.client = client;
 module.exports.bot = bot;
+module.exports.sh = sh;
 app.use(express.static(__dirname + "/public"));
 app.listen(process.env.PORT || 4000);
