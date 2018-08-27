@@ -102,6 +102,17 @@ client.query("SELECT * FROM prefixes").then(res => {
 
 bot.on("messageCreate", msg => {
   if (msg.author.bot)return;
+  if (msg.content.startsWith("sws ") || msg.content.startsWith("Sws ")){
+    let command = commands.find(function (cmd) {
+        return cmd.name == "slap"
+      })
+  
+   let args = msg.content.split(" ")
+     args.shift();
+      args.shift();
+      command.func(msg, args)
+      return;
+  }
   if (msg.content.startsWith("sbs ") || msg.content.startsWith("Sbs ")){
     
     let command = commands.find(function (cmd) {
