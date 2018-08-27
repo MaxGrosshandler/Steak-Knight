@@ -170,7 +170,7 @@ async function postStats() {
             .post("https://bots.discord.pw/api/bots/397898847906430976/stats")
             .set({Authorization: process.env.dbots})
             .send({server_count: bot.guilds.size});
-        console.log("Stats have been posted.");
+        console.log("Stats have been posted to Discord Bots.");
     } catch (err) {
         console.error(err);
     }
@@ -180,9 +180,8 @@ async function carbon() {
     try {
         await sf
             .post("https://www.carbonitex.net/discord/data/botdata.php")
-            .set({key: process.env.carbon})
-            .send({servercount: bot.guilds.size});
-        console.log("Carbon!")
+            .send({servercount: bot.guilds.size, key: process.env.carbon});
+        console.log("Stats have been posted to Carbon.")
     }
     catch (err) {
         console.error(err);
