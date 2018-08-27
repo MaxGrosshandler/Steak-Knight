@@ -1,8 +1,8 @@
 const serv = require("../server.js");
 let sh = serv.sh;
 module.exports = {
-  func: async (msg) => {
-    sh.getRandom({type: "slap", nsfw: false, filetype: "gif"}).then(array => {
+  func: async (msg, args) => {
+    sh.getRandom({type: args[0], nsfw: false, filetype: "gif"}).then(array => {
 
         try {
         msg.channel.createMessage({
@@ -24,9 +24,10 @@ module.exports = {
 })
 },
   options: {
-    description: "Slaps a user!",
-    fullDescription: "Gives a user a slap!",
-    usage: "`sk slap @user`"
+    description: "weeb.sh",
+    fullDescription: "don't actually use this",
+    usage: "`why are you here`",
+    hidden: true
   },
-  name: "slap"
+  name: "weeb"
 };

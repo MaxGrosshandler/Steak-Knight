@@ -1,3 +1,5 @@
+const serv = require("../server.js");
+let sf = serv.sf;
 module.exports = {
   func: async (msg) => {
     let recipe;
@@ -10,7 +12,6 @@ module.exports = {
             for (item of recipe.hits[parseInt(Math.random()* 50)].recipe.ingredientLines){
                 reStr += "\n*"+item
             }
-            for (item of recipe.hits[parseInt(Math.random()* 50)].recipe.ingredientLines)
         msg.channel.createMessage({embed: {
             title: recipe.hits[parseInt(Math.random()* 50)].recipe.label,
             url:(recipe.hits[parseInt(Math.random()* 50)].recipe.url),
@@ -28,9 +29,9 @@ module.exports = {
     }
 },
   options: {
-    description: "Ping!",
-    fullDescription: "Returns the bot's latency!",
-    usage: "`sk ping`"
+    description: "Steak recipes!",
+    fullDescription: "Provides a random steak recipe!",
+    usage: "`sk recipe`"
   },
-  name: "ping"
+  name: "recipe"
 };

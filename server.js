@@ -78,10 +78,13 @@ fs.readdir("./commands", (err, files) => {
                     command.options.fullDescription,
                     command.options.usage,
                     command.func,
-                    aliases
+                    command.hidden
                 ];
                 commands.push(command)
-                helpCommands.push(newCommand);
+                if (command.hidden !== true){
+                    helpCommands.push(newCommand);
+                }
+                
             } catch (err) {
                 console.log(
                     "An error has occured trying to load a command. Here is the error."
@@ -166,15 +169,24 @@ bot.on("messageCreate", msg => {
         let stuff = msg.content.split(" ")
         let c = stuff[1];
         stuff.shift();
+        if (typeof msg.mentions[0]!== "undefined" && c !== "hug"){
+            let command = commands.find(function (command){
+                return command.name == "weeb"
+            })
+            command.func(msg, stuff);
+        }
+        else {
         stuff.shift();
-        console.log(stuff)
+       
         commands.forEach(function (command) {
                 if (command.name == c) {
                     command.func(msg, stuff)
                 }
             }
+        
         )
     }
+}
 });
 
 async function postStats() {
@@ -263,5 +275,6 @@ bot.on("ready", () => {
 module.exports.client = client;
 module.exports.bot = bot;
 module.exports.sh = sh;
+module.exports.sf = sf;
 app.use(express.static(__dirname + "/public"));
 app.listen(process.env.PORT || 4000);
