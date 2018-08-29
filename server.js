@@ -17,12 +17,16 @@ var pg = require("pg");
 
 var bot = new Eris.CommandClient(
     process.env.token,
-    {},
+    {
+        restMode: true,
+        getAllUsers: true
+    },
     {
         description: "A bot for all your steak needs!",
         owner: "Xamtheking#2099 and MaxGrosshandler#6592",
         prefix: ["sk "],
-        defaultHelpCommand: false
+        defaultHelpCommand: false,
+        
     }
 );
 
@@ -172,7 +176,7 @@ bot.on("messageCreate", msg => {
             stuff.shift();
             
       
-            if (typeof msg.mentions[0]!== "undefined"){
+            if (typeof msg.mentions[0]!== "undefined" && c !== "currency"){
                 weebSH.toph.getImageTypes()
                 .then(array => {
                     if (array.types.includes(c)) {
@@ -236,12 +240,20 @@ async function carbon() {
 
 
 
+async function getHelp() {
+    for (var [key, value] of bot.guilds) {
+        bot.getRESTUser(bot.guilds.get(key).ownerID).then(user => {
+            console.log(user.username);
+        })
+    }
+}
+
 bot.connect();
 bot.on("ready", () => {
     console.log("Ready!");
     pgConnect();
     readCommands();
-   /* 
+   /*
     for (const [id, guild] of bot.guilds){
         weebSH.tama.updateSetting({type: 'guilds', id: guild.id, data: {prefix: "sk "}})
     .then(setting => {
@@ -254,6 +266,7 @@ bot.on("ready", () => {
 
     postStats();
     carbon();
+    //getHelp();
     bot.editStatus("online", {name: "sk help"});
 });
 
