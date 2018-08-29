@@ -9,19 +9,14 @@ module.exports = {
     let seconds = time.seconds();
     msg.channel.createMessage({
       embed: {
-        title: "Information about Steak Knight",
-        description:
-          "Server count: " +
-          bot.guilds.size +
-          "\nUptime: " +
-          hours +
-          " hours " +
-          minutes +
-          " minutes " +
-          seconds +
-          " seconds" +
-          " \nLibrary: Eris\nGithub: [here](https://github.com/MaxGrosshandler/Steak-Knight) \nDonate: [please I need money](https://paypal.me/MaxGrosshandler)" +
-          "\nSupport Server: [here](https://discord.gg/4xbwxe6)\nInvite me: [here](https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot)"
+          author: {
+            "name": "Information about Steak Knight",
+            "icon_url": "https:\/\/cdn.discordapp.com\/avatars\/397898847906430976\/8c2be2ff0c2a5b4981c8d705ef50d8c5.png?size=512",
+            "url": "https:\/\/bots.discord.pw\/bots\/397898847906430976"},
+        
+         description: "​\n**Steak Knight is a multipurpose bot for all your steak related needs!** \nHe's got some image commands, like hug, the ability to give out roles, guild-specific prefixes, and more coming soon!\n\n[Invite]​(https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot) - [Server]​(https://discord.gg/4xbwxe6) - [Github]​(https://github.com/MaxGrosshandler/Steak-Knight) - [Donate]​(https://www.paypal.me/MaxGrosshandler)​ ​​ ​​ ​​ ​​ ​—​ ​​ ​​ ​​ ​​ ​*Run​ ​ ​`sk help` to learn more.*\n​",
+           
+        footer: {"text":"Servers:" + bot.guilds.size +" | Uptime:" +hours+"h" +minutes+"min" +seconds+"s | Powered by Eris"}           
       }
     });
   },
