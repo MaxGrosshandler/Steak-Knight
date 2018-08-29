@@ -3,9 +3,10 @@ var app = express();
 const fs = require("fs");
 const Eris = (require("eris"))
 const GoogleImages = require('google-images');
-const weeb = require("weeb.js");
- 
-const sh = new weeb(process.env.wolke);
+const Taihou = require('taihou');
+const weebSH = new Taihou(process.env.wolke, true, {
+    userAgent: 'Steak Knight/1.0.0'
+});
  
 
 var Bing = require('node-bing-api')({accKey: process.env.bing});
@@ -20,7 +21,7 @@ var bot = new Eris.CommandClient(
     {
         description: "A bot for all your steak needs!",
         owner: "Xamtheking#2099 and MaxGrosshandler#6592",
-        prefix: ["sk ", "Sk ", "bend over and ", "Bend over and "],
+        prefix: ["sk "],
         defaultHelpCommand: false
     }
 );
@@ -40,6 +41,7 @@ bot.on("guildCreate", async guild => {
 
 
 let client = new pg.Client(process.env.url);
+function pgConnect(){
 client.connect(function (err) {
     if (err) {
         return console.error("could not connect to postgres", err);
@@ -52,9 +54,11 @@ client.connect(function (err) {
         //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
     });
 });
+}
 
 let helpCommands = [];
 let commands = [];
+function readCommands(){
 fs.readdir("./commands", (err, files) => {
     if (err) console.error(err);
     console.log(
@@ -92,13 +96,16 @@ fs.readdir("./commands", (err, files) => {
     console.log("Command Loading complete!");
     console.log("\n");
 });
+}
 
+function prefixSet() {
 client.query("SELECT * FROM prefixes").then(res => {
     for (item of res.rows) {
         bot.registerGuildPrefix(item.id, item.list);
     }
 });
-let arr;
+}
+
 bot.on("messageCreate", msg => {
   if (msg.author.bot)return;
   if (msg.content.startsWith("sbs ") || msg.content.startsWith("Sbs ")){
@@ -149,21 +156,29 @@ bot.on("messageCreate", msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
-    if (msg.content.startsWith(bot.commandOptions.prefix[0]) ||
-        msg.content.startsWith(bot.commandOptions.prefix[1])) {
+    if (msg.content.toLowerCase().startsWith(bot.commandOptions.prefix[0].toLowerCase())) {
         let stuff = msg.content.split(" ")
         let c = stuff[1];
         stuff.shift();
-
-         sh.getTypes().then(array => {
-            arr = array
-        });
-        if (typeof msg.mentions[0]!== "undefined" && c !== "hug" && arr.includes(c)){
-
-            let command = commands.find(function (command){
-                return command.name == "weeb"
-            })
-            command.func(msg, stuff);
+        
+  
+        if (typeof msg.mentions[0]!== "undefined" && c !== "hug"){
+            weebSH.toph.getImageTypes()
+            .then(array => {
+                if (array.types.includes(c)) {
+                try {
+                    let command = commands.find(function (command){
+                        return command.name == "weeb"
+                    })
+                    command.func(msg, stuff);
+                }
+                catch(err) {
+                    console.log("whoopsies")
+                }
+            }
+    
+            }
+        )
         }
         else {
         stuff.shift();
@@ -249,14 +264,22 @@ bot.registerCommand("steak", (msg) => {
 
 
 })
-
-
+bot.registerCommand("settings", (msg) => {
+    weebSH.tama.getSetting('guilds', msg.channel.guild.id)
+    .then(setting => {
+        console.log(setting)
+        msg.channel.createMessage(setting.setting.data.prefix)
+    })
+    .catch(console.error)
+})
 
 
 bot.connect();
 bot.on("ready", () => {
     console.log("Ready!");
-    console.log(bot.guilds.size);
+    pgConnect();
+    readCommands();
+    prefixSet();
     postStats();
     carbon();
     bot.editStatus("online", {name: "sk help"});
@@ -264,7 +287,7 @@ bot.on("ready", () => {
 
 module.exports.client = client;
 module.exports.bot = bot;
-module.exports.sh = sh;
 module.exports.sf = sf;
+module.exports.weebSH= weebSH;
 app.use(express.static(__dirname + "/public"));
 app.listen(process.env.PORT || 4000);

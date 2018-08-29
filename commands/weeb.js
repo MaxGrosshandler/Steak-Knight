@@ -1,15 +1,14 @@
 const serv = require("../server.js");
-let sh = serv.sh;
+let weebSH= serv.weebSH;
 module.exports = {
   func: async (msg, args) => {
-    sh.getRandom({type: args[0], nsfw: false, filetype: "gif"}).then(array => {
+   try { weebSH.toph.getRandomImage(args[0]).then( image => {
 
         try {
         msg.channel.createMessage({
             embed: {
-                description: msg.mentions[0].username + ", you have been affected by a  " + args[0]+"!",
                 image: {
-                    url: array.url
+                    url: image.url
                 },
                 footer:{
                     text: "Powered by weeb.sh"
@@ -18,10 +17,15 @@ module.exports = {
             }
         });
     }
+    
     catch (err){
         msg.channel.createMessage("You didn't mention anyone!")
     }
-})
+   }).catch(console.log(""))
+}
+  catch(err){
+      console.log("");
+  }
 },
   options: {
     description: "weeb.sh",
