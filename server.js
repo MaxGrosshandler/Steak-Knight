@@ -101,13 +101,7 @@ fs.readdir("./commands", (err, files) => {
 });
 }
 
-function prefixSet() {
-client.query("SELECT * FROM prefixes").then(res => {
-    for (item of res.rows) {
-        bot.registerGuildPrefix(item.id, item.list);
-    }
-});
-}
+
 
 bot.on("messageCreate", msg => {
   if (msg.author.bot)return;
@@ -157,18 +151,22 @@ bot.on("messageCreate", msg => {
     command.func(msg, args);
     
   }
+  if (msg.content.toLowerCase() == "sk types"){
+      msg.channel.createMessage({
+          embed: {
+            image: {
+                url: "https://owo.whats-th.is/d2e2c0.png"
+            }
+          }
+      })
+      return;
+  }
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
-   /* weebSH.tama.getSetting('guilds', msg.channel.guild.id)
-    .then(setting => {
-        if (typeof setting == "undefined"){
-            weebSH.tama.updateSetting({type: 'guilds', id: msg.channel.guild.id, data: {prefix: "sk "}})
-        .then(console.log("boop"))
-        .catch(console.error)
-        }
-        */
-        if (msg.content.toLowerCase().startsWith(bot.commandOptions.prefix[0].toLowerCase())) {
+    weebSH.tama.getSetting('guilds', msg.channel.guild.id)
+    .then(setting => {        
+        if (msg.content.toLowerCase().startsWith(setting.setting.data.prefix.toLowerCase())) {
             let stuff = msg.content.split(" ")
             let c = stuff[1];
             stuff.shift();
@@ -207,7 +205,7 @@ bot.on("messageCreate", msg => {
 
 
         
-    //})
+    })
     //.catch(console.error)
   
 });
@@ -235,19 +233,7 @@ async function carbon() {
         console.error(err);
     }
 }
-bot.registerCommand("steak", (msg) => {
-    Bing.images("Filet Mignon", {count: 10}, function(error, res, body){
-        msg.channel.createMessage({
-            embed: {
-                image:{
-                    url: body.value[parseInt(Math.random()* 10)].contentUrl
-                } 
-            }
-        });
-    });
 
-
-})
 
 
 bot.connect();
@@ -255,7 +241,17 @@ bot.on("ready", () => {
     console.log("Ready!");
     pgConnect();
     readCommands();
-    prefixSet();
+   /* 
+    for (const [id, guild] of bot.guilds){
+        weebSH.tama.updateSetting({type: 'guilds', id: guild.id, data: {prefix: "sk "}})
+    .then(setting => {
+        console.log("")
+    })
+    .catch(console.error)
+}
+*/
+
+
     postStats();
     carbon();
     bot.editStatus("online", {name: "sk help"});
@@ -264,7 +260,8 @@ bot.on("ready", () => {
 module.exports.client = client;
 module.exports.bot = bot;
 module.exports.sf = sf;
-module.exports.weebSH= weebSH;
+module.exports.weebSH = weebSH;
 module.exports.helpCommands = helpCommands;
+module.exports.Bing = Bing;
 app.use(express.static(__dirname + "/public"));
 app.listen(process.env.PORT || 4000);

@@ -21,6 +21,7 @@ module.exports = {
       }
       weebSH.tama.updateSetting({type: 'guilds', id: msg.channel.guild.id, data: {prefix: args[0]}})
         .then(array => {
+          //console.log(array)
         msg.channel.createMessage("Your new prefix is " + args[0])
     }
     )
