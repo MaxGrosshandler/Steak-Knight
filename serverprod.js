@@ -37,9 +37,6 @@ bot.on("guildCreate", async guild => {
         }
       }
     }
-    weebSH.tama.updateSetting({type: 'guilds', id: guild.id, data: {prefix: "sk "}})
-        .then(console.log(""))
-        .catch(console.error)
   });
 
 
@@ -111,7 +108,6 @@ client.query("SELECT * FROM prefixes").then(res => {
 
 bot.on("messageCreate", msg => {
   if (msg.author.bot)return;
-
   if (msg.content.startsWith("sbs ") || msg.content.startsWith("Sbs ")){
     
     let command = commands.find(function (cmd) {
@@ -160,15 +156,9 @@ bot.on("messageCreate", msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
-   /* weebSH.tama.getSetting('guilds', msg.channel.guild.id)
+    weebSH.tama.getSetting('guilds', msg.channel.guild.id)
     .then(setting => {
-        if (typeof setting == "undefined"){
-            weebSH.tama.updateSetting({type: 'guilds', id: msg.channel.guild.id, data: {prefix: "sk "}})
-        .then(console.log("boop"))
-        .catch(console.error)
-        }
-        */
-        if (msg.content.toLowerCase().startsWith(bot.commandOptions.prefix[0].toLowerCase())) {
+        if (msg.content.toLowerCase().startsWith(setting.setting.data.prefix)) {
             let stuff = msg.content.split(" ")
             let c = stuff[1];
             stuff.shift();
@@ -207,8 +197,8 @@ bot.on("messageCreate", msg => {
 
 
         
-    //})
-    //.catch(console.error)
+    })
+    .catch(console.error)
   
 });
 
@@ -235,6 +225,41 @@ async function carbon() {
         console.error(err);
     }
 }
+
+/*
+let str = "";
+bot.registerCommand("help", (msg, args) => {
+    if (typeof args[0] == "undefined") {
+        helpCommands.forEach(cmd => {
+            str += "sk " + cmd[0] + " - " + cmd[1] + "\n";
+        });
+        str += "Use `sk help <command>` for more detailed information.";
+        msg.channel.createMessage({
+            embed: {
+                description: str,
+                title: "My help command"
+            }
+        });
+        str = "";
+    } else if (typeof args[0] !== "undefined") {
+        let cmd;
+        helpCommands.forEach(c => {
+            if (c[0] == args[0]) {
+                cmd = c;
+                return;
+            }
+        });
+        if (typeof cmd !== "undefined") {
+            msg.channel.createMessage({
+                embed: {
+                    title: "**" + cmd[0] + "**",
+                    description: cmd[2] + "\n" + cmd[3]
+                }
+            });
+        }
+    }
+});
+*/
 bot.registerCommand("steak", (msg) => {
     Bing.images("Filet Mignon", {count: 10}, function(error, res, body){
         msg.channel.createMessage({
@@ -247,6 +272,14 @@ bot.registerCommand("steak", (msg) => {
     });
 
 
+})
+bot.registerCommand("settings", (msg) => {
+    weebSH.tama.getSetting('guilds', msg.channel.guild.id)
+    .then(setting => {
+        console.log(setting)
+        msg.channel.createMessage(setting.setting.data.prefix)
+    })
+    .catch(console.error)
 })
 
 

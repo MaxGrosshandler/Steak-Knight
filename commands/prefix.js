@@ -6,8 +6,8 @@ module.exports = {
   func: async (msg, args) => {
     if (
       msg.author.id == "195156669108322313" ||
-      msg.author.id == "107563269484490752"// ||
-      //msg.member.permission.has("banMembers") == true
+      msg.author.id == "107563269484490752" ||
+      msg.member.permission.has("banMembers") == true
     ) {
       if (args[0] == "") {
         msg.channel.createMessage("You need to have a prefix!");
@@ -22,14 +22,12 @@ module.exports = {
       weebSH.tama.updateSetting({type: 'guilds', id: msg.channel.guild.id, data: {prefix: args[0]}})
         .then(array => {
         msg.channel.createMessage("Your new prefix is " + args[0])
-        console.log(args[0])
-        console.log(array)
     }
     )
         .catch(console.error)
           
           } else {
-      msg.channel.createMessage("You don't got perms! Also, prefix is currently broken.");
+      msg.channel.createMessage("You don't got permissions!");
     }
   },
   options: {
