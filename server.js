@@ -162,7 +162,7 @@ bot.on("messageCreate", msg => {
         stuff.shift();
         
   
-        if (typeof msg.mentions[0]!== "undefined" && c !== "hug"){
+        if (typeof msg.mentions[0]!== "undefined"){
             weebSH.toph.getImageTypes()
             .then(array => {
                 if (array.types.includes(c)) {
@@ -218,7 +218,7 @@ async function carbon() {
     }
 }
 
-
+/*
 let str = "";
 bot.registerCommand("help", (msg, args) => {
     if (typeof args[0] == "undefined") {
@@ -251,6 +251,7 @@ bot.registerCommand("help", (msg, args) => {
         }
     }
 });
+*/
 bot.registerCommand("steak", (msg) => {
     Bing.images("Filet Mignon", {count: 10}, function(error, res, body){
         msg.channel.createMessage({
@@ -289,5 +290,6 @@ module.exports.client = client;
 module.exports.bot = bot;
 module.exports.sf = sf;
 module.exports.weebSH= weebSH;
+module.exports.helpCommands = helpCommands;
 app.use(express.static(__dirname + "/public"));
 app.listen(process.env.PORT || 4000);
