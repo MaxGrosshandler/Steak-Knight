@@ -7,7 +7,6 @@ const Taihou = require('taihou');
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/1.0.0'
 });
- 
 
 var Bing = require('node-bing-api')({accKey: process.env.bing});
 const sf = require("snekfetch");
@@ -62,6 +61,15 @@ client.connect(function (err) {
     });
 });
 }
+const CronJob = require('cron').CronJob;
+const job = new CronJob('00 00 00 * * 1-7', function() {
+	const d = new Date();
+    console.log('reset at , ' + d)
+    client.query('DELETE FROM waiting');
+});
+job.start();
+console.log('is job running on high? ', job.running);
+console.log(' i am job ', job.nextDates())
 
 let helpCommands = [];
 let commands = [];
