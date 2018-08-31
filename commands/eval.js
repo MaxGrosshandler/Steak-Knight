@@ -1,5 +1,6 @@
 const serv = require("../server.js");
 const bot = serv.bot;
+let alexia = "cute";
 module.exports = {
   func: async (msg, args) => {
    if ( process.env.ids.includes(msg.author.id)

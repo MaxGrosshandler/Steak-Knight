@@ -5,7 +5,7 @@ const Eris = (require("eris"))
 const GoogleImages = require('google-images');
 const Taihou = require('taihou');
 const weebSH = new Taihou(process.env.wolke, true, {
-    userAgent: 'Steak Knight/1.0.0'
+    userAgent: 'Steak Knight/4.0.0'
 });
 
 var Bing = require('node-bing-api')({accKey: process.env.bing});
@@ -247,29 +247,11 @@ async function carbon() {
 }
 
 
-
-async function getHelp() {
-    for (var [key, value] of bot.guilds) {
-        bot.getRESTUser(bot.guilds.get(key).ownerID).then(user => {
-            console.log(user.username);
-        })
-    }
-}
-
 bot.connect();
 bot.on("ready", () => {
     console.log("Ready!");
     pgConnect();
     readCommands();
-   /*
-    for (const [id, guild] of bot.guilds){
-        weebSH.tama.updateSetting({type: 'guilds', id: guild.id, data: {prefix: "sk "}})
-    .then(setting => {
-        console.log("")
-    })
-    .catch(console.error)
-}
-*/
 
 
     postStats();
