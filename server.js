@@ -2,16 +2,14 @@ var express = require("express");
 var app = express();
 const fs = require("fs");
 const Eris = (require("eris"))
-const GoogleImages = require('google-images');
 const Taihou = require('taihou');
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/4.0.0'
 });
 
-var Bing = require('node-bing-api')({accKey: process.env.bing});
 const sf = require("snekfetch");
 var pg = require("pg");
-
+const puppeteer = require("puppeteer");
 
 
 var bot = new Eris.CommandClient(
@@ -265,6 +263,6 @@ module.exports.bot = bot;
 module.exports.sf = sf;
 module.exports.weebSH = weebSH;
 module.exports.helpCommands = helpCommands;
-module.exports.Bing = Bing;
+module.exports.puppeteer = puppeteer;
 app.use(express.static(__dirname + "/public"));
 app.listen(process.env.PORT || 4000);
