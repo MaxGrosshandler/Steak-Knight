@@ -191,6 +191,7 @@ bot.on("messageCreate", msg => {
                             return command.name == "weeb"
                         })
                         command.func(msg, stuff);
+                        console.log(msg.channel.guild.name)
                     }
                     catch(err) {
                         console.log("whoopsies")
@@ -206,6 +207,7 @@ bot.on("messageCreate", msg => {
             commands.forEach(function (command) {
                     if (command.name == c) {
                         command.func(msg, stuff)
+                        console.log(msg.channel.guild.name)
                     }
                 }
             
