@@ -16,5 +16,8 @@
   },
   "engines": {
     "node": "10.7.0"
+  },
+  "scripts": {
+    "test": "node test.js"
   }
 }
