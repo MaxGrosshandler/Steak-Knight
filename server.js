@@ -179,8 +179,6 @@ bot.on("messageCreate", msg => {
             let stuff = msg.content.split(" ")
             let c = stuff[1];
             stuff.shift();
-            
-      
             if (typeof msg.mentions[0]!== "undefined" && c !== "currency"){
                 weebSH.toph.getImageTypes()
                 .then(array => {
@@ -289,7 +287,6 @@ async function carbon() {
         console.error(err);
     }
 }
-
 
 bot.connect();
 bot.on("ready", () => {
