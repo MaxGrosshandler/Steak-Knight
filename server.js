@@ -16,7 +16,7 @@ var bot = new Eris.CommandClient(
     process.env.token,
     {
         restMode: true,
-        getAllUsers: true
+       autoreconnect: true
     },
     {
         description: "A bot for all your steak needs!",
