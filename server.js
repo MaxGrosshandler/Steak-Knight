@@ -174,8 +174,51 @@ bot.on("messageCreate", msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
+    if (msg.channel.guild.id == null){
+        if (msg.content.toLowerCase().startsWith("sk")) {
+            let stuff = msg.content.split(" ")
+            let c = stuff[1];
+            stuff.shift();
+            
+      
+            if (typeof msg.mentions[0]!== "undefined" && c !== "currency"){
+                weebSH.toph.getImageTypes()
+                .then(array => {
+                    if (array.types.includes(c)) {
+                    try {
+                        let command = commands.find(function (command){
+                            return command.name == "weeb"
+                        })
+                        command.func(msg, stuff);
+                        console.log(msg.channel.guild.name)
+                    }
+                    catch(err) {
+                        console.log("whoopsies")
+                    }
+                }
+        
+                }
+            )
+            }
+            else {
+            stuff.shift();
+           
+            commands.forEach(function (command) {
+                    if (command.name == c) {
+                        command.func(msg, stuff)
+                        console.log(msg.channel.guild.name)
+                    }
+                }
+            
+            )
+        }
+    }
+
+    }
+    else {
     weebSH.tama.getSetting('guilds', msg.channel.guild.id)
-    .then(setting => {        
+    .then(setting => {
+
         if (msg.content.toLowerCase().startsWith(setting.setting.data.prefix.toLowerCase())) {
             let stuff = msg.content.split(" ")
             let c = stuff[1];
@@ -218,6 +261,7 @@ bot.on("messageCreate", msg => {
 
         
     })
+}
     //.catch(console.error)
   
 });
