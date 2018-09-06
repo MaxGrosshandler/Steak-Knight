@@ -174,8 +174,8 @@ bot.on("messageCreate", msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
-    if (msg.channel.guild.id == null){
-        if (msg.content.toLowerCase().startsWith("sk")) {
+    if (msg.channel.guild == undefined){
+        if (msg.content.toLowerCase().startsWith("sk ")) {
             let stuff = msg.content.split(" ")
             let c = stuff[1];
             stuff.shift();
@@ -190,7 +190,7 @@ bot.on("messageCreate", msg => {
                             return command.name == "weeb"
                         })
                         command.func(msg, stuff);
-                        console.log(msg.channel.guild.name)
+                        console.log("was in a dm")
                     }
                     catch(err) {
                         console.log("whoopsies")
@@ -206,7 +206,7 @@ bot.on("messageCreate", msg => {
             commands.forEach(function (command) {
                     if (command.name == c) {
                         command.func(msg, stuff)
-                        console.log(msg.channel.guild.name)
+                        console.log("was in a dm")
                     }
                 }
             
