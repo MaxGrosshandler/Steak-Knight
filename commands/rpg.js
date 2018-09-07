@@ -44,9 +44,9 @@ module.exports = {
                 "The monster dealt you " + monsterHit + " damage!"
                 if ( 0 >= monster.rows[0].hp - playerHit){
                     atkDesc = "You killed the monster! Hooray! You gained " + monster.rows[0].monster_level * 20 + " xp!"
-                    client.query("DELETE FROM monsters  where player_id = $1",[player.rows[0].id]);
-                    if (player.rows[0].xp + monster.rows[0].monster_level*20 >= player.rows[0].next_level){
-                        client.query("UPDATE players SET (xp, hp, atk, level, next_level, maxHP) = (players.xp + $1, players.maxHP + 10 , players.atk + 1, players.level+1, players.next_level + 100, players.maxhp+10)   where id = $2", [monster.rows[0].monster_level * 20, player.rows[0].id]);
+                    client.query("DELETE FROM monsters where player_id = $1",[player.rows[0].id]);
+                    if (player.rows[0].xp >= player.rows[0].next_level){
+                        client.query("UPDATE players SET (xp, hp, atk, level, next_level, maxhp) = (players.xp + $1, players.maxhp + 10 , players.atk + 1, players.level+1, players.next_level + 100, players.maxhp+10)   where id = $2", [monster.rows[0].monster_level * 20, player.rows[0].id]);
                    atkDesc += "\nAlso, you leveled up! You are now level " + (player.rows[0].level + 1)
                     }
                     else{
