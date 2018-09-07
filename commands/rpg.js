@@ -50,7 +50,7 @@ module.exports = {
                    atkDesc += "\nAlso, you leveled up! You are now level " + (player.rows[0].level + 1)
                     }
                     else{
-                        client.query("UPDATE players SET xp = players.xp + $1 where id = $2", [monster.rows[0].xp * 20, player.rows[0].id]);
+                        client.query("UPDATE players SET xp = players.xp + $1 where id = $2", [monster.rows[0].level * 20, player.rows[0].id]);
                     }
                 }
                 else if (0 >= player.rows[0].hp - monsterHit){
