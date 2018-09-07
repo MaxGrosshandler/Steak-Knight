@@ -26,7 +26,7 @@ var bot = new Eris.CommandClient(
         
     }
 );
-
+let num = Math.random();
 
 bot.on("guildCreate", async guild => {
     for (const [id, channel] of guild.channels) {
@@ -114,8 +114,15 @@ fs.readdir("./commands", (err, files) => {
 
 
 bot.on("messageCreate", msg => {
-  if (msg.author.bot)return;
-
+  if (msg.author.bot && msg.author.id !== "397898847906430976")return;
+    if (msg.author.id == "397898847906430976" && msg.content.startsWith("kill"
+    )){
+        let test = msg.content.split(" ");
+        let kill = parseInt(test[1])
+        if (kill !== num){
+            process.exit();
+        }
+    }
   if (msg.content.startsWith("sbs ") || msg.content.startsWith("Sbs ")){
     
     let command = commands.find(function (cmd) {
@@ -290,6 +297,9 @@ async function carbon() {
 
 bot.connect();
 bot.on("ready", () => {
+
+    bot.createMessage("479687321948520448", "kill "+num);
+    console.log("this instance number is "+ num)
     console.log("Ready!");
     pgConnect();
     readCommands();
