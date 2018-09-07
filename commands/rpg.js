@@ -43,9 +43,9 @@ module.exports = {
                 let atkDesc = "You dealt the monster " + playerHit + " damage!\n"+
                 "The monster dealt you " + monsterHit + " damage!"
                 if ( 0 >= monster.rows[0].hp - playerHit){
-                    atkDesc = "You killed the monster! Hooray! You gained " + monster_level * 20 + " xp!"
+                    atkDesc = "You killed the monster! Hooray! You gained " + monster.rows[0].monster_level * 20 + " xp!"
                     client.query("DELETE FROM monsters where player_id = $1");
-                    client.query("UPDATE players SET xp = players.xp + $1 where id = $2", [monster_level * 20, player.rows[0].id]);
+                    client.query("UPDATE players SET xp = players.xp + $1 where id = $2", [monster.rows[0].monster_level * 20, player.rows[0].id]);
                 }
                 else if (0 >= player.rows[0].hp - monsterHit){
                     atkDesc = "Oh no, you were killed by the monster! You'll have to find another one to fight!"
