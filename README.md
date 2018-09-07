@@ -1,5 +1,5 @@
 # Steak Knight
-
+https://travis-ci.org/MaxGrosshandler/Steak-Knight.svg?branch=master
 Thanks for looking at my bot! Let me show you around.
 
 By the way it has a [discord server](https://discord.gg/4xbwxe6) in case you need help.
