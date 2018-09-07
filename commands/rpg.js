@@ -46,7 +46,7 @@ module.exports = {
                     atkDesc = "You killed the monster! Hooray! You gained " + monster.rows[0].monster_level * 20 + " xp!"
                     client.query("DELETE FROM monsters  where player_id = $1",[player.rows[0].id]);
                     if (player.rows[0].xp + monster.rows[0].monster_level*20 >= player.rows[0].next_level){
-                        client.query("UPDATE players SET (xp, hp, atk, level, next_level, maxHP) = (players.xp + $1, players.maxHP + 10 , players.atk + 1, players.level+1, players.next_level + 100, players.maxHP+10)   where id = $2", [monster.rows[0].monster_level * 20, player.rows[0].id]);
+                        client.query("UPDATE players SET (xp, hp, atk, level, next_level, maxHP) = (players.xp + $1, players.maxHP + 10 , players.atk + 1, players.level+1, players.next_level + 100, players.maxhp+10)   where id = $2", [monster.rows[0].monster_level * 20, player.rows[0].id]);
                    atkDesc += "\nAlso, you leveled up! You are now level " + (player.rows[0].level + 1)
                     }
                     else{
@@ -56,7 +56,7 @@ module.exports = {
                 else if (0 >= player.rows[0].hp - monsterHit){
                     atkDesc = "Oh no, you were killed by the monster! You'll have to find another one to fight!"
                     client.query("DELETE FROM monsters  where player_id = $1", [player.rows[0].id]);
-                    client.query("UPDATE players SET hp = $1 where id = $2", [player.rows[0].maxHP, player.rows[0].id]);
+                    client.query("UPDATE players SET hp = $1 where id = $2", [player.rows[0].maxhp, player.rows[0].id]);
                 }
                 else {
                     client.query("UPDATE players SET hp = players.hp - $1 where id = $2",[monsterHit, player.rows[0].id]);
@@ -99,7 +99,7 @@ module.exports = {
                 msg.channel.createMessage({embed:{description:"You are level 1, have 40 hp, and have an attack of 1d6+1. You haven't done anything yet, so you have 0xp."}})
             }
             else {
-                msg.channel.createMessage({embed:{description:"You are level "+result.rows[0].level+", have "+result.rows[0].hp+" out of " +result.rows[0].maxHP + " hp, and have an attack of 1d6+"+result.rows[0].atk + ".\n"
+                msg.channel.createMessage({embed:{description:"You are level "+result.rows[0].level+", have "+result.rows[0].hp+" out of " +result.rows[0].maxhp + " hp, and have an attack of 1d6+"+result.rows[0].atk + ".\n"
                 +"You have " + result.rows[0].xp + " xp and you hit the next level at " +result.rows[0].next_level + " xp."}})
             }
         })
