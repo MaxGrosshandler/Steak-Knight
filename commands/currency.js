@@ -95,7 +95,7 @@ module.exports = {
                         spoop[0] = msg.author.id
                         client.query("SELECT * FROM currency where id = $1",spoop).then(result => {
                             if (typeof result.rows[0] == "undefined"){
-                                msg.channel.createMessage("You have no <:steak:481449443204530197> !")
+                                msg.channel.createMessage("You have no <:steak:481449443204530197> ! You can get some with `sk currency daily`")
                             }
                             else {
                                 msg.channel.createMessage("You have " + result.rows[0].money+ " <:steak:481449443204530197>")

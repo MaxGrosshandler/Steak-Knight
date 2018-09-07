@@ -19,7 +19,7 @@ module.exports = {
                 msg.channel.createMessage("You are level 1, have 40 hp, and have an attack of 1d6+1. You haven't done anything yet!")
             }
             else {
-                msg.channel.createMessage("You are level "+results.rows[0].level+", have "+results.rows[0].hp+" hp, and have an attack of 1d6+"+results.rows[0].atk)
+                msg.channel.createMessage("You are level "+result.rows[0].level+", have "+result.rows[0].hp+" hp, and have an attack of 1d6+"+result.rows[0].atk)
             }
         })
     }
