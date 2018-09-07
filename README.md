@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/MaxGrosshandler/Steak-Knight.svg?branch=master)](https://travis-ci.org/MaxGrosshandler/Steak-Knight)
 # Steak Knight
 
 Thanks for looking at my bot! Let me show you around.
