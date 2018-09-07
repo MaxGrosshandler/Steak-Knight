@@ -6,19 +6,24 @@ module.exports = {
         let spoop = [];
         spoop[0] = msg.author.id
         let snark = [];
-        snark[0] = msg.author.id
-        snark[1] = 1
-        snark[2] = 40
-        snark[3] = 1
+        snark[0] = "Steakface"
+        snark[1] = 1234
+        snark[2] = 1
+        snark[3] = msg.author.id
+        snark[4] = 10
+        snark[5] = 1
         
         client.query("SELECT * FROM monsters where player_id = $1",spoop).then(result => {
             if (typeof result.rows[0] == "undefined"){
-                client.query("INSERT INTO monsters (monster_name, monster_id, monster_level,  atk ) values ($1, $2, $3, $4)", snark)
+                client.query("INSERT INTO monsters (monster_name, monster_id, monster_level, player_id, hp,  atk ) values ($1, $2, $3, $4)", snark)
                 msg.channel.createMessage({embed:{description:"You found a Steakface! It is level 1, has 10 health, and has an attack of 1d3+1."}})
             }
             else {
+                client.query("SELECT * FROM monsters where player_id = $1",spoop).then(result => {
                 msg.channel.createMessage({embed:{description:"You are currently fighting a level "+result.rows[0].level+ " " + result.rows[0].monster_name + " with " +result.rows[0].hp+" hp, and  an attack of 1d3+"+result.rows[0].atk}})
+            })
             }
+        
         })
     }
     if (args[0] == null){
