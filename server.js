@@ -1,7 +1,9 @@
 var express = require("express");
 var app = express();
 const fs = require("fs");
-const Eris = (require("eris"))
+const Eris = require("eris")
+const droll = require('droll');
+
 const Taihou = require('taihou');
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/4.0.0'
@@ -316,5 +318,6 @@ module.exports.sf = sf;
 module.exports.weebSH = weebSH;
 module.exports.helpCommands = helpCommands;
 module.exports.puppeteer = puppeteer;
+module.exports.droll = droll;
 app.use(express.static(__dirname + "/public"));
 app.listen(process.env.PORT || 4000);

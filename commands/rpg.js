@@ -1,8 +1,9 @@
 const serv = require("../server.js");
 let client = serv.client;
+let droll = serv.droll;
 module.exports = {
   func: async (msg, args) => {
-    if (args[0] == "fight"){
+    if (args[0] == "find"){
         let spoop = [];
         spoop[0] = msg.author.id
         let snark = [];
@@ -20,11 +21,60 @@ module.exports = {
             }
             else {
                 client.query("SELECT * FROM monsters where player_id = $1",spoop).then(result => {
-                msg.channel.createMessage({embed:{description:"You are currently fighting a level "+result.rows[0].level+ " " + result.rows[0].monster_name + " with " +result.rows[0].hp+" hp, and  an attack of 1d3+"+result.rows[0].atk}})
+                msg.channel.createMessage({embed:{description:"You are currently fighting a level "
+                +result.rows[0].monster_level+ " " + result.rows[0].monster_name +
+                 " with " +result.rows[0].hp+" hp, and  an attack of 1d3+"+result.rows[0].atk+"."}})
             })
             }
         
         })
+    }
+
+    if (args[0] == "fight"){
+        client.query("SELECT * FROM monsters where player_id = $1",msg.author.id).then(monster=> {
+            if (typeof monster.rows[0] == "undefined"){
+                msg.channel.createMessage({embed:{description:"You haven't found a monster yet! Use `sk rpg find`"}})
+            }
+            else {
+                client.query("SELECT * FROM players where id = $1",msg.author.id).then(player =>
+                     {
+                let playerHit = droll.roll("1d6+"+player.rows[0].atk);
+                let monsterHit = droll.roll("1d3+"+monster.rows[0].atk)
+                let atkDesc = "You dealt the monster " + playerHit + " damage!\n"+
+                "The monster dealt you " + monsterHit + " damage!"
+                if ( 0 >= monster.rows[0].hp - playerHit){
+                    atkDesc = "You killed the monster! Hooray! You gained " + monster_level * 20 + " xp!"
+                    client.query("DELETE FROM monsters where player_id = $1");
+                    client.query("UPDATE players SET xp = players.xp + $1 where id = $2", [monster_level * 20, player.rows[0].id]);
+                }
+                else if (0 >= player.rows[0].hp - monsterHit){
+                    atkDesc = "Oh no, you were killed by the monster! You'll have to find another one to fight!"
+                    client.query("DELETE FROM monsters where player_id = $1");
+                    client.query("UPDATE players SET hp = 0 where id = $1", [player.rows[0].id]);
+                }
+                else {
+                    client.query("UPDATE players SET hp = players.hp - $1 where id = $2",[monsterHit, player.rows[0].id]);
+                    client.query("UPDATE monsters SET hp = monsters.hp - $1 where player_id = $2",[playerHit, player.rows[0].id]);
+                }
+                
+
+                
+                msg.channel.createMessage(
+                                {
+                                 embed:
+                                        {
+                                    description: atkDesc
+                                        }
+                                })
+                
+                
+
+
+                        })
+                }
+
+        })
+
     }
     if (args[0] == null){
         let spoop = [];
