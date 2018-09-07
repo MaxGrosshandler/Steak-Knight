@@ -38,8 +38,8 @@ module.exports = {
             else {
                 client.query("SELECT * FROM players where id = $1",[msg.author.id]).then(player =>
                      {
-                let playerHit = droll.roll(`1d6+${player.rows[0].atk}`);
-                let monsterHit = droll.roll(`1d3+${monster.rows[0].atk}`)
+                let playerHit = droll.roll(`1d6+${player.rows[0].atk}`).total;
+                let monsterHit = droll.roll(`1d3+${monster.rows[0].atk}`).total;
                 let atkDesc = "You dealt the monster " + playerHit + " damage!\n"+
                 "The monster dealt you " + monsterHit + " damage!"
                 if ( 0 >= monster.rows[0].hp - playerHit){
