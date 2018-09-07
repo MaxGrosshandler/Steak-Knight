@@ -7,17 +7,27 @@ module.exports = {
         let spoop = [];
         spoop[0] = msg.author.id
         let snark = [];
-        snark[0] = "Steakface"
+        client.query("Select * from players where player_id = $1",spoop).then(p => {
+            if (p.rows[0].level < 3){
+                snark[0] = "Steakgoblin"
+            }
+            else{
+                snark[0] = "Steakorc"
+            }
+        
         snark[1] = 1234
-        snark[2] = 1
+        snark[2] = Math.ceil(p.rows[0].level / 2)
         snark[3] = msg.author.id
-        snark[4] = 10
-        snark[5] = 1
+        snark[4] = 10 * Math.ceil(p.rows[0].level / 2)
+        snark[5] = 1  + Math.ceil(p.rows[0].level / 2)
+        })
+       
+        
         
         client.query("SELECT * FROM monsters where player_id = $1",spoop).then(result => {
             if (typeof result.rows[0] == "undefined"){
                 client.query("INSERT INTO monsters (monster_name, monster_id, monster_level, player_id, hp,  atk ) values ($1, $2, $3, $4, $5, $6)", snark)
-                msg.channel.createMessage({embed:{description:"You found a Steakface! It is level 1, has 10 health, and has an attack of 1d3+1."}})
+                msg.channel.createMessage({embed:{description:"You found a Steakgoblin! It is level 1, has 10 health, and has an attack of 1d3+1."}})
             }
             else {
                 client.query("SELECT * FROM monsters where player_id = $1",spoop).then(result => {
@@ -45,7 +55,7 @@ module.exports = {
                 if ( 0 >= monster.rows[0].hp - playerHit){
                     atkDesc = "You killed the monster! Hooray! You gained " + monster.rows[0].monster_level * 20 + " xp!"
                     client.query("DELETE FROM monsters where player_id = $1",[player.rows[0].id]);
-                    if (player.rows[0].xp >= player.rows[0].next_level){
+                    if (player.rows[0].xp + monster.rows[0].monster_level*20 >= player.rows[0].next_level){
                         client.query("UPDATE players SET (xp, hp, atk, level, next_level, maxhp) = (players.xp + $1, players.maxhp + 10 , players.atk + 1, players.level+1, players.next_level + 100, players.maxhp+10)   where id = $2", [monster.rows[0].monster_level * 20, player.rows[0].id]);
                    atkDesc += "\nAlso, you leveled up! You are now level " + (player.rows[0].level + 1)
                     }
@@ -88,7 +98,7 @@ module.exports = {
         let snark = [];
         snark[0] = msg.author.id
         snark[1] = 1
-        snark[2] = 40
+        snark[2] = 50
         snark[3] = 1
         snark[4] = 0
         snark[5] = 100
