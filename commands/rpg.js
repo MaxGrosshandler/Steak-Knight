@@ -18,8 +18,8 @@ module.exports = {
         snark[1] = 1234
         snark[2] = Math.ceil(p.rows[0].level / 2)
         snark[3] = msg.author.id
-        snark[4] = 10 * Math.ceil(p.rows[0].level / 2)
-        snark[5] = 1  + Math.ceil(p.rows[0].level / 2)
+        snark[4] = 10 + 5 * Math.ceil(p.rows[0].level / 2)
+        snark[5] = 1  * Math.ceil(p.rows[0].level / 2)
         })
        
         
@@ -27,7 +27,7 @@ module.exports = {
         client.query("SELECT * FROM monsters where player_id = $1",spoop).then(result => {
             if (typeof result.rows[0] == "undefined"){
                 client.query("INSERT INTO monsters (monster_name, monster_id, monster_level, player_id, hp,  atk ) values ($1, $2, $3, $4, $5, $6)", snark)
-                msg.channel.createMessage({embed:{description:"You found a Steakgoblin! It is level 1, has 10 health, and has an attack of 1d3+1."}})
+                msg.channel.createMessage({embed:{description:"You found a "+snark[0] +"! It is level "+snark[2]+", has " + snark[4]+ "health, and has an attack of 1d3+" + snark[5]+ "."}})
             }
             else {
                 client.query("SELECT * FROM monsters where player_id = $1",spoop).then(result => {
