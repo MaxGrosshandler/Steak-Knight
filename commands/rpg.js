@@ -7,7 +7,7 @@ module.exports = {
         let spoop = [];
         spoop[0] = msg.author.id
         let snark = [];
-        client.query("Select * from players where player_id = $1",spoop).then(p => {
+        client.query("Select * from players where id= $1",spoop).then(p => {
             if (p.rows[0].level < 3){
                 snark[0] = "Steakgoblin"
             }
