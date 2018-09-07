@@ -5,7 +5,7 @@ module.exports = {
     if (args[0] == "fight"){
         msg.channel.createMessage("Soon:tm:");
     }
-    if (args[0] == "stats"){
+    if (args[0] == null){
         let spoop = [];
         spoop[0] = msg.author.id
         let snark = [];

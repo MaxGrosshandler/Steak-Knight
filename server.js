@@ -94,7 +94,7 @@ fs.readdir("./commands", (err, files) => {
                     command.hidden
                 ];
                 commands.push(command)
-                if (command.name !== "weeb"){
+                if (command.name !== "weeb" && command.name !== "rpg"){
                     helpCommands.push(newCommand);
                 }
                 
