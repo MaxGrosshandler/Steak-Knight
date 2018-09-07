@@ -31,12 +31,12 @@ module.exports = {
     }
 
     if (args[0] == "fight"){
-        client.query("SELECT * FROM monsters where player_id = $1",msg.author.id).then(monster=> {
+        client.query("SELECT * FROM monsters where player_id = $1",[msg.author.id]).then(monster=> {
             if (typeof monster.rows[0] == "undefined"){
                 msg.channel.createMessage({embed:{description:"You haven't found a monster yet! Use `sk rpg find`"}})
             }
             else {
-                client.query("SELECT * FROM players where id = $1",msg.author.id).then(player =>
+                client.query("SELECT * FROM players where id = $1",[msg.author.id]).then(player =>
                      {
                 let playerHit = droll.roll("1d6+"+player.rows[0].atk);
                 let monsterHit = droll.roll("1d3+"+monster.rows[0].atk)
