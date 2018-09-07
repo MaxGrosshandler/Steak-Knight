@@ -118,7 +118,8 @@ bot.on("messageCreate", msg => {
     if (msg.author.id == "397898847906430976" && msg.content.startsWith("kill"
     )){
         const test = msg.content.split(" ");
-        const kill = parseInt(test[1])
+        const kill = parseInt(test[1], 10)
+        console.log(test)
         console.log(kill)
         console.log(num)
         if (kill !== num){
