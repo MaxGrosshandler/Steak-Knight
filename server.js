@@ -26,7 +26,7 @@ var bot = new Eris.CommandClient(
         
     }
 );
-let num = Math.random();
+const num = Math.random();
 
 bot.on("guildCreate", async guild => {
     for (const [id, channel] of guild.channels) {
@@ -117,8 +117,10 @@ bot.on("messageCreate", msg => {
   if (msg.author.bot && msg.author.id !== "397898847906430976")return;
     if (msg.author.id == "397898847906430976" && msg.content.startsWith("kill"
     )){
-        let test = msg.content.split(" ");
-        let kill = parseInt(test[1])
+        const test = msg.content.split(" ");
+        const kill = parseInt(test[1])
+        console.log(kill)
+        console.log(num)
         if (kill !== num){
             process.exit();
         }
