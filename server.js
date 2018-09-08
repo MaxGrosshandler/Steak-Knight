@@ -295,7 +295,11 @@ async function carbon() {
         console.error(err);
     }
 }
-
+async function reset(guildid){
+    weebSH.tama.updateSetting({type: 'guilds', id: guildid, data: {prefix: "sk "}})
+    .then(console.log(""))
+    .catch(console.error)
+};
 bot.connect();
 bot.on("ready", () => {
 

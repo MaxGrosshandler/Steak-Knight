@@ -9,7 +9,7 @@ module.exports = {
       msg.author.id == "107563269484490752" ||
       msg.member.permission.has("banMembers") == true
     ) {
-      if (args[0] == "") {
+      if (args[0] == undefined) {
         msg.channel.createMessage("You need to have a prefix!");
         return;
       }
