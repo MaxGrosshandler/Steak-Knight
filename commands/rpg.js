@@ -92,6 +92,9 @@ module.exports = {
         })
 
     }
+    if (args[0] == "help"){
+        msg.channel.createMessage({embed:{description:"You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` to fight a monster! Please use `sk rpg` first!"}});
+    }
     if (args[0] == null){
         let spoop = [];
         spoop[0] = msg.author.id
@@ -118,7 +121,7 @@ module.exports = {
 },
   options: {
     description: "Rpg system (in development)!",
-    fullDescription: "Currently still in development, check back soon!",
+    fullDescription: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` to fight a monster! Please use `sk rpg` first!",
     usage: "`sk rpg`"
   },
   name: "rpg"
