@@ -3,7 +3,8 @@ var app = express();
 const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
-
+const tracker = require('pivotaltracker');
+const tClient = new tracker.Client(process.env.tracker);
 const Taihou = require('taihou');
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/4.0.0'
@@ -183,19 +184,10 @@ bot.on("messageCreate", async msg => {
         msg.channel.createMessage("Midna is the best girl.");
     }
     if (msg.content == "sk storyboard"){
-        
+        tClient.project(2196529).get(function(error, project) {
+ console.log(project);
+        });
 
-
-        try {
-            await sf
-                .post("https://www.pivotaltracker.com/services/v5/projects/2196529/stories")
-                .set({TrackerToken: process.env.tracker})
-                .send({"current_state":"started","estimate":1,"name":"Exhaust ports are ray shielded 👹"});
-            console.log("Sent to pivotal tracker successfully!");
-        } catch (err) {
-            console.error(err);
-        }
-        
     }
     if (msg.channel.guild == undefined){
         if (msg.content.toLowerCase().startsWith("sk ")) {
