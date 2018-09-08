@@ -115,7 +115,7 @@ fs.readdir("./commands", (err, files) => {
 
 
 
-bot.on("messageCreate", msg => {
+bot.on("messageCreate", async msg => {
   if (msg.author.bot && msg.author.id !== "397898847906430976")return;
     if (msg.author.id == "397898847906430976" && msg.content.startsWith("kill"
     )){
