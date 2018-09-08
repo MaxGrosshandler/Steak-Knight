@@ -182,6 +182,21 @@ bot.on("messageCreate", msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
+    if (msg.content == "sk storyboard"){
+        
+
+
+        try {
+            await sf
+                .post("https://www.pivotaltracker.com/services/v5/projects/2196529/stories")
+                .set({token: process.env.tracker})
+                .send({"current_state":"started","estimate":1,"name":"Exhaust ports are ray shielded 👹"});
+            console.log("Sent to pivotal tracker successfully!");
+        } catch (err) {
+            console.error(err);
+        }
+        
+    }
     if (msg.channel.guild == undefined){
         if (msg.content.toLowerCase().startsWith("sk ")) {
             let stuff = msg.content.split(" ")
