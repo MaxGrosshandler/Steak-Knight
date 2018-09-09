@@ -320,7 +320,7 @@ bot.on("ready", () => {
     postStats();
     carbon();
     //getHelp();
-    bot.editStatus("online", {name: `watching ${bot.guilds.size} servers | sk help`, type: 3});
+    bot.editStatus("online", {name: `${bot.guilds.size} servers | sk help`, type: 3});
 });
 
 module.exports.client = client;
