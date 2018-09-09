@@ -15,6 +15,7 @@ module.exports = {
         }
         ,"color":3553599,
         "description":"​\n**Steak Knight is a multipurpose bot for all your steak related needs!** \nHe's got some image commands, like hug, the ability to give out roles, guild-specific prefixes, and more coming soon!\n\n[Invite](https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot) - [Server](https://dis​cord.gg/4xbwx​e6) - [Github](https://github.com/MaxGrosshandler/Steak-Knight) - [Donate](https://www.paypal.me/MaxGrosshandler)​ ​​ ​​ ​​ ​​ ​—​ ​​ ​​ ​​ ​​ ​*Run​ ​ ​`sk help` to learn more.*\n​",
+
         footer: {"text":"Servers: " + bot.guilds.size +" | Uptime: " +hours+"h " +minutes+"min " +seconds+"s | Powered by Eris"} 
       }     
       }
