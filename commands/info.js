@@ -14,13 +14,9 @@ module.exports = {
           "name":"Information about Steak Knight","icon_url":"https://cdn.discordapp.com/avatars/397898847906430976/8c2be2ff0c2a5b4981c8d705ef50d8c5.png?size=512","url":"https://bots.discord.pw/bots/397898847906430976"
         }
         ,"color":3553599,
-        "description":"​\n**Steak Knight is a multipurpose bot for all your steak related needs!** \n"
-        +"He has access to Weeb.SH for pat/hug/bite commands (run `sk types` for full list), he can get steak recipes with `sk recipe`,  he has guild-specific prefixes, google functionality, a currency system, and more coming very soon!\n"
-        +"[Invite](https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot)"
-        +" - [Server](https://dis​cord.gg/4xbwx​e6) - [Github](https://github.com/MaxGrosshandler/Steak-Knight)"
-        +" - [Donate](https://www.paypal.me/MaxGrosshandler)​ ​​ ​​ ​​ ​​ ​—​ ​​ ​​ ​​ ​​ ​*Run​ ​ ​`sk help` to learn more.*\n​",
+        "description":"​\n**Steak Knight is a multipurpose bot for all your steak related needs!** \nHe's got some image commands, like hug, the ability to give out roles, guild-specific prefixes, and more coming soon!\n\n[Invite](https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot) - [Server](https://dis​cord.gg/4xbwx​e6) - [Github](https://github.com/MaxGrosshandler/Steak-Knight) - [Donate](https://www.paypal.me/MaxGrosshandler)​ ​​ ​​ ​​ ​​ ​—​ ​​ ​​ ​​ ​​ ​*Run​ ​ ​`sk help` to learn more.*\n​",
         footer: {"text":"Servers: " + bot.guilds.size +" | Uptime: " +hours+"h " +minutes+"min " +seconds+"s | Powered by Eris"} 
-      }      
+      }     
       }
     );
   },
