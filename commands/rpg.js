@@ -3,6 +3,20 @@ let client = serv.client;
 let droll = serv.droll;
 module.exports = {
   func: async (msg, args) => {
+    const guilcd = new Set();
+    if (guildcd.has(msg.author.id)) {
+        msg.channel.createMessage("This command is on cooldown!");
+} else {
+
+       // the user can type the command ... your command code goes here :)
+
+    // Adds the user to the set so that they can't talk for a minute
+    guildcd.add(msg.channel.guild.id);
+    setTimeout(() => {
+      // Removes the user from the set after a minute
+      guildcd.delete(msg.channel.guild.id);
+    }, 4000);
+
     if (args[0] == "find"){
         let spoop = [];
         spoop[0] = msg.author.id
@@ -126,6 +140,7 @@ module.exports = {
         })
     }
    
+}
 },
   options: {
     description: "Rpg system (in development)!",

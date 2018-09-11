@@ -14,7 +14,7 @@ const sf = require("snekfetch");
 var pg = require("pg");
 const puppeteer = require("puppeteer");
 
-
+let cooldowns = [];
 var bot = new Eris.CommandClient(
     process.env.token,
     {
@@ -76,6 +76,7 @@ const pkill = new CronJob('0 */10 * * * *', function() {
 pkill.start();
 console.log('is the kill job running? ', pkill.running);
 console.log(' i am kill job', pkill.nextDates())
+
 
 let helpCommands = [];
 let commands = [];
