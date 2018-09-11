@@ -115,7 +115,7 @@ fs.readdir("./commands", (err, files) => {
             }
         }
     );
-    console.log("Command Loading complete and it's on travis!");
+    console.log("Command Loading complete!");
     console.log("\n");
 });
 }
