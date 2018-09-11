@@ -3,19 +3,19 @@ let client = serv.client;
 let droll = serv.droll;
 module.exports = {
   func: async (msg, args) => {
-    const guildcd = new Set();
-    if (guildcd.has(msg.channel.guild.id)) {
+    const guildcd = [];
+    if (guildcd.includes(msg.channel.guild.id)) {
         msg.channel.createMessage("This command is on cooldown!");
 } else {
 
        // the user can type the command ... your command code goes here :)
 
     // Adds the user to the set so that they can't talk for a minute
-    guildcd.add(msg.channel.guild.id);
+    guildcd.unshift(msg.channel.guild.id);
     console.log(guildcd);
     setTimeout(() => {
       // Removes the user from the set after a minute
-      guildcd.delete(msg.channel.guild.id);
+      guildcd.shift();
     }, 4000);
 
     if (args[0] == "find"){
