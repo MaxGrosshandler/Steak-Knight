@@ -314,8 +314,12 @@ bot.on("ready", () => {
     console.log("Ready!");
     pgConnect();
     readCommands();
-    for (const [id, guild] of bot.guilds) {
-        weebSH.tama.updateSetting({type: 'guilds', id: id, data: {prefix: "sk "}})
+    for (const [id, guild] of bot.guilds){
+        weebSH.tama.getSetting('guilds', id)
+        .then(setting => {
+            console.log(setting)
+        }
+    )
     }
 
     postStats();
