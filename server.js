@@ -69,8 +69,14 @@ const job = new CronJob('00 00 00 * * 1-7', function() {
     client.query('DELETE FROM waiting');
 });
 job.start();
-console.log('is job running on high? ', job.running);
-console.log(' i am job ', job.nextDates())
+const pkill = new CronJob('00 10 * * * *', function() {
+    const d = new Date();
+    bot.createMessage("479687321948520448", "kill "+num);
+    console.log('reset at , ' + d)
+});
+pkill.start();
+console.log('is the kill job running? ', pkill.running);
+console.log(' i am kill job', pkill.nextDates())
 
 let helpCommands = [];
 let commands = [];
@@ -121,7 +127,8 @@ bot.on("messageCreate", async msg => {
     if (msg.author.id == "397898847906430976" && msg.content.startsWith("kill"
     )){
         const test = msg.content.split(" ");
-        console.log(test)
+        console.log(test[1])
+        console.log(num.toString())
         if (test[1] !== num.toString()){
             process.exit();
         }
