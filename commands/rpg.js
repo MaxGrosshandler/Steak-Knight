@@ -4,7 +4,7 @@ let droll = serv.droll;
 module.exports = {
   func: async (msg, args) => {
     const guildcd = new Set();
-    if (guildcd.has(msg.author.id)) {
+    if (guildcd.has(msg.channel.guild.id)) {
         msg.channel.createMessage("This command is on cooldown!");
 } else {
 
