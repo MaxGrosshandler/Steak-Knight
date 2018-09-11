@@ -8,6 +8,12 @@ module.exports = {
         spoop[0] = msg.author.id
         let snark = [];
         client.query("Select * from players where id= $1",spoop).then(p => {
+            if (typeof p.rows[0] == "undefined"){
+                msg.channel.createMessage({embed:{description:"You haven't started your adventure yet! Use `sk rpg`"}})
+                return;
+
+            }
+            else {
             if (p.rows[0].level < 3){
                 snark[0] = "Steakgoblin"
             }
@@ -20,16 +26,13 @@ module.exports = {
         snark[3] = msg.author.id
         snark[4] = 15 + 5 * Math.ceil(p.rows[0].level / 2)
         snark[5] = 1  * Math.ceil(p.rows[0].level / 2)
-        })
+        }
+    })
        
         
 
             client.query("SELECT * FROM monsters where player_id = $1",spoop).then(result => {
-                if (typeof snark[2] == "undefined"){
-                    msg.channel.createMessage({embed:{description:"You haven't started your adventure yet! Use `sk rpg`"}})
-                    return;
-                }
-            else if (typeof result.rows[0] == "undefined"){
+                    if (typeof result.rows[0] == "undefined"){
                 client.query("INSERT INTO monsters (monster_name, monster_id, monster_level, player_id, hp,  atk ) values ($1, $2, $3, $4, $5, $6)", snark)
                 msg.channel.createMessage({embed:{description:"You found a "+snark[0] +"! It is level "+snark[2]+", has " + snark[4]+ " health, and has an attack of 2d3+" + snark[5]+ "."}})
             }
