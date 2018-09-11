@@ -63,16 +63,17 @@ client.connect(function (err) {
 });
 }
 const CronJob = require('cron').CronJob;
-const job = new CronJob('00 00 00 * * 1-7', function() {
+const job = new CronJob('00 00 00 * * 0-6', function() {
 	const d = new Date();
     console.log('reset at , ' + d)
     client.query('DELETE FROM waiting');
 });
 job.start();
-const pkill = new CronJob('00 10 * * * *', function() {
+const pkill = new CronJob('0 */10 * * * *', function() {
     const d = new Date();
     bot.createMessage("479687321948520448", "kill "+num);
-    console.log('reset at , ' + d)
+    console.log('Every Tenth Minute:', d);
+    
 });
 pkill.start();
 console.log('is the kill job running? ', pkill.running);
