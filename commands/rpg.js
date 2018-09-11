@@ -3,7 +3,7 @@ let client = serv.client;
 let droll = serv.droll;
 module.exports = {
   func: async (msg, args) => {
-    const guilcd = new Set();
+    const guildcd = new Set();
     if (guildcd.has(msg.author.id)) {
         msg.channel.createMessage("This command is on cooldown!");
 } else {
