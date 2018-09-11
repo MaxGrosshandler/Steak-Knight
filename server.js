@@ -69,13 +69,14 @@ const job = new CronJob('00 00 00 * * 0-6', function() {
     client.query('DELETE FROM waiting');
 });
 job.start();
-const pkill = new CronJob('0 */10 * * * *', function() {
-    process.exit();
+
+//const pkill = new CronJob('0 */10 * * * *', function() {
+  //  process.exit();
     
-});
-pkill.start();
-console.log('is the kill job running? ', pkill.running);
-console.log(' i am kill job', pkill.nextDates())
+//});
+//pkill.start();
+//console.log('is the kill job running? ', pkill.running);
+//console.log(' i am kill job', pkill.nextDates())
 
 
 let helpCommands = [];
@@ -309,19 +310,11 @@ async function reset(guildid){
 bot.connect();
 bot.on("ready", () => {
 
-    bot.createMessage("479687321948520448", "kill "+num);
+    bot.createMessage("479687321948520448", "I started up!");
     console.log("this instance number is "+ num)
     console.log("Ready!");
     pgConnect();
     readCommands();
-    for (const [id, guild] of bot.guilds){
-        weebSH.tama.getSetting('guilds', id)
-        .then(setting => {
-            console.log(setting)
-        }
-    )
-    }
-
     postStats();
     carbon();
     //getHelp();
