@@ -12,6 +12,7 @@ module.exports = {
 
     // Adds the user to the set so that they can't talk for a minute
     guildcd.add(msg.channel.guild.id);
+    console.log(guildcd);
     setTimeout(() => {
       // Removes the user from the set after a minute
       guildcd.delete(msg.channel.guild.id);
