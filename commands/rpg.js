@@ -24,7 +24,6 @@ module.exports = {
         client.query("Select * from players where id = $1",spoop).then(p => {
             if (typeof p.rows[0] == "undefined"){
                 msg.channel.createMessage({embed:{description:"You haven't started your adventure yet! Use `sk rpg`"}})
-                break;
 
             }
             else {
@@ -40,8 +39,7 @@ module.exports = {
         snark[3] = msg.author.id
         snark[4] = 15 + 5 * Math.ceil(p.rows[0].level / 2)
         snark[5] = 1  * Math.ceil(p.rows[0].level / 2)
-        }
-    })
+        
        
         
 
@@ -59,8 +57,10 @@ module.exports = {
             }
         
         })
-    }
 
+    }
+        })
+    }
     if (args[0] == "fight"){
         client.query("SELECT * FROM monsters where player_id = $1",[msg.author.id]).then(monster=> {
             if (typeof monster.rows[0] == "undefined"){
