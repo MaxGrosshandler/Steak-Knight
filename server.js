@@ -71,7 +71,7 @@ const job = new CronJob('00 00 00 * * 0-6', function() {
 job.start();
 const pkill = new CronJob('0 */10 * * * *', function() {
     const d = new Date();
-    bot.createMessage("479687321948520448", "kill "+num);
+    process.exit();
     console.log('Every Tenth Minute:', d);
     
 });
@@ -124,16 +124,7 @@ fs.readdir("./commands", (err, files) => {
 
 
 bot.on("messageCreate", async msg => {
-  if (msg.author.bot && msg.author.id !== "397898847906430976")return;
-    if (msg.author.id == "397898847906430976" && msg.content.startsWith("kill"
-    )){
-        const test = msg.content.split(" ");
-        console.log(test[1])
-        console.log(num.toString())
-        if (test[1] !== num.toString()){
-            process.exit();
-        }
-    }
+  if (msg.author.bot)return;
   if (msg.content.startsWith("sbs ") || msg.content.startsWith("Sbs ")){
     
     let command = commands.find(function (cmd) {
