@@ -27,6 +27,7 @@ module.exports = {
             client.query("SELECT * FROM monsters where player_id = $1",spoop).then(result => {
                 if (typeof snark[2] == "undefined"){
                     msg.channel.createMessage({embed:{description:"You haven't started your adventure yet! Use `sk rpg`"}})
+                    return;
                 }
             else if (typeof result.rows[0] == "undefined"){
                 client.query("INSERT INTO monsters (monster_name, monster_id, monster_level, player_id, hp,  atk ) values ($1, $2, $3, $4, $5, $6)", snark)
@@ -47,6 +48,7 @@ module.exports = {
         client.query("SELECT * FROM monsters where player_id = $1",[msg.author.id]).then(monster=> {
             if (typeof monster.rows[0] == "undefined"){
                 msg.channel.createMessage({embed:{description:"You haven't found a monster yet! Use `sk rpg find`"}})
+                return;
             }
             else {
                 client.query("SELECT * FROM players where id = $1",[msg.author.id]).then(player =>
