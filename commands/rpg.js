@@ -21,10 +21,10 @@ module.exports = {
         let spoop = [];
         spoop[0] = msg.author.id
         let snark = [];
-        client.query("Select * from players where id= $1",spoop).then(p => {
+        client.query("Select * from players where id = $1",spoop).then(p => {
             if (typeof p.rows[0] == "undefined"){
                 msg.channel.createMessage({embed:{description:"You haven't started your adventure yet! Use `sk rpg`"}})
-                return;
+                break;
 
             }
             else {
@@ -134,7 +134,7 @@ module.exports = {
                 msg.channel.createMessage({embed:{description:"You are level 1, have 50 hp, and have an attack of 2d6+1. You haven't done anything yet, so you have 0xp."}})
             }
             else {
-                msg.channel.createMessage({embed:{description:"You are level "+result.rows[0].level+", have "+result.rows[0].hp+" out of " +result.rows[0].maxhp + " hp, and have an attack of 1d6+"+result.rows[0].atk + ".\n"
+                msg.channel.createMessage({embed:{description:"You are level "+result.rows[0].level+", have "+result.rows[0].hp+" out of " +result.rows[0].maxhp + " hp, and have an attack of 2d6+"+result.rows[0].atk + ".\n"
                 +"You have " + result.rows[0].xp + " xp and you hit the next level at " +result.rows[0].next_level + " xp."}})
             }
         })
