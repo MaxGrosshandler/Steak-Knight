@@ -1,4 +1,4 @@
-const channel = 'REPLACE_WITH_CHANNEL_ID';
+const channel = '489246833567203337';
 
 const color = Math.floor(Math.random() * 0xFFFFFF);
 
