@@ -88,7 +88,7 @@ module.exports = {
                     client.query("UPDATE players SET player_hp = $1 where player_id = $2", [player.player_maxhp, player.player_id]);
                 }
                 else {
-                    client.query("UPDATE players SET hp = players.player_hp - $1 where player_id = $2",[monsterHit, player.player_id]);
+                    client.query("UPDATE players SET player_hp = players.player_hp - $1 where player_id = $2",[monsterHit, player.player_id]);
                     client.query("UPDATE monsters SET hp = monsters.hp - $1 where player_id = $2",[playerHit, player.player_id]);
                 }
                 
