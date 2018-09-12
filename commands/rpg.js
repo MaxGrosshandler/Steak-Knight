@@ -79,7 +79,7 @@ module.exports = {
                    atkDesc += "\nAlso, you leveled up! You are now level " + (player.player_level + 1)
                     }
                     else{
-                        client.query("UPDATE players SET xp = players.xp + $1 where id = $2", [monster.monster_level * 20, player.player_id]);
+                        client.query("UPDATE players SET player_xp = players.player_xp + $1 where player_id = $2", [monster.monster_level * 20, player.player_id]);
                     }
                 }
                 else if (0 >= player.player_hp - monsterHit){
@@ -88,7 +88,7 @@ module.exports = {
                     client.query("UPDATE players SET hp = $1 where id = $2", [player.player_maxhp, player.player_id]);
                 }
                 else {
-                    client.query("UPDATE players SET hp = players.hp - $1 where id = $2",[monsterHit, player.player_id]);
+                    client.query("UPDATE players SET hp = players.hp - $1 where player_id = $2",[monsterHit, player.player_id]);
                     client.query("UPDATE monsters SET hp = monsters.hp - $1 where player_id = $2",[playerHit, player.player_id]);
                 }
                 
