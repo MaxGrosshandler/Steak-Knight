@@ -26,7 +26,7 @@ module.exports = {
         snark[1] = 1234
         snark[2] = Math.ceil(p.rows[0].player_level / 2)
         snark[3] = msg.author.id
-        snark[4] = 10 + 5 * Math.ceil(p.rows[0].player_level )
+        snark[4] = 10 + 5 * Math.ceil(p.rows[0].player_level) + 2 * Math.ceil(p.rows[0].player_level)
         snark[5] = 1  * Math.ceil(p.rows[0].player_level )
         
        
