@@ -71,7 +71,7 @@ module.exports = {
                 let atkDesc = "You dealt the monster " + playerHit + " damage!\n"+
                 "The monster dealt you " + monsterHit + " damage!"
                 if ( 0 >= monster.hp - playerHit){
-                    atkDesc = "You killed the monster! Hooray! You gained " + monster.monster_level * 20 + " xp! You also gained "+monster.monster_level*5+" <:steak:481449443204530197>!"
+                    atkDesc = "You killed the monster! Hooray! You gained " + monster.monster_level * 20 + " xp! You also gained "+monster.monster_level*5+" <:steak:481449443204530197>! You can check your balance with `sk currency`."
                     client.query("INSERT INTO currency (id, money) values ($1, $2) ON CONFLICT (id) DO UPDATE SET money = currency.money + $2 WHERE currency.id = $1", [player.player_id, monster.monster_level*5])
                     client.query("DELETE FROM monsters where player_id = $1",[player.player_id]);
                     if (player.player_xp + monster.monster_level*20 >= player.player_next_level){
@@ -120,7 +120,7 @@ module.exports = {
 
     }
     if (args[0] == "help"){
-        msg.channel.createMessage({embed:{description:"You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` to fight a monster! Please use `sk rpg` first!"}});
+        msg.channel.createMessage({embed:{description:"You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` or `srf` to fight a monster! Please use `sk rpg` first!"}});
     }
     if (args[0] == null){
         let spoop = [];
