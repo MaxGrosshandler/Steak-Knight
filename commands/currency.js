@@ -7,7 +7,7 @@ module.exports = {
     if (args[0] == "add" && process.env.ids.includes(msg.author.id)){
     if (!isNaN(args[2])){
         let values = [];
-        let id = msg.mentions[0].id.replace(/[^a-zA-Z0-9]/g, '');
+        let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
         values[0] = id
         values[1] = args[2]
 
