@@ -75,7 +75,7 @@ module.exports = {
                     client.query("INSERT INTO currency (id, money) values ($1, $2) ON CONFLICT (id) DO UPDATE SET money = currency.money + $2 WHERE currency.id = $1", [player.player_id, monster.monster_level*5])
                     client.query("DELETE FROM monsters where player_id = $1",[player.player_id]);
                     if (player.player_xp + monster.monster_level*20 >= player.player_next_level){
-                        client.query("UPDATE players SET (player_xp, player_hp, player_atk, player_level, player_next_level, player_maxhp) = (players.player_xp + $1, players.player_maxhp + 10 , players.player_atk + 1, players.player_level+1, players.player_next_level + 100, players.player_maxhp+10)   where player_id = $2", [monster.monster_level * 20, player.id]);
+                        client.query("UPDATE players SET (player_xp, player_hp, player_atk, player_level, player_next_level, player_maxhp) = (players.player_xp + $1, players.player_maxhp + 10 , players.player_atk + 1, players.player_level+1, players.player_next_level + 100, players.player_maxhp+10)   where player_id = $2", [monster.monster_level * 20, player.player_id]);
                    atkDesc += "\nAlso, you leveled up! You are now level " + (player.player_level + 1)
                     }
                     else{
