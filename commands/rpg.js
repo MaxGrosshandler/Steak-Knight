@@ -4,18 +4,7 @@ let droll = serv.droll;
 const guildcd = new Set();
 module.exports = {
   func: async (msg, args) => {
-    if (guildcd.has(msg.channel.guild.id)) {
-        msg.channel.createMessage("This command is on cooldown!");
-} else {
-
-       // the user can type the command ... your command code goes here :)
-
-    // Adds the user to the set so that they can't talk for a minute
-    guildcd.add(msg.channel.guild.id);
-    console.log(guildcd);
-    setTimeout(() => {
-      guildcd.delete(msg.channel.guild.id);
-    }, 4000);
+   
 
     if (args[0] == "find"){
         let spoop = [];
@@ -62,6 +51,9 @@ module.exports = {
         })
     }
     if (args[0] == "fight"){
+        if (guildcd.has(msg.channel.guild.id)) {
+            msg.channel.createMessage("This command is on cooldown!");
+    } else {
         client.query("SELECT * FROM monsters where player_id = $1",[msg.author.id]).then(monster=> {
             if (typeof monster.rows[0] == "undefined"){
                 msg.channel.createMessage({embed:{description:"You haven't found a monster yet! Use `sk rpg find`"}})
@@ -113,6 +105,14 @@ module.exports = {
 
         })
 
+
+        guildcd.add(msg.channel.guild.id);
+        setTimeout(() => {
+          guildcd.delete(msg.channel.guild.id);
+        }, 4000);
+    }
+        
+
     }
     if (args[0] == "help"){
         msg.channel.createMessage({embed:{description:"You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` to fight a monster! Please use `sk rpg` first!"}});
@@ -139,10 +139,6 @@ module.exports = {
             }
         })
     }
-
-
-
-}
 
 
     
