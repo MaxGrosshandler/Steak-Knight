@@ -31,6 +31,13 @@ var bot = new Eris.CommandClient(
 );
 const num = Math.random();
 
+/* BEGIN ZOMBIEWATCH */
+
+const ZombieWatch = require('./ZombieWatch');
+const zombieWatch = new ZombieWatch(bot);
+
+/* END ZOMBIEWATCH */
+
 bot.on("guildCreate", async guild => {
     for (const [id, channel] of guild.channels) {
       if (channel.type === 0) { // check if text channel
