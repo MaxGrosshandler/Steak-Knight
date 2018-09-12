@@ -77,13 +77,13 @@ const job = new CronJob('00 00 00 * * 0-6', function() {
 });
 job.start();
 
-//const pkill = new CronJob('0 */10 * * * *', function() {
-  //  process.exit();
+const pkill = new CronJob('0 */10 * * * *', function() {
+    process.exit();
     
-//});
-//pkill.start();
-//console.log('is the kill job running? ', pkill.running);
-//console.log(' i am kill job', pkill.nextDates())
+});
+pkill.start();
+console.log('is the kill job running? ', pkill.running);
+console.log(' i am kill job', pkill.nextDates())
 
 
 let helpCommands = [];
