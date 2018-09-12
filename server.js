@@ -144,9 +144,9 @@ bot.on("messageCreate", async msg => {
 const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
   await page.goto('https://console.run.pivotal.io/');
-  const frame = await page.frames().find(f => f.name() === 'iframe');
-  const button = await frame.$('email');
-  button.click();
+  let texts = await page.evaluate(() => {
+await page.click(document.getElementsById('email'))
+
   await page.keyboard.type(process.env.username);
   await page.click(BUTTON_SELECTOR);
   await page.click(USER_SELECTOR);
@@ -165,7 +165,8 @@ await page.waitForNavigation();
             name: 'steak.jpg'
         });
     browser.close();
-    }
+    })
+  }
 
 
 
