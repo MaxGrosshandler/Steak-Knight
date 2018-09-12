@@ -14,7 +14,6 @@ const sf = require("snekfetch");
 var pg = require("pg");
 const puppeteer = require("puppeteer");
 
-let cooldowns = [];
 var bot = new Eris.CommandClient(
     process.env.token,
     {
@@ -133,6 +132,27 @@ fs.readdir("./commands", (err, files) => {
 
 bot.on("messageCreate", async msg => {
   if (msg.author.bot)return;
+
+  if (msg.content == "spooples!"){
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('https://login.run.pivotal.io/login');
+  await page.screenshot({ path: 'pivotal.png' });
+  let file = fs.readFileSync('./pivotal.png');
+        msg.channel.createMessage('', {
+            file,
+            name: 'steak.jpg'
+        });
+    browser.close();
+    }
+  const EMAIL_SELECTOR = '#email'
+  const USER_SELECTOR = '#username';
+ const PASS_SELECTOR = '#password';
+
+  const BUTTON_SELECTOR = 'body > div.page > div > div > div:nth-child(2) > form > div:nth-child(4) > input';
+    const LOGIN = 'body > div.page > div > div > div:nth-child(2) > form > div:nth-child(3) > input';
+
+
   if (msg.content.toLowerCase().startsWith("sbs ")){
     
     let command = commands.find(function (cmd) {
