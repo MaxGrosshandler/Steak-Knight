@@ -112,7 +112,7 @@ fs.readdir("./commands", (err, files) => {
                 ];
                 commands.push(command)
                 if (command.name !== "weeb" && command.name !== "eval" && command.name !== "invite" && command.name !== "donate"
-            && command.name !== "help" && command.name !== "clean"){
+            && command.name !== "help" && command.name !== "clean" && command.name !== "zombiewatch"){
                     helpCommands.push(newCommand);
                 }
                 
