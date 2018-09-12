@@ -85,10 +85,10 @@ module.exports = {
                 else if (0 >= player.player_hp - monsterHit){
                     atkDesc = "Oh no, you were killed by the monster! You'll have to find another one to fight!"
                     client.query("DELETE FROM monsters  where player_id = $1", [player.player_id]);
-                    client.query("UPDATE players SET hp = $1 where id = $2", [player.player_maxhp, player.player_id]);
+                    client.query("UPDATE players SET player_hp = $1 where player_id = $2", [player.player_maxhp, player.player_id]);
                 }
                 else {
-                    client.query("UPDATE players SET hp = players.hp - $1 where player_id = $2",[monsterHit, player.player_id]);
+                    client.query("UPDATE players SET hp = players.player_hp - $1 where player_id = $2",[monsterHit, player.player_id]);
                     client.query("UPDATE monsters SET hp = monsters.hp - $1 where player_id = $2",[playerHit, player.player_id]);
                 }
                 
