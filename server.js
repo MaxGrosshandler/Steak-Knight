@@ -34,6 +34,7 @@ const num = Math.random();
 
 const ZombieWatch = require('./ZombieWatch');
 const zombieWatch = new ZombieWatch(bot);
+bot.zombieWatch = zombieWatch;
 
 /* END ZOMBIEWATCH */
 
