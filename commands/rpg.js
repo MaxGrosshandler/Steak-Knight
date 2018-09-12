@@ -53,7 +53,7 @@ module.exports = {
         })
     }
     if (args[0] == "fight"){
-        if (guildcd.has(msg.channel.guild.id)) {
+        if (guildcd.has(msg.channel.id)) {
             msg.channel.createMessage("This command is on cooldown!");
     } else {
         client.query("SELECT * FROM monsters where player_id = $1",[msg.author.id]).then(m=> {
@@ -111,9 +111,9 @@ module.exports = {
         })
 
 
-        guildcd.add(msg.channel.guild.id);
+        guildcd.add(msg.channel.id);
         setTimeout(() => {
-          guildcd.delete(msg.channel.guild.id);
+          guildcd.delete(msg.channel.id);
         }, 4000);
     }
         

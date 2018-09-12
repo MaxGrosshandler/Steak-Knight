@@ -125,7 +125,7 @@ fs.readdir("./commands", (err, files) => {
 
 bot.on("messageCreate", async msg => {
   if (msg.author.bot)return;
-  if (msg.content.startsWith("sbs ") || msg.content.startsWith("Sbs ")){
+  if (msg.content.toLowerCase().startsWith("sbs ")){
     
     let command = commands.find(function (cmd) {
       return cmd.name == "bottle"
@@ -139,7 +139,7 @@ bot.on("messageCreate", async msg => {
     command.func(msg, args)
     return;
   }
-  else if (msg.content.startsWith("sbss ") || msg.content.startsWith("Sbss ")){
+  else if (msg.content.toLowerCase().startsWith("sbss ")){
     
     let command = commands.find(function (cmd) {
       return cmd.name == "bottle"
@@ -153,8 +153,14 @@ bot.on("messageCreate", async msg => {
     command.func(msg, args)
     return;
   }
- 
-  if (msg.content == "sboi" || msg.content == "Sboi" ){
+ if (msg.content.toLowerCase() == "srf") {
+     let command = commands.find(function (cmd) {
+         return cmd.name == "rpg"
+     })
+     let args = ["fight"];
+     command.func(msg, args);
+ }
+  if (msg.content.toLowerCase() == "sboi" ){
     let command = commands.find(function (cmd) {
       return cmd.name == "bottle"
     })
@@ -162,7 +168,7 @@ bot.on("messageCreate", async msg => {
     command.func(msg, args);
     
   }
-  if (msg.content == "sboo" || msg.content=="Sboo"){
+  if (msg.content.toLowerCase == "sboo"){
     let command = commands.find(function (cmd) {
       return cmd.name == "bottle"
     })
