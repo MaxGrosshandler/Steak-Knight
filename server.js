@@ -3,6 +3,7 @@ var app = express();
 const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
+const CREDS = require('./creds');
 const tracker = require('pivotaltracker');
 const tClient = new tracker.Client(process.env.tracker);
 const Taihou = require('taihou');
@@ -134,9 +135,27 @@ bot.on("messageCreate", async msg => {
   if (msg.author.bot)return;
 
   if (msg.content == "spooples!"){
+    const EMAIL_SELECTOR = '#email'
+    const USER_SELECTOR = '#username';
+   const PASS_SELECTOR = '#password';
+  
+    const BUTTON_SELECTOR = 'body > div.page > div > div > div:nth-child(2) > form > div:nth-child(4) > input';
+      const LOGIN = 'body > div.page > div > div > div:nth-child(2) > form > div:nth-child(3) > input';
 const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
   await page.goto('https://login.run.pivotal.io/login');
+  await page.click(EMAIL_SELECTOR)
+  await page.keyboard.type(CREDS.username);
+  await page.click(BUTTON_SELECTOR);
+  await page.click(USER_SELECTOR);
+await page.keyboard.type(CREDS.username);
+
+await page.click(PASSWORD_SELECTOR);
+await page.keyboard.type(CREDS.password);
+await page.click(LOGIN);
+
+
+await page.waitForNavigation();
   await page.screenshot({ path: 'pivotal.png' });
   let file = fs.readFileSync('./pivotal.png');
         msg.channel.createMessage('', {
@@ -145,12 +164,7 @@ const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid
         });
     browser.close();
     }
-  const EMAIL_SELECTOR = '#email'
-  const USER_SELECTOR = '#username';
- const PASS_SELECTOR = '#password';
 
-  const BUTTON_SELECTOR = 'body > div.page > div > div > div:nth-child(2) > form > div:nth-child(4) > input';
-    const LOGIN = 'body > div.page > div > div > div:nth-child(2) > form > div:nth-child(3) > input';
 
 
   if (msg.content.toLowerCase().startsWith("sbs ")){
