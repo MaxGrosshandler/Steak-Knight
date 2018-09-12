@@ -3,7 +3,6 @@ var app = express();
 const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
-const CREDS = require('./creds');
 const tracker = require('pivotaltracker');
 const tClient = new tracker.Client(process.env.tracker);
 const Taihou = require('taihou');
@@ -143,15 +142,15 @@ bot.on("messageCreate", async msg => {
       const LOGIN = 'body > div.page > div > div > div:nth-child(2) > form > div:nth-child(3) > input';
 const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
-  await page.goto('https://login.run.pivotal.io/login');
+  await page.goto('https://console.run.pivotal.io/');
   await page.click(EMAIL_SELECTOR)
-  await page.keyboard.type(CREDS.username);
+  await page.keyboard.type(process.env.username);
   await page.click(BUTTON_SELECTOR);
   await page.click(USER_SELECTOR);
-await page.keyboard.type(CREDS.username);
+await page.keyboard.type(process.env.username);
 
-await page.click(PASSWORD_SELECTOR);
-await page.keyboard.type(CREDS.password);
+await page.click(PASS_SELECTOR);
+await page.keyboard.type(process.env.password);
 await page.click(LOGIN);
 
 
