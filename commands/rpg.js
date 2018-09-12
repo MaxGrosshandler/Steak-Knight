@@ -133,8 +133,8 @@ module.exports = {
         snark[4] = 0
         snark[5] = 100
         snark[6] = 50
-        client.query("SELECT * FROM players where id = $1",spoop).then(result => {
-            let player = monster;
+        client.query("SELECT * FROM players where player_id = $1",spoop).then(p => {
+            let player = p.rows[0];
             if (typeof player == "undefined"){
                 client.query("INSERT INTO players (player_id, player_level, player_hp, player_atk, player_xp, player_next_level, player_maxhp) values ($1, $2, $3, $4, $5, $6, $7)", snark)
                 msg.channel.createMessage({embed:{description:"You are level 1, have 50 hp, and have an attack of 2d6+1. You haven't done anything yet, so you have 0xp."}})
