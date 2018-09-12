@@ -151,7 +151,7 @@ module.exports = {
    
 },
   options: {
-    description: "Rpg system (in development)!",
+    description: "Fight some baddies for loot and glory!",
     fullDescription: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` to fight a monster! Please use `sk rpg` first!",
     usage: "`sk rpg`"
   },

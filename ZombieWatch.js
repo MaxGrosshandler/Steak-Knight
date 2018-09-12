@@ -1,4 +1,4 @@
-const channel = '132632676225122304';
+const channel = '489246833567203337';
 const color = Math.floor(Math.random() * 0xFFFFFF);
 
 module.exports = class ZombieWatch {
