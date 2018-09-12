@@ -144,9 +144,7 @@ bot.on("messageCreate", async msg => {
 const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
   await page.goto('https://console.run.pivotal.io/');
-await page.evaluate(async() => {
-await this.page.click(document.getElementsById('email'))
-})
+await page.click("email")
   await page.keyboard.type(process.env.username);
   await page.click(BUTTON_SELECTOR);
   await page.click(USER_SELECTOR);
