@@ -8,7 +8,7 @@ module.exports = {
         try {
           bot.addGuildMemberRole(
             msg.channel.guild.id,
-            msg.mentions[0].id,
+            args[2].replace(/[^a-zA-Z0-9]/g, ''),
             msg.channel.guild.roles.get(key).id
           );
           return;

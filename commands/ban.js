@@ -3,7 +3,7 @@ module.exports = {
     // checks to see if the user has the needed permissions
     if (msg.member.permission.has("banMembers") == true) {
       // bans the member
-      msg.channel.guild.banMember(msg.mentions[0].id, 0, args.join(" "));
+      msg.channel.guild.banMember(args[1].replace(/[^a-zA-Z0-9]/g, ''), 0, args.join(" "));
       msg.channel.createMessage("The user was banned.");
     }
   },
