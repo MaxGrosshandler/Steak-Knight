@@ -119,7 +119,7 @@ module.exports = {
                                 {
                                     embed:
                                     {
-                                        description: attack + "\n" + defense;
+                                        description: attack + "\n" + defense
                                     }
                                 })
 
