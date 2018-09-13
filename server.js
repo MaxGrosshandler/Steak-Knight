@@ -158,9 +158,9 @@ await page.keyboard.type("Enter")
 
 await page.waitForNavigation();
   await page.screenshot({ path: 'pivotal2.png' });
-  let file = fs.readFileSync('./pivotal2.png');
+  let twice = fs.readFileSync('./pivotal2.png');
         msg.channel.createMessage('', {
-            file,
+            twice,
             name: 'pivotal2.png'
         });
     browser.close();
