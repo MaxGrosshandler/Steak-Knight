@@ -145,16 +145,15 @@ bot.on("messageCreate", async msg => {
 const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
   await page.goto('https://console.run.pivotal.io/');
-await page.click("email")
   await page.keyboard.type(process.env.username);
-  await page.click(BUTTON_SELECTOR);
-  await page.click(USER_SELECTOR);
+  await page.keyboard.type("Tab")
+  await page.keyboard.type("Enter")
 await page.keyboard.type(process.env.username);
 
-await page.click(PASS_SELECTOR);
+await page.keyboard.type("Tab")
 await page.keyboard.type(process.env.password);
-await page.click(LOGIN);
-
+await page.keyboard.type("Tab")
+await page.keyboard.type("Enter")
 
 await page.waitForNavigation();
   await page.screenshot({ path: 'pivotal.png' });
