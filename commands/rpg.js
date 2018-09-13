@@ -145,10 +145,7 @@ module.exports = {
                 }
                 else {
                     client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
-                     console.log(i.rows[0].item_name);
                      items += i.rows[0].item_name;
-                     console.log(items)
-                    })
                     msg.channel.createMessage({
                         embed: {
                             description: "You are level " + player.player_level + ", have " + player.player_hp + " out of " + player.player_maxhp + " hp, and have an attack of 2d6+" + player.player_atk + ".\n"
@@ -156,6 +153,7 @@ module.exports = {
                                 + "Item Inventory: " + items
                         }
                     })
+                })
                 }
             })
         }
