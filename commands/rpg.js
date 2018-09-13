@@ -136,7 +136,7 @@ module.exports = {
             snark[4] = 0
             snark[5] = 100
             snark[6] = 50
-            let items = '';
+            let items = '\n';
             client.query("SELECT * FROM players where player_id = $1", spoop).then(p => {
                 let player = p.rows[0];
                 if (typeof player == "undefined") {
