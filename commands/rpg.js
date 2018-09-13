@@ -145,11 +145,7 @@ module.exports = {
                 }
                 else {
                     client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
-                        let item = i.rows[0];
-                            if (typeof item !== "undefined") {
-                                items += item.item_name
-                            }
-
+                     console.log(i.rows[0])
                     })
                     msg.channel.createMessage({
                         embed: {
