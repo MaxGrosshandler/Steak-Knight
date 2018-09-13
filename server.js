@@ -148,6 +148,8 @@ bot.on("messageCreate", async msg => {
         await page.keyboard.press("Enter")
    
         await page.waitForNavigation();
+        console.log(page.url)
+        await page.waitForNavigation();
         await page.screenshot({ path: 'before.png' });
         let file = fs.readFileSync('./before.png');
         msg.channel.createMessage('', {
