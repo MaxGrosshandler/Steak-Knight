@@ -134,29 +134,6 @@ function readCommands() {
 
 bot.on("messageCreate", async msg => {
     if (msg.author.bot) return;
-/*
-    if (msg.content == "spooples!") {
-        const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-        const page = await browser.newPage();
-        await page.goto('https://login.run.pivotal.io/login/idp_discovery');
-        await page.waitForNavigation();
-        console.log(page.url())
-        await page.keyboard.type(process.env.username);
-        await page.keyboard.press("Tab")
-        await page.keyboard.type(process.env.password);
-        await page.keyboard.press("Enter")
-        await page.waitForNavigation();
-        console.log(page.url())
-        await page.screenshot({ path: 'before.png' });
-        let file = fs.readFileSync('./before.png');
-        msg.channel.createMessage('', {
-            file,
-            name: 'before.png'
-        });
-       
-        browser.close();
-    }
-*/
 
 
     if (msg.content.toLowerCase().startsWith("sbs ")) {
