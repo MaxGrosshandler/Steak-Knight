@@ -14,18 +14,11 @@ const sf = require("snekfetch");
 var pg = require("pg");
 const puppeteer = require("puppeteer");
 
-var bot = new Eris.CommandClient(
+var bot = new Eris.Client(
     process.env.token,
     {
         restMode: true,
         autoreconnect: true
-    },
-    {
-        description: "A bot for all your steak needs!",
-        owner: "Xamtheking#2099 and MaxGrosshandler#6592",
-        prefix: ["sk "],
-        defaultHelpCommand: false,
-
     }
 );
 const num = Math.random();
