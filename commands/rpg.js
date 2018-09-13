@@ -133,6 +133,7 @@ module.exports = {
         snark[4] = 0
         snark[5] = 100
         snark[6] = 50
+        let items = '';
         client.query("SELECT * FROM players where player_id = $1",spoop).then(p => {
             let player = p.rows[0];
             if (typeof player == "undefined"){
@@ -140,8 +141,18 @@ module.exports = {
                 msg.channel.createMessage({embed:{description:"You are level 1, have 50 hp, and have an attack of 2d6+1. You haven't done anything yet, so you have 0xp."}})
             }
             else {
+                client.query("SELECT * FROM items where player_id = $1",spoop).then(i => {
+                    let item = i.rows;
+
+                   item.forEach(function (i) {
+                       if (typeof i !== "undefined"){
+                           items += i.item_name
+                       }
+                   })
+                })
                 msg.channel.createMessage({embed:{description:"You are level "+player.player_level+", have "+player.player_hp+" out of " +player.player_maxhp + " hp, and have an attack of 2d6+"+player.player_atk + ".\n"
-                +"You have " + player.player_xp + " xp and you hit the next level at "+ player.player_next_level + " xp."}})
+                +"You have " + player.player_xp + " xp and you hit the next level at "+ player.player_next_level + " xp.\n"
+            +"Item Inventory: "+items}})
             }
         })
     }

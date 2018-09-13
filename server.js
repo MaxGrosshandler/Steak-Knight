@@ -141,6 +141,12 @@ const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid
   await page.goto('https://console.run.pivotal.io/');
   await page.keyboard.type(process.env.username);
   await page.keyboard.type("Tab")
+  await page.screenshot({ path: 'pivotal.png' });
+  let file = fs.readFileSync('./pivotal.png');
+        msg.channel.createMessage('', {
+            file,
+            name: 'pivotal.png'
+        });
   await page.keyboard.type("Enter")
   await page.waitForNavigation();
 await page.keyboard.type(process.env.username);
@@ -151,11 +157,11 @@ await page.keyboard.type("Tab")
 await page.keyboard.type("Enter")
 
 await page.waitForNavigation();
-  await page.screenshot({ path: 'pivotal.png' });
-  let file = fs.readFileSync('./pivotal.png');
+  await page.screenshot({ path: 'pivotal2.png' });
+  let file = fs.readFileSync('./pivotal2.png');
         msg.channel.createMessage('', {
             file,
-            name: 'steak.jpg'
+            name: 'pivotal2.png'
         });
     browser.close();
   }
