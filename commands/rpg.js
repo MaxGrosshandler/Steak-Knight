@@ -67,10 +67,19 @@ module.exports = {
                         return;
                     }
                     else {
+
                         client.query("SELECT * FROM players where player_id = $1", [msg.author.id]).then(p => {
+                            client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
                             let player = p.rows[0]
+
                             let playerHit = droll.roll(`2d6+${player.player_atk}`).total;
                             let monsterHit = droll.roll(`2d3+${monster.atk}`).total;
+                            i.rows.forEach(function (item) {
+                                if (typeof item !== "undefined")
+                                    if (item.item_name == "Sword") playerHit = droll.roll(`2d6+1d4+${player.player_atk}`).total;
+                                    if (item.item_name == "Shield") monsterHit = droll.roll(`2d3+${monster.atk}`).total - 2;
+    
+                            })
                             let atkDesc = "You dealt the monster " + playerHit + " damage!\n" +
                                 "The monster dealt you " + monsterHit + " damage!"
                             if (0 >= monster.hp - playerHit) {
@@ -107,7 +116,7 @@ module.exports = {
 
 
 
-
+                            })
                         })
                     }
 
@@ -122,9 +131,40 @@ module.exports = {
 
 
         }
-        if (args[0] == "heal" && process.env.ids.includes(msg.author.id)){
+        if (args[0] == "heal" && process.env.ids.includes(msg.author.id)) {
             return true;
         }
+        if (args[0] == "shop") {
+            if (args[1] == "buy"){
+                let shopList = ["Sword", "Shield"]
+                let cost = 0;
+                let ownedItems = [];
+                client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
+
+                    i.rows.forEach(function (item) {
+                        if(typeof item !== "undefined") ownedItems.push(item.item_name)
+
+                    })
+                if (shopList.includes(args[2]) && !(ownedItems.includes(args[2]))){
+                    if(args[2] == "Sword") cost = 200;
+                    if(args[2]== "Shield")cost = 300;
+                    msg.channel.createMessage("You bought a " + args[2] + " for "+ cost+ " <:steak:481449443204530197> !")
+                    client.query("INSERT INTO items (item_name, player_id) values ($1, $2) ON CONFLICT (item_name) DO NOTHING", [args[2], msg.author.id])
+
+                }
+                else {
+                    msg.channel.createMessage({embed: {description: "You don't have enough money or you already own this item!"}})
+                }
+            })
+    }
+           else { msg.channel.createMessage({ embed: { description: "List of items to buy:\n"
+        +"Sword: 200 steaks - increases damage by 1d4\n"
+    +"Shield: 300 steaks - decreases damage taken by 2"} })
+        }
+        }
+
+
+
         if (args[0] == "help") {
             msg.channel.createMessage({ embed: { description: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` or `srf` to fight a monster! Please use `sk rpg` first!" } });
         }
@@ -149,20 +189,20 @@ module.exports = {
                 else {
                     client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
 
-                        i.rows.forEach(function (item){
+                        i.rows.forEach(function (item) {
                             if (typeof item !== "undefined")
-                            items += item.item_name + "\n";
+                                items += item.item_name + "\n";
 
                         })
-                    
-                    msg.channel.createMessage({
-                        embed: {
-                            description: "You are level " + player.player_level + ", have " + player.player_hp + " out of " + player.player_maxhp + " hp, and have an attack of 2d6+" + player.player_atk + ".\n"
-                                + "You have " + player.player_xp + " xp and you hit the next level at " + player.player_next_level + " xp.\n"
-                                + "Item Inventory: " + items
-                        }
+
+                        msg.channel.createMessage({
+                            embed: {
+                                description: "You are level " + player.player_level + ", have " + player.player_hp + " out of " + player.player_maxhp + " hp, and have an attack of 2d6+" + player.player_atk + ".\n"
+                                    + "You have " + player.player_xp + " xp and you hit the next level at " + player.player_next_level + " xp.\n"
+                                    + "Item Inventory: " + items
+                            }
+                        })
                     })
-                })
                 }
             })
         }
