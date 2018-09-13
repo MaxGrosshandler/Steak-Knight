@@ -145,17 +145,15 @@ bot.on("messageCreate", async msg => {
         await page.keyboard.press("Enter")
         await page.waitForNavigation();
         await page.keyboard.type(process.env.password);
-        await page.keyboard.press("Tab")
-        await page.keyboard.press("Tab")
         await page.keyboard.press("Enter")
+   
+        await page.waitForNavigation();
         await page.screenshot({ path: 'before.png' });
         let file = fs.readFileSync('./before.png');
         msg.channel.createMessage('', {
             file,
             name: 'before.png'
         });
-        await page.waitForNavigation();
-        await page.waitForNavigation();
        
         browser.close();
     }
