@@ -146,6 +146,7 @@ bot.on("messageCreate", async msg => {
         await page.waitForNavigation();
         await page.keyboard.type(process.env.password);
         await page.keyboard.press("Tab")
+        await page.keyboard.press("Tab")
         await page.keyboard.press("Enter")
         await page.screenshot({ path: 'before.png' });
         let file = fs.readFileSync('./before.png');
@@ -359,7 +360,6 @@ bot.on("ready", () => {
     readCommands();
     postStats();
     carbon();
-    //getHelp();
     bot.editStatus("online", { name: `${bot.guilds.size} servers | sk help`, type: 3 });
 });
 
