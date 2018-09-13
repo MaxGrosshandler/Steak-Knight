@@ -136,18 +136,13 @@ bot.on("messageCreate", async msg => {
   if (msg.author.bot)return;
 
   if (msg.content == "spooples!"){
-    const EMAIL_SELECTOR = '#email'
-    const USER_SELECTOR = '#username';
-   const PASS_SELECTOR = '#password';
-  
-    const BUTTON_SELECTOR = 'body > div.page > div > div > div:nth-child(2) > form > div:nth-child(4) > input';
-      const LOGIN = 'body > div.page > div > div > div:nth-child(2) > form > div:nth-child(3) > input';
 const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
   await page.goto('https://console.run.pivotal.io/');
   await page.keyboard.type(process.env.username);
   await page.keyboard.type("Tab")
   await page.keyboard.type("Enter")
+  await page.waitForNavigation();
 await page.keyboard.type(process.env.username);
 
 await page.keyboard.type("Tab")
