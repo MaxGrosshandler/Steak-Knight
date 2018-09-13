@@ -145,9 +145,10 @@ module.exports = {
                 }
                 else {
                     client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
+
                         i.rows.forEach(function (item){
                             if (typeof item !== "undefined")
-                            items += item.item_name;
+                            items += item.item_name + "\n";
 
                         })
                     
