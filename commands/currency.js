@@ -12,7 +12,10 @@ module.exports = {
         values[1] = args[2]
 
         client.query("INSERT INTO currency (id, money) values ($1, $2) ON CONFLICT (id) DO UPDATE SET money = currency.money + $2 WHERE currency.id = $1", values).then(result =>{
-            msg.channel.createMessage("Added " + args[2] + " <:steak:481449443204530197> to " + msg.mentions[0].username)
+            bot.getRESTUser(values[0]).then(user => {
+                msg.channel.createMessage("Added " + args[2] + " <:steak:481449443204530197> to " + user.username)
+            })
+            
             
               })
               
@@ -24,7 +27,7 @@ module.exports = {
             else if (args[0] == "remove" && process.env.ids.includes(msg.author.id) ){
                 if (!isNaN(args[2])){
                 let values = [];
-                let id = msg.mentions[0].id.replace(/[^a-zA-Z0-9]/g, '');
+                let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
                 values[0] = id
                 values[1] = args[2]
                 let snakes = [];
@@ -36,7 +39,10 @@ module.exports = {
                     }
                     else{
                         client.query("UPDATE currency SET money = currency.money - $2 WHERE currency.id = $1", values).then(result =>{
-                            msg.channel.createMessage("Removed " + args[2] + " <:steak:481449443204530197>  from the account of " + msg.mentions[0].username)
+                            bot.getRESTUser(values[0]).then(user => {
+                                msg.channel.createMessage("Removed " + args[2] + " <:steak:481449443204530197>  from the account of " + user.username)
+                            })
+                            
                             
                               })
                     }
@@ -52,7 +58,7 @@ module.exports = {
             else if (args[0] == "give" ){
                 if(!isNaN(args[2])){
                 let values = [];
-                let id = msg.mentions[0].id.replace(/[^a-zA-Z0-9]/g, '');
+                let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
                 values[0] = id
                 values[1] = args[2]
                 let snakes = [];
@@ -78,7 +84,10 @@ module.exports = {
                         })
                         client.query("UPDATE currency SET money = currency.money - $2 WHERE currency.id = $1", snakes).then(rob =>
                             {
-                            msg.channel.createMessage("Gave " + args[2] + " <:steak:481449443204530197> to " + msg.mentions[0].username)
+                                bot.getRESTUser(values[0]).then(user => {
+                                    msg.channel.createMessage("Gave " + args[2] + " <:steak:481449443204530197> to " + user.username)
+                                })
+                            
                             }
                         )
                         }

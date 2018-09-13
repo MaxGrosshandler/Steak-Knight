@@ -122,6 +122,9 @@ module.exports = {
 
 
         }
+        if (args[0] == "heal" && process.env.ids.includes(msg.author.id)){
+            return true;
+        }
         if (args[0] == "help") {
             msg.channel.createMessage({ embed: { description: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` or `srf` to fight a monster! Please use `sk rpg` first!" } });
         }
