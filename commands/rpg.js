@@ -14,15 +14,18 @@ module.exports = {
 
                 }
                 else {
-                    if (p.rows[0].player_level < 3) {
-                        snark[0] = "Steakgoblin"
+                    if (p.rows[0].player_level > 5) {
+                        snark[0] = "Steakdragon"
+                    }
+                    else if (p.rows[0].player_level > 2) {
+                        snark[0] = "Steakorc"
                     }
                     else {
-                        snark[0] = "Steakorc"
+                        snark[0] = "Steakgoblin"
                     }
 
                     snark[1] = 1234
-                    snark[2] = Math.ceil(p.rows[0].player_level / 2)
+                    snark[2] = Math.ceil(p.rows[0].player_level)
                     snark[3] = msg.author.id
                     snark[4] = 8 + 5 * Math.ceil(p.rows[0].player_level) + 2 * Math.ceil(p.rows[0].player_level)
                     snark[5] = 2 + 1 * Math.ceil(p.rows[0].player_level)
@@ -94,7 +97,7 @@ module.exports = {
                                     client.query("INSERT INTO currency (id, money) values ($1, $2) ON CONFLICT (id) DO UPDATE SET money = currency.money + $2 WHERE currency.id = $1", [player.player_id, monster.monster_level * 5])
                                     client.query("DELETE FROM monsters where player_id = $1", [player.player_id]);
                                     if (player.player_xp + monster.monster_level * 20 >= player.player_next_level) {
-                                        client.query("UPDATE players SET (player_xp, player_hp, player_atk, player_level, player_next_level, player_maxhp) = (players.player_xp + $1, players.player_maxhp + 10 , players.player_atk + 1, players.player_level+1, players.player_next_level + 100, players.player_maxhp+10)   where player_id = $2", [monster.monster_level * 20, player.player_id]);
+                                        client.query("UPDATE players SET (player_xp, player_hp, player_atk, player_level, player_next_level, player_maxhp) = (0, players.player_maxhp + 10 , players.player_atk + 1, players.player_level+1, players.player_next_level + 100, players.player_maxhp+10)   where player_id = $2", [monster.monster_level * 20, player.player_id]);
                                         attack += "\nAlso, you leveled up! You are now level " + (player.player_level + 1)
                                     }
                                     else {
