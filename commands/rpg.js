@@ -7,10 +7,8 @@ module.exports = {
 
 
         if (args[0] == "find") {
-            let spoop = [];
-            spoop[0] = msg.author.id
             let snark = [];
-            client.query("Select * from players where player_id = $1", spoop).then(p => {
+            client.query("Select * from players where player_id = $1", [msg.author.id]).then(p => {
                 if (typeof p.rows[0] == "undefined") {
                     msg.channel.createMessage({ embed: { description: "You haven't started your adventure yet! Use `sk rpg`" } })
 
@@ -32,14 +30,14 @@ module.exports = {
 
 
 
-                    client.query("SELECT * FROM monsters where player_id = $1", spoop).then(m => {
+                    client.query("SELECT * FROM monsters where player_id = $1", [msg.author.id]).then(m => {
                         let monster = m.rows[0];
                         if (typeof monster == "undefined") {
                             client.query("INSERT INTO monsters (monster_name, monster_id, monster_level, player_id, hp,  atk ) values ($1, $2, $3, $4, $5, $6)", snark)
                             msg.channel.createMessage({ embed: { description: "You found a " + snark[0] + "! It is level " + snark[2] + ", has " + snark[4] + " health, and has an attack of 2d3+" + snark[5] + "." } })
                         }
                         else {
-                            client.query("SELECT * FROM monsters where player_id = $1", spoop).then(m => {
+                            client.query("SELECT * FROM monsters where player_id = $1", [msg.author.id]).then(m => {
                                 let monster = m.rows[0];
                                 msg.channel.createMessage({
                                     embed: {
@@ -69,7 +67,7 @@ module.exports = {
                     else {
 
                         client.query("SELECT * FROM players where player_id = $1", [msg.author.id]).then(p => {
-                            client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
+                            client.query("SELECT * FROM items where player_id = $1", [msg.author.id]).then(i => {
                             let player = p.rows[0]
 
                             let playerHit = droll.roll(`2d6+${player.player_atk}`).total;
@@ -139,7 +137,7 @@ module.exports = {
                 let shopList = ["Sword", "Shield"]
                 let cost = 0;
                 let ownedItems = [];
-                client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
+                client.query("SELECT * FROM items where player_id = $1", [msg.author.id]).then(i => {
 
                     i.rows.forEach(function (item) {
                         if(typeof item !== "undefined") ownedItems.push(item.item_name)
@@ -169,8 +167,6 @@ module.exports = {
             msg.channel.createMessage({ embed: { description: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` or `srf` to fight a monster! Please use `sk rpg` first!" } });
         }
         if (args[0] == null) {
-            let spoop = [];
-            spoop[0] = msg.author.id
             let snark = [];
             snark[0] = msg.author.id
             snark[1] = 1
@@ -180,14 +176,14 @@ module.exports = {
             snark[5] = 100
             snark[6] = 50
             let items = '\n';
-            client.query("SELECT * FROM players where player_id = $1", spoop).then(p => {
+            client.query("SELECT * FROM players where player_id = $1", [msg.author.id]).then(p => {
                 let player = p.rows[0];
                 if (typeof player == "undefined") {
                     client.query("INSERT INTO players (player_id, player_level, player_hp, player_atk, player_xp, player_next_level, player_maxhp) values ($1, $2, $3, $4, $5, $6, $7)", snark)
                     msg.channel.createMessage({ embed: { description: "You are level 1, have 50 hp, and have an attack of 2d6+1. You haven't done anything yet, so you have 0xp." } })
                 }
                 else {
-                    client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
+                    client.query("SELECT * FROM items where player_id = $1", [msg.author.id]).then(i => {
 
                         i.rows.forEach(function (item) {
                             if (typeof item !== "undefined")
