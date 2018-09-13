@@ -17,7 +17,6 @@ const puppeteer = require("puppeteer");
 var bot = new Eris.Client(
     process.env.token,
     {
-        restMode: true,
         autoreconnect: true
     }
 );
