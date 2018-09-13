@@ -145,7 +145,12 @@ module.exports = {
                 }
                 else {
                     client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
-                     items += i.rows[0].item_name;
+                        i.rows.forEach(function (item){
+                            if (typeof item !== "undefined")
+                            items += item.item_name;
+
+                        })
+                    
                     msg.channel.createMessage({
                         embed: {
                             description: "You are level " + player.player_level + ", have " + player.player_hp + " out of " + player.player_maxhp + " hp, and have an attack of 2d6+" + player.player_atk + ".\n"
