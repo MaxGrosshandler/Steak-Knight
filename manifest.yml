@@ -3,7 +3,7 @@ applications:
     memory: 512M
     instances: 1
     random-route: true
-    command: npm start | git clone https://github.com/sagnew/Twilio-IP-Messaging-Plays-Pokemon.git | cd Twilio-IP-Messaging-Plays-Pokemon | git checkout original-game
+    command: npm start
     buildpacks:
     - https://github.com/cloudfoundry/apt-buildpack
     - https://github.com/cloudfoundry/nodejs-buildpack
