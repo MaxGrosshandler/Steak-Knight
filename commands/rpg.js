@@ -145,7 +145,9 @@ module.exports = {
                 }
                 else {
                     client.query("SELECT * FROM items where player_id = $1", spoop).then(i => {
-                     console.log(i.rows[0])
+                     console.log(i.rows[0].item_name);
+                     items += i.rows[0].item_name;
+                     console.log(items)
                     })
                     msg.channel.createMessage({
                         embed: {
