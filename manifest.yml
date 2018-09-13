@@ -3,7 +3,7 @@ applications:
     memory: 512M
     instances: 1
     random-route: true
-    command: npm start
+    command: npm install | npm start
     buildpacks:
     - https://github.com/cloudfoundry/apt-buildpack
     - https://github.com/cloudfoundry/nodejs-buildpack
