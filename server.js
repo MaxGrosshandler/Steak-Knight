@@ -7,7 +7,7 @@ const tracker = require('pivotaltracker');
 const tClient = new tracker.Client(process.env.tracker);
 const Taihou = require('taihou');
 const weebSH = new Taihou(process.env.wolke, true, {
-    userAgent: 'Steak Knight/4.0.0'
+    userAgent: 'Steak Knight/3.0.0'
 });
 
 const sf = require("snekfetch");
