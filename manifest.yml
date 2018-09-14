@@ -1,10 +1,9 @@
 applications:
   - name: sk
-    memory: 512M
+    memory: 2G
     instances: 1
     random-route: true
     command: npm start
     buildpacks:
-    - https://github.com/cloudfoundry/apt-buildpack
     - https://github.com/cloudfoundry/nodejs-buildpack
 
