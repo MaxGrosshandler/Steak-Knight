@@ -305,6 +305,41 @@ module.exports = {
         if (args[0] == "help") {
             msg.channel.createMessage({ embed: { description: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` or `srf` to fight a monster! Please use `sk rpg` first!" } });
         }
+        if (args[0] == "lookup"){
+            let items = '';
+            let playerClass = "none (you'll get one at level 5)";
+            bot.getRESTUser(args[1]).then(user => {
+                if (typeof result.rows[0] !== "undefined"){
+                    client.query("SELECT * FROM players where player_id = $1", [msg.author.id]).then(p => {
+                        let player = p.rows[0];
+            client.query("SELECT * FROM classes where player_id = $1", [args[1]]).then(cla => {
+                client.query("SELECT * FROM items where player_id = $1", [args[1]]).then(i => {
+                    c = cla.rows[0];
+                    if (typeof c !== "undefined") {
+                        playerClass = c.class_name;
+                    }
+
+                    i.rows.forEach(function (item) {
+                        if (typeof item !== "undefined")
+                            items += item.item_name + " | ";
+
+                    })
+                    items += "\n"
+                    
+
+                    msg.channel.createMessage({
+                        embed: {
+                            description: user.username+" is level " + player.player_level + ", have " + player.player_hp + " out of " + player.player_maxhp + " hp, and have an attack of 2d6+" + player.player_atk + ".\n"
+                                + "You have " + player.player_xp + " xp and you hit the next level at " + player.player_next_level + " xp.\n"
+                                + "Items: " + items + "Class: " + playerClass
+                        }
+                    })
+                })
+            })
+        })
+    }
+    })
+}
         if (args[0] == null) {
             let snark = [];
             snark[0] = msg.author.id
