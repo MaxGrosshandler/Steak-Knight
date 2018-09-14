@@ -99,10 +99,10 @@ function readCommands() {
                     command.func,
                     command.hidden
                 ];
-                if (command.name !== "weeb"){
+                if (command.name !== "weeb") {
                     commands.push(command)
                 }
-                
+
                 if (command.name !== "weeb" && command.name !== "eval" && command.name !== "invite" && command.name !== "donate"
                     && command.name !== "help" && command.name !== "clean" && command.name !== "zombiewatch") {
                     helpCommands.push(newCommand);
@@ -191,82 +191,39 @@ bot.on("messageCreate", async msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
-    if (msg.channel.guild == undefined) {
-        if (msg.content.toLowerCase().startsWith("sk ")) {
-            let stuff = msg.content.split(" ")
-            let c = stuff[1];
-            stuff.shift();
-            if (typeof msg.mentions[0] !== "undefined" && c !== "currency") {
-                weebSH.toph.getImageTypes()
-                    .then(array => {
-                        if (array.types.includes(c)) {
-                            try {
-                                weeb.func(msg, stuff);
-                                console.log("Command was sk " + command.name + " and was in a dm")
-                            }
-                            catch (err) {
-                                console.log("whoopsies")
-                            }
+
+    if (msg.content.toLowerCase().startsWith("sk ")) {
+        let stuff = msg.content.split(" ")
+        let c = stuff[1];
+        stuff.shift();
+        if (c !== "currency") {
+            weebSH.toph.getImageTypes()
+                .then(array => {
+                    if (array.types.includes(c)) {
+                        try {
+                            weeb.func(msg, stuff);
                         }
-
+                        catch (err) {
+                            console.log(err)
+                        }
                     }
-                    )
-            }
-            else {
-                stuff.shift();
 
-                commands.forEach(function (command) {
-                    if (command.name == c) {
-                        command.func(msg, stuff)
-                        console.log("Command was sk " + command.name + " and was in a dm")
-                    }
                 }
-
                 )
-            }
         }
+        else {
+            stuff.shift();
 
-    }
-    else {
-                if (msg.content.toLowerCase().startsWith("sk ")) {
-                    let stuff = msg.content.split(" ")
-                    let c = stuff[1];
-                    stuff.shift();
-                    if (typeof msg.mentions[0] !== "undefined" && c !== "currency") {
-                        weebSH.toph.getImageTypes()
-                            .then(array => {
-                                if (array.types.includes(c)) {
-                                    try {
-                                        weeb.func(msg, stuff);
-                                        console.log("Command was sk " + command.name + " and was in " + msg.channel.guild.name)
-                                    }
-                                    catch (err) {
-                                        console.log("whoopsies")
-                                    }
-                                }
-
-                            }
-                            )
-                    }
-                    else {
-                        stuff.shift();
-
-                        commands.forEach(function (command) {
-                            if (command.name == c) {
-                                command.func(msg, stuff)
-                                console.log("Command was sk " + command.name + " and was in " + msg.channel.guild.name)
-                            }
-                        }
-
-                        )
-                    }
+            commands.forEach(function (command) {
+                if (command.name == c) {
+                    command.func(msg, stuff)
+                    console.log("Command was sk " + command.name)
                 }
+            }
 
-
-
-            
+            )
+        }
     }
-    //.catch(console.error)
 
 });
 
