@@ -335,6 +335,7 @@ module.exports = {
                                     items += item.item_name + " | ";
 
                             })
+                            items += "\n"
 
                             msg.channel.createMessage({
                                 embed: {

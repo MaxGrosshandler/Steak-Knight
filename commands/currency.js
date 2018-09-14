@@ -140,8 +140,6 @@ module.exports = {
                         client.query("SELECT * FROM currency where id = $1",[args[1]]).then(result => {
                             bot.getRESTUser(args[1]).then(user => {
                             if (typeof result.rows[0] == "undefined"){
-                               
-                                
                                 msg.channel.createMessage(user.username +" has 0 <:steak:481449443204530197>")
                             }
                             else {
