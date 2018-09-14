@@ -11,7 +11,6 @@ const weebSH = new Taihou(process.env.wolke, true, {
 
 const sf = require("snekfetch");
 var pg = require("pg");
-const puppeteer = require("puppeteer");
 
 var bot = new Eris.Client(
     process.env.token,
@@ -100,7 +99,10 @@ function readCommands() {
                     command.func,
                     command.hidden
                 ];
-                commands.push(command)
+                if (command.name !== "weeb"){
+                    commands.push(command)
+                }
+                
                 if (command.name !== "weeb" && command.name !== "eval" && command.name !== "invite" && command.name !== "donate"
                     && command.name !== "help" && command.name !== "clean" && command.name !== "zombiewatch") {
                     helpCommands.push(newCommand);
@@ -226,9 +228,6 @@ bot.on("messageCreate", async msg => {
 
     }
     else {
-        weebSH.tama.getSetting('guilds', msg.channel.guild.id)
-            .then(setting => {
-
                 if (msg.content.toLowerCase().startsWith("sk ")) {
                     let stuff = msg.content.split(" ")
                     let c = stuff[1];
@@ -265,7 +264,7 @@ bot.on("messageCreate", async msg => {
 
 
 
-            })
+            
     }
     //.catch(console.error)
 
@@ -312,7 +311,6 @@ module.exports.bot = bot;
 module.exports.sf = sf;
 module.exports.weebSH = weebSH;
 module.exports.helpCommands = helpCommands;
-module.exports.puppeteer = puppeteer;
 module.exports.droll = droll;
 app.use(express.static(__dirname + "/public"));
 app.listen(process.env.PORT || 4000);

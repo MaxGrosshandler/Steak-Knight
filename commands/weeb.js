@@ -1,7 +1,9 @@
-const serv = require("../server.js");
-let weebSH = serv.weebSH;
+
 module.exports = {
   func: async (msg, args) => {
+    const weebSH = new Taihou(process.env.wolke, true, {
+        userAgent: 'Steak Knight/4.0.0'
+    });
     weebSH.toph.getImageTypes()
     .then(array => {
         if (array.types.includes(args[0])){
