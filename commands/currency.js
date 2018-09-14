@@ -136,6 +136,20 @@ module.exports = {
 
 
                     }
+                    else if (args[0] == "bal"){
+                        client.query("SELECT * FROM currency where id = $1",[args[1]]).then(result => {
+                            bot.getRESTUser(values[0]).then(user => {
+                            if (typeof result.rows[0] == "undefined"){
+                               
+                                
+                                msg.channel.createMessage(user.username +" has 0 <:steak:481449443204530197>")
+                            }
+                            else {
+                                msg.channel.createMessage(user.username +" has " + result.rows[0].money+ " <:steak:481449443204530197>")
+                            }
+                        })
+                    })
+                }
             
 
 
