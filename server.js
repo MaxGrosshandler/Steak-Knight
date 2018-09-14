@@ -4,6 +4,7 @@ const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
 const Taihou = require('taihou');
+const weeb = require("./commands/weeb.js")
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/3.0.0'
 });
@@ -201,10 +202,7 @@ bot.on("messageCreate", async msg => {
                     .then(array => {
                         if (array.types.includes(c)) {
                             try {
-                                let command = commands.find(function (command) {
-                                    return command.name == "weeb"
-                                })
-                                command.func(msg, stuff);
+                                weeb.func(msg, stuff);
                                 console.log("Command was sk " + command.name + " and was in a dm")
                             }
                             catch (err) {
@@ -245,10 +243,7 @@ bot.on("messageCreate", async msg => {
                             .then(array => {
                                 if (array.types.includes(c)) {
                                     try {
-                                        let command = commands.find(function (command) {
-                                            return command.name == "weeb"
-                                        })
-                                        command.func(msg, stuff);
+                                        weeb.func(msg, stuff);
                                         console.log("Command was sk " + command.name + " and was in " + msg.channel.guild.name)
                                     }
                                     catch (err) {
