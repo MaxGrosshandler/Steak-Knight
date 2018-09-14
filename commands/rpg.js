@@ -203,20 +203,23 @@ module.exports = {
                                 if(cap(args[1]) == "Barbarian") 
                                  {
                                      client.query("insert into classes (class_name, type, value, player_id) values ($1, $2, $3, $4)", ["Barbarian", 'a', 5, msg.author.id])
-                                    msg.channel.createMessage("You are now a "+cap(args[1]))
+                                    msg.channel.createMessage("You are now a "+cap(args[1]+"! You can use `sk rpg fight skill` to use your skill in battle!"))
                                     }
                                  
                                 else if(cap(args[1]) == "Mage"){
                                   client.query("insert into classes (class_name, type, value, player_id) values ($1, $2, $3, $4)", ["Mage", 'a', 5, msg.author.id])
-                                  msg.channel.createMessage("You are now a "+cap(args[1]))
+                                  msg.channel.createMessage("You are now a "+cap(args[1]+"! You can use `sk rpg fight skill` to use your skill in battle!"))
+
                                 }
                                   else if(cap(args[1]) == "Guardian") {
                                   client.query("insert into classes (class_name, type, value, player_id) values ($1, $2, $3, $4)", ["Guardian", 'd', 5, msg.author.id])
-                                  msg.channel.createMessage("You are now a "+cap(args[1]))
+                                  msg.channel.createMessage("You are now a "+cap(args[1]+"! You can use `sk rpg fight skill` to use your skill in battle!"))
+
                                 }
                                   else if(cap(args[1]) == "Priest") {
                                  client.query("insert into classes (class_name, type, value, player_id) values ($1, $2, $3, $4)", ["Priest", 'd', 5, msg.author.id])
-                                 msg.channel.createMessage("You are now a "+cap(args[1]))
+                                 msg.channel.createMessage("You are now a "+cap(args[1]+"! You can use `sk rpg fight skill` to use your skill in battle!"))
+
                                 }
                                  else {
                                     msg.channel.createMessage("That's not a valid class!")
@@ -242,7 +245,9 @@ module.exports = {
                     "Barbarian - attack focused strong man\n"
                     +"Mage - attack focused spellcaster\n"
                     +"Guardian - defending melee man\n"
-                    +"Priest - defensive holy dude"
+                    +"Priest - defensive holy dude\n"
+                    +"You can choose one of these classes with `sk rpg class <classname> if you are level 5 or higher and don't already have a class!"
+
                 }})
             }
 
