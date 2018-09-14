@@ -1,5 +1,5 @@
 const serv = require("../server.js");
-let weebSH= serv.weebSH;
+let weebSH = serv.weebSH;
 module.exports = {
   func: async (msg, args) => {
     weebSH.toph.getImageTypes()
