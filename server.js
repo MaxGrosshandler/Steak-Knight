@@ -64,7 +64,7 @@ const job = new CronJob('00 00 00 * * 0-6', function () {
 });
 job.start();
 
-const pkill = new CronJob('0 */10 * * * *', function () {
+const pkill = new CronJob('0 */40 * * * *', function () {
     process.exit();
 
 });
