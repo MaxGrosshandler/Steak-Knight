@@ -1,6 +1,7 @@
 const serv = require("../server.js");
 let client = serv.client;
 let droll = serv.droll;
+let bot = serv.bot;
 const guildcd = new Set();
 function cap(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -309,8 +310,8 @@ module.exports = {
             let items = '';
             let playerClass = "none (you'll get one at level 5)";
             bot.getRESTUser(args[1]).then(user => {
-                if (typeof result.rows[0] !== "undefined"){
-                    client.query("SELECT * FROM players where player_id = $1", [msg.author.id]).then(p => {
+                if (typeof user !== "undefined"){
+                    client.query("SELECT * FROM players where player_id = $1", [args[1]]).then(p => {
                         let player = p.rows[0];
             client.query("SELECT * FROM classes where player_id = $1", [args[1]]).then(cla => {
                 client.query("SELECT * FROM items where player_id = $1", [args[1]]).then(i => {
@@ -329,8 +330,8 @@ module.exports = {
 
                     msg.channel.createMessage({
                         embed: {
-                            description: user.username+" is level " + player.player_level + ", have " + player.player_hp + " out of " + player.player_maxhp + " hp, and have an attack of 2d6+" + player.player_atk + ".\n"
-                                + "You have " + player.player_xp + " xp and you hit the next level at " + player.player_next_level + " xp.\n"
+                            description: user.username+" is level " + player.player_level + ", has " + player.player_hp + " out of " + player.player_maxhp + " hp, and has an attack of 2d6+" + player.player_atk + ".\n"
+                                + "They have " + player.player_xp + " xp and they hit the next level at " + player.player_next_level + " xp.\n"
                                 + "Items: " + items + "Class: " + playerClass
                         }
                     })
