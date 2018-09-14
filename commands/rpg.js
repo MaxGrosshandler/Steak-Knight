@@ -106,13 +106,12 @@ module.exports = {
                                         else {
 
                                             let c = cla.rows[0];
-                                            console.log(c)
                                             if (c.type === 'a') {
                                                 playerHit += c.value
-                                                if (c.name == "Barbarian") {
+                                                if (c.class_name === "Barbarian") {
                                                     attack += ", buffed thanks to your Mighty Swing"
                                                 }
-                                                else if (c.name == "Mage") {
+                                                else if (c.class_name === "Mage") {
                                                     attack += ", buffed thanks to your Frost Barrage"
                                                 }
 
@@ -120,10 +119,10 @@ module.exports = {
                                             }
                                             else if (c.type === 'd') {
                                                 monsterHit -= c.value
-                                                if (c.name == "Guardian") {
+                                                if (c.class_name === "Guardian") {
                                                     defense += ", reduced thanks to your Steadfast Will"
                                                 }
-                                                else if (c.name == "Priest") {
+                                                else if (c.class_name === "Priest") {
                                                     attack += ", reduced thanks to your Magical Shield"
                                                 }
 
