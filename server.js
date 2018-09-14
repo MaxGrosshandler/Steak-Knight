@@ -40,10 +40,6 @@ bot.on("guildCreate", async guild => {
             }
         }
     }
-    console.log(guild.id)
-    weebSH.tama.updateSetting({ type: 'guilds', id: guild.id, data: { prefix: "sk " } })
-        .then(console.log(""))
-        .catch(console.error)
 });
 
 
@@ -233,12 +229,10 @@ bot.on("messageCreate", async msg => {
         weebSH.tama.getSetting('guilds', msg.channel.guild.id)
             .then(setting => {
 
-                if (msg.content.toLowerCase().startsWith(setting.setting.data.prefix.toLowerCase())) {
+                if (msg.content.toLowerCase().startsWith("sk ")) {
                     let stuff = msg.content.split(" ")
                     let c = stuff[1];
                     stuff.shift();
-
-
                     if (typeof msg.mentions[0] !== "undefined" && c !== "currency") {
                         weebSH.toph.getImageTypes()
                             .then(array => {
@@ -300,11 +294,6 @@ async function carbon() {
         console.error(err);
     }
 }
-async function reset(guildid) {
-    weebSH.tama.updateSetting({ type: 'guilds', id: guildid, data: { prefix: "sk " } })
-        .then(console.log(""))
-        .catch(console.error)
-};
 bot.connect();
 bot.on("ready", () => {
 
