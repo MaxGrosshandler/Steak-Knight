@@ -2,6 +2,9 @@ const serv = require("../server.js");
 let weebSH= serv.weebSH;
 module.exports = {
   func: async (msg, args) => {
+    weebSH.toph.getImageTypes()
+    .then(array => {
+        if (array.types.includes(args[0])){
    try { weebSH.toph.getRandomImage(args[0]).then( image => {
 
         try {
@@ -19,14 +22,19 @@ module.exports = {
     }
     
     catch (err){
-        msg.channel.createMessage("You didn't mention anyone!")
+        msg.channel.createMessage("Don't use that thanks")
     }
    }).catch(console.log(""))
 }
   catch(err){
       console.log("");
   }
-},
+}
+else{
+    msg.channel.createMessage("Never use `sk weeb`, it only exists as a backend function to work with weeb.sh")
+}
+})
+  },
   options: {
     description: "weeb.sh",
     fullDescription: "don't actually use this",

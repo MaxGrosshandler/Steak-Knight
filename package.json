@@ -13,8 +13,7 @@
     "pivotaltracker": "^0.1.4",
     "puppeteer": "^1.7.0",
     "snekfetch": "^4.0.4",
-    "taihou": "^2.0.2",
-    "weeb.js": "^1.6.2"
+    "taihou": "^2.0.2"
   },
   "engines": {
     "node": "10.9.0"
