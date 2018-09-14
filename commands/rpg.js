@@ -314,7 +314,7 @@ module.exports = {
             snark[4] = 0
             snark[5] = 100
             snark[6] = 50
-            let items = '\n';
+            let items = '';
             let playerClass = "none (you'll get one at level 5)";
             client.query("SELECT * FROM players where player_id = $1", [msg.author.id]).then(p => {
                 let player = p.rows[0];
@@ -332,7 +332,7 @@ module.exports = {
 
                             i.rows.forEach(function (item) {
                                 if (typeof item !== "undefined")
-                                    items += item.item_name + "\n";
+                                    items += item.item_name + " | ";
 
                             })
 

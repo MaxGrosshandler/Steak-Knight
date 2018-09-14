@@ -138,7 +138,7 @@ module.exports = {
                     }
                     else if (args[0] == "bal"){
                         client.query("SELECT * FROM currency where id = $1",[args[1]]).then(result => {
-                            bot.getRESTUser(values[0]).then(user => {
+                            bot.getRESTUser(args[1]).then(user => {
                             if (typeof result.rows[0] == "undefined"){
                                
                                 
