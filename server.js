@@ -210,7 +210,7 @@ bot.on("messageCreate", async msg => {
         msg.channel.createMessage("Midna is the best girl.");
     }
 
-    if (msg.content.startsWith("sk ")) {
+    if (msg.content.toLowerCase().startsWith("sk ")) {
         let stuff = msg.content.split(" ")
         let c = stuff[1];
         stuff.shift()
