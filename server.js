@@ -6,7 +6,7 @@ const droll = require('droll');
 const Taihou = require('taihou');
 const weeb = require("./commands/weeb.js")
 const weebSH = new Taihou(process.env.wolke, true, {
-    userAgent: 'Steak Knight/3.0.0'
+    userAgent: 'Steak Knight/4.0.0'
 });
 
 const sf = require("snekfetch");
@@ -40,6 +40,7 @@ bot.on("guildCreate", async guild => {
             }
         }
     }
+    console.log(guild.id)
     weebSH.tama.updateSetting({ type: 'guilds', id: guild.id, data: { prefix: "sk " } })
         .then(console.log(""))
         .catch(console.error)
