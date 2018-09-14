@@ -4,7 +4,7 @@ const color = Math.floor(Math.random() * 0xFFFFFF);
 module.exports = class ZombieWatch {
     constructor(bot) {
         this.bot = bot;
-        this.bot.once('ready', this.initialize.bind(this));
+        this.bot.on('ready', this.initialize.bind(this));
     }
 
     async initialize() {
