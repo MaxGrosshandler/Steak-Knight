@@ -3,8 +3,6 @@ var app = express();
 const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
-const tracker = require('pivotaltracker');
-const tClient = new tracker.Client(process.env.tracker);
 const Taihou = require('taihou');
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/3.0.0'
@@ -192,12 +190,6 @@ bot.on("messageCreate", async msg => {
     }
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
-    }
-    if (msg.content == "sk storyboard") {
-        tClient.project(2196529).get(function (error, project) {
-            console.log(project);
-        });
-
     }
     if (msg.channel.guild == undefined) {
         if (msg.content.toLowerCase().startsWith("sk ")) {
