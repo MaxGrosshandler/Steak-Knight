@@ -33,7 +33,7 @@ bot.on("guildCreate", async guild => {
         if (channel.type === 0) { // check if text channel
             let perms = channel.permissionsOf(bot.user.id).json;
             if (perms.readMessages && perms.sendMessages) {
-                await channel.createMessage('Hi, my name is Steak Knight! Thanks for inviting me to your server! You can look at my commands with `sk help`. If you have any trouble, come to our support server located at https://discord.gg/4xbwxe6 and be sure to ask plenty of questions! Have a steak-tastic day!');
+                await channel.createMessage('Hi, my name is Steak Knight! Thanks for inviting me to your server! You can look at my commands with `sk help`. If you have trouble and/or the bot is not working as he should (I have been doing a lot of testing lately) please head over to the support server at https://discordapp.com/invite/4xbwxe6 Have a steak-tastic day!');
                 break;
             }
         }
@@ -215,8 +215,8 @@ bot.on("messageCreate", async msg => {
         let c = stuff[1];
         stuff.shift()
         if (weebArray.includes(c)){
-            try { weebSH.toph.getRandomImage(c).then( image => {
-
+            try { weebSH.toph.getRandomImage(c).then(image => {
+                console.log(image)
                 try {
                 msg.channel.createMessage({
                     embed: {
@@ -246,7 +246,7 @@ bot.on("messageCreate", async msg => {
             if (command.name == c) {
                 stuff.shift();
                 command.func(msg, stuff)
-                console.log("Command was sk " + command.name)
+                console.log("Command was sk " + command.name + " and was invoked by " + msg.author.username + " with the id of " +msg.author.id)
             }
 
         })
