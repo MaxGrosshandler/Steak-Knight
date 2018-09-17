@@ -232,14 +232,15 @@ module.exports = {
 
 
                 let ownedItems = [];
-                let items = getItems(msg.author.id)
+                let items = await getItems(msg.author.id)
 
                 items.forEach(function (item) {
                     if (typeof item !== "undefined") ownedItems.push(item.item_name)
 
                 })
                 shopItems.forEach(function (item) {
-                    if (item.item_name == args[2].toLowerCase() && !(ownedItems.includes(args[2].toLowerCase()))) {
+                    if (item.item_name == args[2].toLowerCase()) {
+                    if (!(ownedItems.includes(args[2].toLowerCase()))) {
                         client.query("SELECT * from currency where id = $1", [msg.author.id]).then(cur => {
                             c = cur.rows[0]
                             if (c.money - item.cost < 0) {
@@ -261,10 +262,11 @@ module.exports = {
                         msg.channel.createMessage({ embed: { description: "You already own this item!" } })
                     }
 
+                }
+
+
+
                 })
-
-
-
             }
             else {
                 shopItems.forEach(function (item) {
