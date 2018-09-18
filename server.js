@@ -39,17 +39,16 @@ bot.on("guildCreate", async guild => {
     }
 });
 bot.on("guildMemberAdd", async (guild, member) => {
-if (guild.id === "481243726392328192"){
-    let command = commands.find(function (cmd) {
-        return cmd.name == "currency"
+    if (guild.id === "481243726392328192"){
+        let command = commands.find(function (cmd) {
+            return cmd.name == "currency"
+        })
+        let message = await bot.getMessage("481254645084323861", "489749677139427348").then(msg =>{
+            return msg;
+        })
+        command.func(message, ["add", member.id, "100"])
+     }
     })
-    let message = await bot.getMessage("479687321948520448", "491686747391131648").then(msg =>{
-        return msg;
-    })
-    command.func(message, ["add", member.id, "100"])
-
-}
-})
 
 let client = new pg.Client(process.env.url);
 function pgConnect() {
