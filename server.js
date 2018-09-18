@@ -64,7 +64,7 @@ const job = new CronJob('00 00 00 * * 0-6', function () {
 job.start();
 
 //const pkill = new CronJob('0 */40 * * * *', function () {
-  //  process.exit();
+//  process.exit();
 
 //});
 
@@ -97,10 +97,10 @@ function readCommands() {
                     command.func,
                     command.hidden
                 ];
-                    commands.push(command)
+                commands.push(command)
 
 
-                    let hiddenCommands = ['eval','invite','donate','help','clean','zombiewatch']
+                let hiddenCommands = ['eval', 'invite', 'donate', 'help', 'clean', 'zombiewatch']
                 if (!(hiddenCommands.includes(command.name))) {
                     helpCommands.push(newCommand);
                 }
@@ -117,26 +117,26 @@ function readCommands() {
         console.log("\n");
     });
 }
-let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead', 
+let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
-    'bite', 'blush', 'clagwimoth', 'cry', 'cuddle', 
-    
-    'dab', 'dance', 'delet_this', 'deredere', 'discord_memes', 
-    
-    'greet', 'handholding, highfive, hug, initial_d', 
-    
-    'insult', 'jojo', 'kemonomimi', 'kiss', 'lewd', 
-    
-    'lick', 'megumin', 'nani', 'neko', 'nom', 
-    
-    'owo', 'pat', 'poi', 'poke', 'pout', 
-    
-    'punch', 'rem', 'shrug', 'slap', 'sleepy', 
-    
-    'smile', 'smug', 'stare', 'sumfuk', 'teehee', 
-    
-    'thinking', 'thumbsup', 'tickle', 'trap', 'triggered', 
-    
+    'bite', 'blush', 'clagwimoth', 'cry', 'cuddle',
+
+    'dab', 'dance', 'delet_this', 'deredere', 'discord_memes',
+
+    'greet', 'handholding, highfive, hug, initial_d',
+
+    'insult', 'jojo', 'kemonomimi', 'kiss', 'lewd',
+
+    'lick', 'megumin', 'nani', 'neko', 'nom',
+
+    'owo', 'pat', 'poi', 'poke', 'pout',
+
+    'punch', 'rem', 'shrug', 'slap', 'sleepy',
+
+    'smile', 'smug', 'stare', 'sumfuk', 'teehee',
+
+    'thinking', 'thumbsup', 'tickle', 'trap', 'triggered',
+
     'wag', 'waifu_insult', 'wasted']
 
 
@@ -213,87 +213,88 @@ bot.on("messageCreate", async msg => {
         let stuff = msg.content.split(" ")
         let c = stuff[1];
         stuff.shift()
-        if (weebArray.includes(c)){
-            try { weebSH.toph.getRandomImage(c).then(image => {
-                console.log(image)
-                try {
-                msg.channel.createMessage({
-                    embed: {
-                        image: {
-                            url: image.url
-                        },
-                        footer:{
-                            text: "Powered by weeb.sh"
-                        } 
-        
+        if (weebArray.includes(c)) {
+            try {
+                weebSH.toph.getRandomImage(c).then(image => {
+                    console.log(image)
+                    try {
+                        msg.channel.createMessage({
+                            embed: {
+                                image: {
+                                    url: image.url
+                                },
+                                footer: {
+                                    text: "Powered by weeb.sh"
+                                }
+
+                            }
+                        });
                     }
-                });
-            }
-            
-            catch (err){
-                console.log("something went wrong")
-            }
-        })
-    }
-    catch(err) {
-        console.log("whoops")
-    }
-}
 
-        else{
-        commands.forEach(function (command) {
-            if (command.name == c) {
-                stuff.shift();
-                command.func(msg, stuff)
-                console.log("Command was sk " + command.name + " and was invoked by " + msg.author.username + " with the id of " +msg.author.id)
-            }
-
-        })
-    }
-}
-});
-
-        async function postStats() {
-            try {
-                await sf
-                    .post("https://bots.discord.pw/api/bots/397898847906430976/stats")
-                    .set({ Authorization: process.env.dbots })
-                    .send({ server_count: bot.guilds.size });
-                console.log("Stats have been posted to Discord Bots.");
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        async function carbon() {
-            try {
-                await sf
-                    .post("https://www.carbonitex.net/discord/data/botdata.php")
-                    .send({ servercount: bot.guilds.size, key: process.env.carbon });
-                console.log("Stats have been posted to Carbon.")
+                    catch (err) {
+                        console.log("something went wrong")
+                    }
+                })
             }
             catch (err) {
-                console.error(err);
+                console.log("whoops")
             }
         }
-        bot.connect();
-        bot.on("ready", () => {
 
-            bot.createMessage("479687321948520448", "I started up!");
-            console.log("this instance number is " + num)
-            console.log("Ready!");
-            pgConnect();
-            readCommands();
-            postStats();
-            carbon();
-            bot.editStatus("online", { name: `${bot.guilds.size} servers | sk help`, type: 3 });
-        });
+        else {
+            commands.forEach(function (command) {
+                if (command.name == c) {
+                    stuff.shift();
+                    command.func(msg, stuff)
+                    console.log("Command was sk " + command.name + " and was invoked by " + msg.author.username + " with the id of " + msg.author.id)
+                }
 
-        module.exports.client = client;
-        module.exports.bot = bot;
-        module.exports.sf = sf;
-        module.exports.weebSH = weebSH;
-        module.exports.helpCommands = helpCommands;
-        module.exports.droll = droll;
-        app.use(express.static(__dirname + "/public"));
-        app.listen(process.env.PORT || 4000);
+            })
+        }
+    }
+});
+
+async function postStats() {
+    try {
+        await sf
+            .post("https://bots.discord.pw/api/bots/397898847906430976/stats")
+            .set({ Authorization: process.env.dbots })
+            .send({ server_count: bot.guilds.size });
+        console.log("Stats have been posted to Discord Bots.");
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function carbon() {
+    try {
+        await sf
+            .post("https://www.carbonitex.net/discord/data/botdata.php")
+            .send({ servercount: bot.guilds.size, key: process.env.carbon });
+        console.log("Stats have been posted to Carbon.")
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
+pgConnect();
+readCommands();
+bot.connect();
+bot.on("ready", () => {
+
+    bot.createMessage("479687321948520448", "I started up!");
+    console.log("this instance number is " + num)
+    console.log("Ready!");
+    postStats();
+    carbon();
+    bot.editStatus("online", { name: `${bot.guilds.size} servers | sk help`, type: 3 });
+});
+
+module.exports.client = client;
+module.exports.bot = bot;
+module.exports.sf = sf;
+module.exports.weebSH = weebSH;
+module.exports.helpCommands = helpCommands;
+module.exports.droll = droll;
+app.use(express.static(__dirname + "/public"));
+app.listen(process.env.PORT || 4000);
