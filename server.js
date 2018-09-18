@@ -43,7 +43,7 @@ bot.on("guildMemberAdd", async (guild, member) => {
         let command = commands.find(function (cmd) {
             return cmd.name == "currency"
         })
-        let message = await bot.getMessage("481254645084323861", "489749677139427348").then(msg =>{
+        let message = await bot.getMessage("491702554707886081", "491702602573152256").then(msg =>{
             return msg;
         })
         command.func(message, ["add", member.id, "100"])
