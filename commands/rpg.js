@@ -289,12 +289,12 @@ module.exports = {
             }
             else {
                 shopItems.forEach(function (item) {
-                    shopList += item.item_name + " | Type: " + item.item_type + " | Power: " + item.item_value + "\n";
+                    shopList += item.item_name + " | Type: " + item.item_type + " | Power: " + item.item_value + "| Cost: " +item.cost + "\n";
 
                 })
                 msg.channel.createMessage({
                     embed: {
-                        description: shopList
+                        description: shopList + "\n You can buy an item with `sk rpg shop buy <item>`"
                     }
                 })
             }
