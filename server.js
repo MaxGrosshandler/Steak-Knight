@@ -39,6 +39,8 @@ bot.on("guildCreate", async guild => {
     }
 });
 bot.on("guildMemberAdd", async (guild, member) => {
+    console.log(guild)
+    console.log(member)
 if (guild.id === "481243726392328192"){
     let command = commands.find(function (cmd) {
         return cmd.name == "currency"
