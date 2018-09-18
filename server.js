@@ -14,8 +14,7 @@ var pg = require("pg");
 var bot = new Eris.Client(
     process.env.token,
     {
-        restMode: true,
-        autoreconnect: true
+        restMode: true
     }
 );
 const num = Math.random();
