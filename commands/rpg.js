@@ -128,18 +128,20 @@ module.exports = {
                         }
 
                     })
-
-                    if (playerClass.class_type === "Attacker") {
-                        let aval = droll.roll(`${playerClass.class_value}`).total;
-                        playerHit += aval;
-                        attack += ", and you dealt "+playerHit+" damage thanks to your " + playerClass.class_skill
+                    if (typeof playerClass !== "undefined"){
+                        if (playerClass.class_type === "Attacker") {
+                            let aval = droll.roll(`${playerClass.class_value}`).total;
+                            playerHit += aval;
+                            attack += ", and you dealt "+playerHit+" damage thanks to your " + playerClass.class_skill
+                        }
+                        else if (playerClass.class_type === "Defender") {
+                            let dval = droll.roll(`${playerClass.class_value}`).total;
+                            monsterHit -= dval;
+                            defense += ", and you took "+monsterHit+" less damage thanks to your  " + playerClass.class_skill
+    
+                        }
                     }
-                    else if (playerClass.class_type === "Defender") {
-                        let dval = droll.roll(`${playerClass.class_value}`).total;
-                        monsterHit -= dval;
-                        defense += ", and you took "+monsterHit+" less damage thanks to your  " + playerClass.class_skill
-
-                    }
+                    
 
                     if (0 >= monster.hp - playerHit) {
                         attack = "You killed the monster! Hooray! You gained " + monster.monster_level * 20 + " xp"

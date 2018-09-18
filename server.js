@@ -38,7 +38,18 @@ bot.on("guildCreate", async guild => {
         }
     }
 });
+bot.on("guildMemberAdd", async (guild, member) => {
+if (guild.id === "481243726392328192"){
+    let command = commands.find(function (cmd) {
+        return cmd.name == "currency"
+    })
+    let message = await bot.getMessage("481243727499886613", "481425438430855168").then(msg =>{
+        return msg;
+    })
+    command.func(message, ["add", member.id, "100"])
 
+}
+})
 
 let client = new pg.Client(process.env.url);
 function pgConnect() {
