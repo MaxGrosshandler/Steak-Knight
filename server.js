@@ -46,9 +46,16 @@ bot.on("guildMemberAdd", async (guild, member) => {
         let message = await bot.getMessage("491702554707886081", "491702602573152256").then(msg =>{
             return msg;
         })
-        command.func(message, ["add", member.id, "100"])
-     }
+
+        client.query("SELECT * FROM serverjoin WHERE id = $1", [member.id]).then(result =>{
+            if (typeof result.rows[0] == "undefined"){
+                command.func(message, ["add", member.id, "100"])
+                client.query("INSERT INTO serverjoin (id) values ($1)", [member.id])
+
+            }
     })
+}
+})
 
 let client = new pg.Client(process.env.url);
 function pgConnect() {
@@ -307,4 +314,4 @@ module.exports.weebSH = weebSH;
 module.exports.helpCommands = helpCommands;
 module.exports.droll = droll;
 app.use(express.static(__dirname + "/public"));
-app.listen(process.env.PORT || 4000);
+app.listen(process.env.PORT || 4000)
