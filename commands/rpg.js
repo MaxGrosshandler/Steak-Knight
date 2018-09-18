@@ -318,7 +318,7 @@ module.exports = {
             let pItems = '';
             let pClass = "none (you can get one at level 5)";
             if (typeof player == "undefined") {
-                client.query("INSERT INTO players (player_id, player_level, player_hp, player_atk, player_xp, player_next_level, player_maxhp) values ($1, $2, $3, $4, $5, $6, $7)",[1,50,1,0,100,50,msg.author.id] )
+                client.query("INSERT INTO players (player_id, player_level, player_hp, player_atk, player_xp, player_next_level, player_maxhp) values ($1, $2, $3, $4, $5, $6, $7)",[msg.author.id,1,50,1,0,100,50] )
                 msg.channel.createMessage({ embed: { description: "You are level 1, have 50 hp, and have an attack of 2d6+1. You haven't done anything yet, so you have 0xp." } })
             }
             else {
