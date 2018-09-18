@@ -132,12 +132,12 @@ module.exports = {
                     if (playerClass.class_type === "Attacker") {
                         let aval = droll.roll(`${playerClass.class_value}`).total;
                         playerHit += aval;
-                        attack += ", and the final damage dealt was "+playerHit+" thanks to your " + playerClass.class_skill
+                        attack += ", and you dealt "+playerHit+" damage thanks to your " + playerClass.class_skill
                     }
                     else if (playerClass.class_type === "Defender") {
                         let dval = droll.roll(`${playerClass.class_value}`).total;
                         monsterHit -= dval;
-                        defense += ", and the final damage taken was "+monsterHit+" thanks to your  " + playerClass.class_skill
+                        defense += ", and you took "+monsterHit+" less damage thanks to your  " + playerClass.class_skill
 
                     }
 
@@ -172,7 +172,7 @@ module.exports = {
                         {
                             embed:
                             {
-                                description: attack + "!\n" + defense + "!"
+                                description: attack + " for a total of " + playerHit + "damage!\n" + defense + " for a total of " + monsterHit + "damage!"
                             }
                         })
                 }
