@@ -153,15 +153,30 @@ module.exports = {
                                 attack += "\nYou can now choose a class! Use `sk rpg class` to see the class list and `sk rpg class <classname>` to pick a class"
                             }
                         }
+                       
                         else {
                             gainXP(player, monster.monster_level*20)
                         }
+                        msg.channel.createMessage(
+                            {
+                                embed:
+                                {
+                                    description: attack + "!\n" + defense
+                                }
+                            })
                     }
                     else if (0 >= player.player_hp - monsterHit) {
                         attack = "Oh no, you were killed by the monster! You'll have to find another one to fight!"
                         defense = ""
                         killMonster();
                         killPlayer(player)
+                        msg.channel.createMessage(
+                            {
+                                embed:
+                                {
+                                    description: attack + "!\n" + defense
+                                }
+                            })
                         
                     }
                     else {
@@ -171,17 +186,11 @@ module.exports = {
                             {
                                 embed:
                                 {
-                                    description: attack + " for a total of " + playerHit + "damage!\n" + defense + " for a total of " + monsterHit + "damage!"
+                                    description: attack + " for a total of " + playerHit + " damage!\n" + defense + " for a total of " + monsterHit + " damage!"
                                 }
                             })
                     }
-                    msg.channel.createMessage(
-                        {
-                            embed:
-                            {
-                                description: attack + "!\n" + defense
-                            }
-                        })
+                    
                     
                 }
                 guildcd.add(msg.channel.id);
