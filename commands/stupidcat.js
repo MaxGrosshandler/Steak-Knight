@@ -2,7 +2,7 @@ const serv = require("../server.js");
 const bot = serv.bot;
 module.exports = {
   func: async (msg, args) => {
-    msg.channel.createMessage(`stupid cat is awful awful awful garbage`);
+    msg.channel.createMessage(`stupid cat is adorable`);
   },
 
   options: {
