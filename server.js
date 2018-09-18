@@ -100,7 +100,7 @@ function readCommands() {
                 commands.push(command)
 
 
-                let hiddenCommands = ['eval', 'invite', 'donate', 'help', 'clean', 'zombiewatch']
+                let hiddenCommands = ['eval', 'donate', 'help', 'clean', 'zombiewatch']
                 if (!(hiddenCommands.includes(command.name))) {
                     helpCommands.push(newCommand);
                 }
