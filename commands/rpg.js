@@ -118,7 +118,7 @@ module.exports = {
                         if (item.item_type == "attack") {
                             wval = droll.roll(`${item.item_value}`).total;
                             playerHit += wval
-                            attack += " with your mighty " + item.item_name+ ", which dealt an extra " +wval+ " damage"
+                            attack += " with your mighty " + item.item_name+ ", which contributed an extra " +wval+ " damage"
 
                         }
                         else if (item.item_type == "defense") {
