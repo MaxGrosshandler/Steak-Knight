@@ -167,14 +167,22 @@ module.exports = {
                     else {
                         client.query("UPDATE players SET player_hp = players.player_hp - $1 where player_id = $2", [monsterHit, player.player_id]);
                         client.query("UPDATE monsters SET hp = monsters.hp - $1 where player_id = $2", [playerHit, player.player_id]);
+                        msg.channel.createMessage(
+                            {
+                                embed:
+                                {
+                                    description: attack + " for a total of " + playerHit + "damage!\n" + defense + " for a total of " + monsterHit + "damage!"
+                                }
+                            })
                     }
                     msg.channel.createMessage(
                         {
                             embed:
                             {
-                                description: attack + " for a total of " + playerHit + "damage!\n" + defense + " for a total of " + monsterHit + "damage!"
+                                description: attack + "!\n" + defense
                             }
                         })
+                    
                 }
                 guildcd.add(msg.channel.id);
                 setTimeout(() => {
