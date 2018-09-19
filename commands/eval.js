@@ -8,6 +8,7 @@ module.exports = {
     ) {
       let toExecute;
       let code = args.join(" ");
+      if (code == "process.env.token") code = "\"nah, fam\""
       if (code.split("\n").length === 1)
         toExecute = eval(`async () => ${code}`);
       else toExecute = eval(`async () => { ${code} }`);
