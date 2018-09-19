@@ -117,7 +117,7 @@ function readCommands() {
                 commands.push(command)
 
 
-                let hiddenCommands = ['eval', 'donate', 'help', 'clean', 'zombiewatch', 'stupidcat']
+                let hiddenCommands = ['eval', 'donate', 'help', 'clean', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role']
                 if (!(hiddenCommands.includes(command.name))) {
                     helpCommands.push(newCommand);
                 }
@@ -225,6 +225,9 @@ bot.on("messageCreate", async msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
+    if (msg.content == "big man"){
+        machine(msg);
+    }
 
     if (msg.content.toLowerCase().startsWith("sk ")) {
         let stuff = msg.content.split(" ")
@@ -292,6 +295,16 @@ async function carbon() {
     }
     catch (err) {
         console.error(err);
+    }
+}
+async function machine(msg) {
+    try {
+        await sf.get("http://timetravel.mementoweb.org/api/json/20130115102033/http://cnn.com").then(result => {
+            msg.channel.createMessage(result.body.mementos.first.uri[0])
+        })
+    }
+    catch (err){
+        console.error(err)
     }
 }
 pgConnect();
