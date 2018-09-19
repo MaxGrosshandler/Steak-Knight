@@ -19,7 +19,7 @@ module.exports = {
                 reason: args.join(" ")
             });
 
-            let out = ':ok_hand: ';
+            let out = '<:steak:481449443204530197> ';
             if (time === 0) out += 'Slowmode has been disabled.';
             else out += `Slowmode has been set to 1 message every **${time} seconds**.`;
             msg.channel.createMessage(out)
