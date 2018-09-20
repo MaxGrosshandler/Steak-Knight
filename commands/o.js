@@ -40,8 +40,13 @@ module.exports = {
             if (typeof player !== "undefined") {
                     let user = await bot.getRESTUser(id).then(user => {
                     return user})
-                    heal(player, args[1])
+                    if(!isNaN(args[1])){
+                    heal(player, Math.abs(args[1]))
                     msg.channel.createMessage("You healed " +user.username + " for " + args[1] + " hp!")
+                    }
+                    else{
+                        msg.channel.createMessage("That's not a valid number to heal!")
+                    }
             }
             else {
                 msg.channel.createMessage("That player doesn't exist!")

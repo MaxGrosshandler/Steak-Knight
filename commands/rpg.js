@@ -334,31 +334,41 @@ module.exports = {
         if (args[0] == "lookup") {
             let pItems = '';
             let pClass = "none (you'll get one at level 5)";
+            
             let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
-            bot.getRESTUser(id).then(user => {
-                if (typeof user !== "undefined") {
-                    if (typeof playerClass !== "undefined") {
-                        pClass = playerClass.class_name
-                    }
-
-                    items.forEach(function (item) {
-                        if (typeof item !== "undefined")
-                            pItems += item.item_name + " | ";
-
-                    })
-                    pItems += "\n"
-
-
-                    msg.channel.createMessage({
-                        embed: {
-                            description: user.username + " is level " + player.player_level + ", has " + player.player_hp + " out of " + player.player_maxhp + " hp, and has an attack of 2d6+" + player.player_atk + ".\n"
-                                + "They have " + player.player_xp + " xp and they hit the next level at " + player.player_next_level + " xp.\n"
-                                + "Items: " + pItems + "Class: " + pClass
+            let player = await getPlayer(id)
+            let items = await getItems(id)
+            let playerClass = await getClass(id)
+            if (typeof player !== "undefined"){
+                bot.getRESTUser(id).then(user => {
+                    if (typeof user !== "undefined") {
+                        if (typeof playerClass !== "undefined") {
+                            pClass = playerClass.class_name
                         }
-                    })
-
-                }
-            })
+    
+                        items.forEach(function (item) {
+                            if (typeof item !== "undefined")
+                                pItems += item.item_name + " | ";
+    
+                        })
+                        pItems += "\n"
+    
+    
+                        msg.channel.createMessage({
+                            embed: {
+                                description: user.username + " is level " + player.player_level + ", has " + player.player_hp + " out of " + player.player_maxhp + " hp, and has an attack of 2d6+" + player.player_atk + ".\n"
+                                    + "They have " + player.player_xp + " xp and they hit the next level at " + player.player_next_level + " xp.\n"
+                                    + "Items: " + pItems + "Class: " + pClass
+                            }
+                        })
+    
+                    }
+                })
+            }
+            else {
+                msg.channel.createMessage("That user doesn't exist in the rpg database!")
+            }
+            
         }
         if (args[0] == null) {
             let pItems = '';
