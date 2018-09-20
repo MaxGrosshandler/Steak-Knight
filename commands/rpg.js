@@ -40,14 +40,17 @@ async function getClassList() {
 async function killMonster(id) {
     return client.query("DELETE FROM monsters  where player_id = $1", [id])
 }
-async function killPlayer(player){
+async function killPlayer(player) {
     return client.query("UPDATE players SET player_hp = $1 where player_id = $2", [player.player_maxhp, player.player_id]);
 }
-async function levelUp(player){
+async function levelUp(player) {
     return client.query("UPDATE players SET (player_xp, player_hp, player_atk, player_level, player_next_level, player_maxhp) = (0, players.player_maxhp + 10 , players.player_atk + 1, players.player_level+1, players.player_next_level + 100, players.player_maxhp+10)   where player_id = $1", [player.player_id]);
 }
-async function gainXP(player, value){
+async function gainXP(player, value) {
     client.query("UPDATE players SET player_xp = players.player_xp + $1 where player_id = $2", [value, player.player_id]);
+}
+async function heal(player, value) {
+    client.query("Update players set player_hp = players.player_hp + $1 where player_id = $2", [value, player.player_id])
 }
 
 
@@ -82,9 +85,9 @@ module.exports = {
                     monsterName = "Steakgoblin"
                 }
                 if (typeof monster == "undefined") {
-                    client.query("INSERT INTO monsters (monster_name, monster_id, monster_level, player_id, hp,  atk ) values ($1, $2, $3, $4, $5, $6)", [monsterName, 1234, Math.ceil(player.player_level),msg.author.id,8 + 5 * Math.ceil(player.player_level) + 2 * Math.ceil(player.player_level),2 + 1 * Math.ceil(player.player_level) ])
+                    client.query("INSERT INTO monsters (monster_name, monster_id, monster_level, player_id, hp,  atk ) values ($1, $2, $3, $4, $5, $6)", [monsterName, 1234, Math.ceil(player.player_level), msg.author.id, 8 + 5 * Math.ceil(player.player_level) + 2 * Math.ceil(player.player_level), 2 + 1 * Math.ceil(player.player_level)])
                     monster = await getMonster(msg.author.id)
-                    msg.channel.createMessage({ embed: { description: "You found a " + monster.monster_name + "! It is level " + monster.monster_level + ", has " + monster.hp + " health, and has an attack of 2d3+" + monster.atk+ "." } })
+                    msg.channel.createMessage({ embed: { description: "You found a " + monster.monster_name + "! It is level " + monster.monster_level + ", has " + monster.hp + " health, and has an attack of 2d3+" + monster.atk + "." } })
                 }
                 else {
                     msg.channel.createMessage({
@@ -118,30 +121,30 @@ module.exports = {
                         if (item.item_type == "attack") {
                             wval = droll.roll(`${item.item_value}`).total;
                             playerHit += wval
-                            attack += " with your mighty " + item.item_name+ ", which contributed an extra " +wval+ " damage"
+                            attack += " with your mighty " + item.item_name + ", which contributed an extra " + wval + " damage"
 
                         }
                         else if (item.item_type == "defense") {
                             let sval = droll.roll(`${item.item_value}`).total;
                             monsterHit -= sval
-                            defense += ", you blocked "+ sval+ " of it with your "  + item.item_name
+                            defense += ", you blocked " + sval + " of it with your " + item.item_name
                         }
 
                     })
-                    if (typeof playerClass !== "undefined"){
+                    if (typeof playerClass !== "undefined") {
                         if (playerClass.class_type === "Attacker") {
                             let aval = droll.roll(`${playerClass.class_value}`).total;
                             playerHit += aval;
-                            attack += ", and you dealt "+playerHit+" damage thanks to your " + playerClass.class_skill
+                            attack += ", and you dealt " + playerHit + " damage thanks to your " + playerClass.class_skill
                         }
                         else if (playerClass.class_type === "Defender") {
                             let dval = droll.roll(`${playerClass.class_value}`).total;
                             monsterHit -= dval;
-                            defense += ", and you took "+monsterHit+" less damage thanks to your  " + playerClass.class_skill
-    
+                            defense += ", and you took " + dval + " less damage thanks to your  " + playerClass.class_skill
+
                         }
                     }
-                    
+
 
                     if (0 >= monster.hp - playerHit) {
                         attack = "You killed the monster! Hooray! You gained " + monster.monster_level * 20 + " xp"
@@ -151,13 +154,13 @@ module.exports = {
                         if (player.player_xp + monster.monster_level * 20 >= player.player_next_level) {
                             levelUp(player)
                             attack += "\nAlso, you leveled up! You are now level " + (player.player_level + 1)
-                            if (player.player_level == 5) {
+                            if (player.player_level + 1 == 5) {
                                 attack += "\nYou can now choose a class! Use `sk rpg class` to see the class list and `sk rpg class <classname>` to pick a class"
                             }
                         }
-                       
+
                         else {
-                            gainXP(player, monster.monster_level*20)
+                            gainXP(player, monster.monster_level * 20)
                         }
                         msg.channel.createMessage(
                             {
@@ -179,9 +182,10 @@ module.exports = {
                                     description: attack + "!\n" + defense
                                 }
                             })
-                        
+
                     }
                     else {
+                        if (monsterHit < 0) monsterHit = 0;
                         client.query("UPDATE players SET player_hp = players.player_hp - $1 where player_id = $2", [monsterHit, player.player_id]);
                         client.query("UPDATE monsters SET hp = monsters.hp - $1 where player_id = $2", [playerHit, player.player_id]);
                         msg.channel.createMessage(
@@ -192,20 +196,36 @@ module.exports = {
                                 }
                             })
                     }
-                    
-                    
+
+
                 }
-                if (msg.channel.id !== "487793622897524736")
-                {
+                if (msg.channel.id !== "487793622897524736" && msg.channel.id !== "492444145726521344") {
                     guildcd.add(msg.channel.id);
-                setTimeout(() => {
-                    guildcd.delete(msg.channel.id);
-                }, 4000);
-            }
+                    setTimeout(() => {
+                        guildcd.delete(msg.channel.id);
+                    }, 4000);
+                }
             }
         }
-        if (args[0] == "heal" && process.env.ids.includes(msg.author.id)) {
-            return true;
+        if (args[0] == "heal") {
+            let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
+            let player = getPlayer(id)
+           
+            if (typeof player !== "undefined") {
+                if (playerClass.class_name == 'Priest') {
+                    let amount =  droll.roll(`${playerClass.class_value}`).total;
+                    let user = await bot.getRESTUser(player.player_id).then(user => {
+                    return user})
+                    heal(player, amount)
+                    msg.channel.createMessage("You healed " +user.username + " for " + amount + " hp!")
+                }
+                else {
+                    msg.channel.createMessage("You aren't a priest!")
+                }
+            }
+            else {
+                msg.channel.createMessage("That player doesn't exist!")
+            }
         }
         if (args[0] == "class") {
             let classList = await getClassList();
@@ -250,25 +270,41 @@ module.exports = {
             }
         }
         if (args[0] == "shop") {
-            if (args[1] == "buy") {
+            shopItems.forEach(function (item) {
+                shopList += item.item_name + " | Type: " + item.item_type + " | Power: " + item.item_value + " | Cost: " + item.cost + "\n";
+
+            })
+            msg.channel.createMessage({
+                embed: {
+                    description: shopList + "\n You can buy an item with `sk rpg buy <item>`"
+                }
+            })
+        }
+        if (args[0] == "buy") {
 
 
-                let ownedItems = [];
-                let items = await getItems(msg.author.id)
+            let ownedItems = [];
+            let items = await getItems(msg.author.id)
 
-                items.forEach(function (item) {
-                    if (typeof item !== "undefined") ownedItems.push(item.item_name)
+            items.forEach(function (item) {
+                if (typeof item !== "undefined") ownedItems.push(item.item_name)
 
-                })
-                shopItems.forEach(function (item) {
-                    if (item.item_name == args[2].toLowerCase()) {
-                    if (!(ownedItems.includes(args[2].toLowerCase()))) {
+            })
+            shopItems.forEach(function (item) {
+                if (item.item_name == args[1].toLowerCase()) {
+                    if (!(ownedItems.includes(args[1].toLowerCase()))) {
                         client.query("SELECT * from currency where id = $1", [msg.author.id]).then(cur => {
                             c = cur.rows[0]
                             if (c.money - item.cost < 0) {
                                 msg.channel.createMessage({ embed: { description: "You don't have enough money to buy that!" } })
                             }
                             else {
+                                if (item.item_type == "attack") {
+                                    client.query("Delete from items where player_id = $1 AND item_type = 'attack'", [msg.author.id])
+                                }
+                                else if (item.item_type == "defense") {
+                                    client.query("Delete from items where player_id = $1 AND item_type = 'defense'", [msg.author.id])
+                                }
                                 msg.channel.createMessage({ embed: { description: "You bought a " + item.item_name + " for " + item.cost + " <:steak:481449443204530197> !" } })
                                 client.query("UPDATE currency SET money = currency.money - $2 WHERE currency.id = $1", [msg.author.id, item.cost])
                                 client.query("INSERT INTO items (item_name, item_type, item_value, player_id) values ($1, $2, $3, $4)", [item.item_name, item.item_type, item.item_value, msg.author.id])
@@ -288,21 +324,8 @@ module.exports = {
 
 
 
-                })
-            }
-            else {
-                shopItems.forEach(function (item) {
-                    shopList += item.item_name + " | Type: " + item.item_type + " | Power: " + item.item_value + "| Cost: " +item.cost + "\n";
-
-                })
-                msg.channel.createMessage({
-                    embed: {
-                        description: shopList + "\n You can buy an item with `sk rpg shop buy <item>`"
-                    }
-                })
-            }
+            })
         }
-
 
 
         if (args[0] == "help") {
@@ -311,7 +334,8 @@ module.exports = {
         if (args[0] == "lookup") {
             let pItems = '';
             let pClass = "none (you'll get one at level 5)";
-            bot.getRESTUser(args[1]).then(user => {
+            let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
+            bot.getRESTUser(id).then(user => {
                 if (typeof user !== "undefined") {
                     if (typeof playerClass !== "undefined") {
                         pClass = playerClass.class_name
@@ -340,7 +364,7 @@ module.exports = {
             let pItems = '';
             let pClass = "none (you can get one at level 5)";
             if (typeof player == "undefined") {
-                client.query("INSERT INTO players (player_id, player_level, player_hp, player_atk, player_xp, player_next_level, player_maxhp) values ($1, $2, $3, $4, $5, $6, $7)",[msg.author.id,1,50,1,0,100,50] )
+                client.query("INSERT INTO players (player_id, player_level, player_hp, player_atk, player_xp, player_next_level, player_maxhp) values ($1, $2, $3, $4, $5, $6, $7)", [msg.author.id, 1, 50, 1, 0, 100, 50])
                 msg.channel.createMessage({ embed: { description: "You are level 1, have 50 hp, and have an attack of 2d6+1. You haven't done anything yet, so you have 0xp." } })
             }
             else {

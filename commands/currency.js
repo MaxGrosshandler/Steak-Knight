@@ -140,9 +140,10 @@ module.exports = {
 
                     }
                     else if (args[0] == "bal"){
-                        let bal = await balance(args[1])
+                        let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
+                        let bal = await balance(id)
                         if (typeof bal !== "undefined"){
-                            bot.getRESTUser(args[1]).then(user => {
+                            bot.getRESTUser(id).then(user => {
                             if (typeof bal == "undefined"){
                                 msg.channel.createMessage(user.username +" has 0 <:steak:481449443204530197>")
                             }
