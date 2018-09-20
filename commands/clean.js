@@ -1,24 +1,21 @@
+const serv = require("../server.js");
+let bot = serv.bot;
 module.exports = {
-  func: async (msg, args) => {
+  func: async (msg) => {
     // checks for permissions. Either you need to be able to ban members or be me, will work on making cleaner
     if (
-      msg.author.id == "107563269484490752" ||
-      msg.author.id == "195156669108322313" ||
+      process.env.ids.includes(msg.author.id) || 
       msg.member.permission.has("banMembers") == true
-    )
-      // super duper messy but works, deletes its own messages
-      msg.channel.getMessages(15).then(m => {
-        for (let message of m) {
-          if (message.author.id == "397898847906430976") {
-            message.channel.deleteMessage(message.id);
-          }
-        }
-      });
+    ){
+    bot.purgeChannel(msg.channel.id, 20, ( msg.id == "397898847906430976"))
+    }
+      
+      
   },
   options: {
-    description: "Cleans some messages",
-    fullDescription: "Clean `X` amount of messages",
-    usage: "`sk clean X`"
+    description: "Cleans the bot's messages",
+    fullDescription: "Cleans all SK's messages from the last 20 sent",
+    usage: "`sk clean`"
   },
   name: "clean"
 };

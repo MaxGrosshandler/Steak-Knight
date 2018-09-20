@@ -1,6 +1,9 @@
 var express = require("express");
 var app = express();
 const fs = require("fs");
+const {createServer} = require('http')
+const {createServerFrom} = require('wss')
+
 const Eris = require("eris")
 const droll = require('droll');
 const Taihou = require('taihou');
@@ -39,22 +42,22 @@ bot.on("guildCreate", async guild => {
     }
 });
 bot.on("guildMemberAdd", async (guild, member) => {
-    if (guild.id === "481243726392328192"){
+    if (guild.id === "481243726392328192") {
         let command = commands.find(function (cmd) {
             return cmd.name == "currency"
         })
-        let message = await bot.getMessage("491702554707886081", "491702602573152256").then(msg =>{
+        let message = await bot.getMessage("491702554707886081", "491702602573152256").then(msg => {
             return msg;
         })
 
-        client.query("SELECT * FROM serverjoin WHERE id = $1", [member.id]).then(result =>{
-            if (typeof result.rows[0] == "undefined"){
+        client.query("SELECT * FROM serverjoin WHERE id = $1", [member.id]).then(result => {
+            if (typeof result.rows[0] == "undefined") {
                 command.func(message, ["add", member.id, "100"])
                 client.query("INSERT INTO serverjoin (id) values ($1)", [member.id])
 
             }
-    })
-}
+        })
+    }
 })
 
 let client = new pg.Client(process.env.url);
@@ -140,7 +143,7 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
     'dab', 'dance', 'delet_this', 'deredere', 'discord_memes',
 
-    'greet', 'handholding, highfive, hug, initial_d',
+    'greet', 'handholding', 'highfive', 'hug', 'initial_d',
 
     'insult', 'jojo', 'kemonomimi', 'kiss', 'lewd',
 
@@ -225,10 +228,20 @@ bot.on("messageCreate", async msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
-    if (msg.content == "big man"){
-        machine(msg);
+    /*
+    if (msg.content == "sk socket") {
+        createServer(function connectionListener (ws) {
+            ws.send('welcome!')
+            ws.on('message', (data) => {
+              ws.send(data.toString()) // echo-server
+            })
+          })
+          .listen(4443, function () {
+            const {address, port} = this.address() // this is the http[s].Server
+            console.log('listening on http://%s:%d (%s)', /::/.test(address) ? '0.0.0.0' : address, port)
+          })
     }
-
+    */
     if (msg.content.toLowerCase().startsWith("sk ")) {
         let stuff = msg.content.split(" ")
         let c = stuff[1];
@@ -236,7 +249,6 @@ bot.on("messageCreate", async msg => {
         if (weebArray.includes(c)) {
             try {
                 weebSH.toph.getRandomImage(c).then(image => {
-                    console.log(image)
                     try {
                         msg.channel.createMessage({
                             embed: {
@@ -297,16 +309,6 @@ async function carbon() {
         console.error(err);
     }
 }
-async function machine(msg) {
-    try {
-        await sf.get("http://timetravel.mementoweb.org/api/json/20130115102033/http://cnn.com").then(result => {
-            msg.channel.createMessage(result.body.mementos.first.uri[0])
-        })
-    }
-    catch (err){
-        console.error(err)
-    }
-}
 pgConnect();
 readCommands();
 bot.connect();
@@ -327,4 +329,4 @@ module.exports.weebSH = weebSH;
 module.exports.helpCommands = helpCommands;
 module.exports.droll = droll;
 app.use(express.static(__dirname + "/public"));
-app.listen(process.env.PORT || 4000)
+app.listen(process.env.PORT)
