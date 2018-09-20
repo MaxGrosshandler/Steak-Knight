@@ -117,10 +117,13 @@ function readCommands() {
                     command.func,
                     command.hidden
                 ];
-                commands.push(command)
+                if (command.name !== "kick" && command.name !== "ban" && command.name !== "role"){
+                    commands.push(command)
+                }
+                
 
 
-                let hiddenCommands = ['eval', 'donate', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role']
+                let hiddenCommands = ['eval', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role']
                 if (!(hiddenCommands.includes(command.name))) {
                     helpCommands.push(newCommand);
                 }
@@ -143,7 +146,7 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
     'dab', 'dance', 'delet_this', 'deredere', 'discord_memes',
 
-    'greet', 'handholding, highfive, hug, initial_d',
+    'greet', 'handholding', 'highfive', 'hug', 'initial_d',
 
     'insult', 'jojo', 'kemonomimi', 'kiss', 'lewd',
 
