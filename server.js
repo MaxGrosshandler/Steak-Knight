@@ -143,7 +143,7 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
     'dab', 'dance', 'delet_this', 'deredere', 'discord_memes',
 
-    'greet', 'handholding', 'highfive', 'hug', 'initial_d',
+    'greet', 'handholding, highfive, hug, initial_d',
 
     'insult', 'jojo', 'kemonomimi', 'kiss', 'lewd',
 
