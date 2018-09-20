@@ -7,7 +7,9 @@ module.exports = {
       process.env.ids.includes(msg.author.id) || 
       msg.member.permission.has("banMembers") == true
     ){
-    bot.purgeChannel(msg.channel.id, 20, ( msg.id == "397898847906430976"))
+    bot.purgeChannel(msg.channel.id, 20, function(msg) {
+      return msg.author.id == "397898847906430976"
+    })
     }
       
       
