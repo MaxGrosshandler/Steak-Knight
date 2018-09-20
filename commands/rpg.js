@@ -195,10 +195,13 @@ module.exports = {
                     
                     
                 }
-                guildcd.add(msg.channel.id);
+                if (msg.channel.id !== "487793622897524736")
+                {
+                    guildcd.add(msg.channel.id);
                 setTimeout(() => {
                     guildcd.delete(msg.channel.id);
                 }, 4000);
+            }
             }
         }
         if (args[0] == "heal" && process.env.ids.includes(msg.author.id)) {
