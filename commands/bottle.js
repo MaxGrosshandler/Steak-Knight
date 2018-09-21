@@ -166,7 +166,7 @@ module.exports = {
                 } );
               } catch (e) {
                 console.log(e);
-                msg.channel.createMessage("Message not sent for some reason.");
+                msg.channel.createMessage("Message not sent!");
               }
             }
           });
