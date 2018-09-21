@@ -210,7 +210,7 @@ bot.on("messageCreate", async msg => {
         command.func(msg, args);
 
     }
-    if (msg.content.toLowerCase == "sboo") {
+    if (msg.content.toLowerCase() == "sboo") {
         let command = commands.find(function (cmd) {
             return cmd.name == "bottle"
         })

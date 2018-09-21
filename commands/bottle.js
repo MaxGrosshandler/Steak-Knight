@@ -6,40 +6,23 @@ module.exports = {
 
 
     if (args[0] == "opt-in") {
-      const idText = "DELETE FROM bottles where id = $1";
-      let idVals = [msg.author.id];
-      client
-        .query(idText, idVals)
-        .then(res => {
-          console.log();
-        })
-        .catch(e => console.error(e.stack));
-
-      const bolText = "INSERT INTO bottles(id) VALUES($1) RETURNING *";
-      const bolVals = [msg.author.id];
-      client
-        .query(bolText, bolVals)
-        .then(res => {
-          console.log();
-        })
-        .catch(e => console.error(e.stack));
-      //  }
-
+      let exists = await client.query ("Select from bottles where id = $1", [msg.author.id])
+      if (typeof exists.rows[0] !== "undefined"){
+        msg.channel.createMessage("You are already on the bottle list!")
+      }
+      else {
+        client.query( "INSERT INTO bottles(id) VALUES($1)",[msg.author.id])
       msg.channel.createMessage(
         "Opted into bottles! You can now send and receive bottles. You can use either `sk bottle send <message>` or `sbs <message>` to send your first bottle. \nIf you get a bottle that contains advertisements or prohibited content, please DM Xamtheking#2099 or MaxGrosshandler#6592 so I can take care of the issue. Happy bottling!"
       );
+      }
+      
     }
     if (args[0] == "opt-out") {
-      const bdText = "DELETE FROM bottles where id = $1";
-      let bdVals = [msg.author.id];
-      client
-        .query(bdText, bdVals)
-        .then(res => {
+      client.query("delete from bottles where id = ($1)",[msg.author.id])
           msg.channel.createMessage(
             "Opted out of bottles. You will no longer receive or be able to send any bottles."
-          );
-        })
-        .catch(e => console.error(e.stack));
+          )
     }
     if (args[0]== "help"){
       msg.channel.createMessage({
@@ -133,20 +116,7 @@ module.exports = {
                 }
                 );
               }
-              
-              
-            let values = [];
-              client.query("SELECT * from bottle_stats").then(result =>{
-                values[0] = result.rows[0].bottlenumber + 1
-                console.log(values[0])
-            
-              })
-              const sText = "DELETE FROM bottle_stats";
-              client.query(sText);
-              client.query("INSERT INTO bottle_stats (bottlenumber) values ($1)", values)
-
-              
-            
+              client.query("update bottle_stats set bottlenumber = bottle_stats.bottlenumber + 1")
                 msg.channel.createMessage("Message sent!");
                 let report =
                   "Sent by: " +
