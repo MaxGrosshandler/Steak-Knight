@@ -1,8 +1,6 @@
 var express = require("express");
 var app = express();
 const fs = require("fs");
-const {createServer} = require('http')
-const {createServerFrom} = require('wss')
 
 const Eris = require("eris")
 const droll = require('droll');
@@ -10,7 +8,16 @@ const Taihou = require('taihou');
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/4.0.0'
 });
-
+function getcolor(member) {
+    roles = member.roles
+    for (i of roles) {
+        a = member.guild.roles.get(i)
+        if (a.color != 0) {
+            return a.color
+        }
+    }
+    return "#ffffff"
+}
 const sf = require("snekfetch");
 var pg = require("pg");
 
@@ -165,7 +172,9 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
 bot.on("messageCreate", async msg => {
     if (msg.author.bot) return;
-
+    if (msg.content.toLowerCase() == "sk color"){
+        console.log(getcolor(msg.author));
+    }
 
     if (msg.content.toLowerCase().startsWith("sbs ")) {
 
