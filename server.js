@@ -1,8 +1,8 @@
 var express = require("express");
 var app = express();
 const fs = require("fs");
-const {createServer} = require('http')
-const {createServerFrom} = require('wss')
+const { createServer } = require('http')
+const { createServerFrom } = require('wss')
 
 const Eris = require("eris")
 const droll = require('droll');
@@ -15,8 +15,7 @@ const sf = require("snekfetch");
 var pg = require("pg");
 
 var bot = new Eris.Client(
-    process.env.token,
-    {
+    process.env.token, {
         restMode: true
     }
 );
@@ -41,9 +40,9 @@ bot.on("guildCreate", async guild => {
         }
     }
 });
-bot.on("guildMemberAdd", async (guild, member) => {
+bot.on("guildMemberAdd", async(guild, member) => {
     if (guild.id === "481243726392328192") {
-        let command = commands.find(function (cmd) {
+        let command = commands.find(function(cmd) {
             return cmd.name == "currency"
         })
         let message = await bot.getMessage("491702554707886081", "491702602573152256").then(msg => {
@@ -61,12 +60,13 @@ bot.on("guildMemberAdd", async (guild, member) => {
 })
 
 let client = new pg.Client(process.env.url);
+
 function pgConnect() {
-    client.connect(function (err) {
+    client.connect(function(err) {
         if (err) {
             return console.error("could not connect to postgres", err);
         }
-        client.query('SELECT NOW() AS "theTime"', function (err, result) {
+        client.query('SELECT NOW() AS "theTime"', function(err, result) {
             if (err) {
                 return console.error("error running query", err);
             }
@@ -76,7 +76,7 @@ function pgConnect() {
     });
 }
 const CronJob = require('cron').CronJob;
-const job = new CronJob('00 00 00 * * 0-6', function () {
+const job = new CronJob('00 00 00 * * 0-6', function() {
     const d = new Date();
     console.log('reset at , ' + d)
     client.query('DELETE FROM waiting');
@@ -95,6 +95,7 @@ job.start();
 
 let helpCommands = [];
 let commands = [];
+
 function readCommands() {
     fs.readdir("./commands", (err, files) => {
         if (err) console.error(err);
@@ -117,10 +118,10 @@ function readCommands() {
                     command.func,
                     command.hidden
                 ];
-                if (command.name !== "kick" && command.name !== "ban" && command.name !== "role"){
+                if (command.name !== "kick" && command.name !== "ban" && command.name !== "role") {
                     commands.push(command)
                 }
-                
+
 
 
                 let hiddenCommands = ['eval', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role', 'o']
@@ -128,14 +129,14 @@ function readCommands() {
                     helpCommands.push(newCommand);
                 }
 
-            } catch (err) {
+            }
+            catch (err) {
                 console.log(
                     "An error has occured trying to load a command. Here is the error."
                 );
                 console.log(err.stack);
             }
-        }
-        );
+        });
         console.log("Command Loading complete!");
         console.log("\n");
     });
@@ -160,7 +161,8 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
     'thinking', 'thumbsup', 'tickle', 'trap', 'triggered',
 
-    'wag', 'waifu_insult', 'wasted']
+    'wag', 'waifu_insult', 'wasted'
+]
 
 
 bot.on("messageCreate", async msg => {
@@ -169,7 +171,7 @@ bot.on("messageCreate", async msg => {
 
     if (msg.content.toLowerCase().startsWith("sbs ")) {
 
-        let command = commands.find(function (cmd) {
+        let command = commands.find(function(cmd) {
             return cmd.name == "bottle"
         })
 
@@ -183,27 +185,27 @@ bot.on("messageCreate", async msg => {
     }
     else if (msg.content.toLowerCase().startsWith("sbss ")) {
 
-        let command = commands.find(function (cmd) {
+        let command = commands.find(function(cmd) {
             return cmd.name == "bottle"
         })
 
         let snakes = msg.content.split(" ")
         snakes.shift();
         let spoops = snakes.join(" ")
-        let potato = "send sign " + spoops;
-        let args = potato.split(" ")
+        let second = "send sign " + spoops;
+        let args = second.split(" ")
         command.func(msg, args)
         return;
     }
     if (msg.content.toLowerCase() == "srf") {
-        let command = commands.find(function (cmd) {
+        let command = commands.find(function(cmd) {
             return cmd.name == "rpg"
         })
         let args = ["fight"];
         command.func(msg, args);
     }
     if (msg.content.toLowerCase() == "sboi") {
-        let command = commands.find(function (cmd) {
+        let command = commands.find(function(cmd) {
             return cmd.name == "bottle"
         })
         let args = ["opt-in"]
@@ -211,7 +213,7 @@ bot.on("messageCreate", async msg => {
 
     }
     if (msg.content.toLowerCase() == "sboo") {
-        let command = commands.find(function (cmd) {
+        let command = commands.find(function(cmd) {
             return cmd.name == "bottle"
         })
         let args = ["opt-out"]
@@ -277,7 +279,7 @@ bot.on("messageCreate", async msg => {
         }
 
         else {
-            commands.forEach(function (command) {
+            commands.forEach(function(command) {
                 if (command.name == c) {
                     stuff.shift();
                     command.func(msg, stuff)
@@ -296,7 +298,8 @@ async function postStats() {
             .set({ Authorization: process.env.dbots })
             .send({ server_count: bot.guilds.size });
         console.log("Stats have been posted to Discord Bots.");
-    } catch (err) {
+    }
+    catch (err) {
         console.error(err);
     }
 }
