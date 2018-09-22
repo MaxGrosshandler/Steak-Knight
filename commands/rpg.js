@@ -141,12 +141,12 @@ module.exports = {
                     })
                     if (typeof playerClass !== "undefined") {
                         if (playerClass.class_type === "Attacker") {
-                            let aval = droll.roll(`${playerClass.class_value}`).total;
+                            let aval = droll.roll(`${playerClass.class_value}`).total + Math.floor(player.player_level/2);
                             playerHit += aval;
                             attack += ", and you dealt " + playerHit + " damage thanks to your " + playerClass.class_skill
                         }
                         else if (playerClass.class_type === "Defender") {
-                            let dval = droll.roll(`${playerClass.class_value}`).total;
+                            let dval = droll.roll(`${playerClass.class_value}`).total + Math.floor(player.player_level/2);
                             monsterHit -= dval;
                             defense += ", and you took " + dval + " less damage thanks to your  " + playerClass.class_skill
 
