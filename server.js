@@ -7,15 +7,9 @@ const Taihou = require('taihou');
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/4.0.0'
 });
-function getcolor(member) {
+async function getcolor(member) {
     roles = member.roles
-    for (i of roles) {
-        a = member.guild.roles.get(i)
-        if (a.color != 0) {
-            return a.color
-        }
-    }
-    return "#ffffff"
+    return roles;
 }
 const sf = require("snekfetch");
 var pg = require("pg");
@@ -130,7 +124,7 @@ function readCommands() {
 
 
 
-                let hiddenCommands = ['eval', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role', 'o']
+                let hiddenCommands = ['eval', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role', 'o', 'sleuth']
                 if (!(hiddenCommands.includes(command.name))) {
                     helpCommands.push(newCommand);
                 }
@@ -174,7 +168,9 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 bot.on("messageCreate", async msg => {
     if (msg.author.bot) return;
     if (msg.content.toLowerCase() == "sk color"){
-        console.log(getcolor(msg.author));
+        let coloredRoles = msg.member.roles
+        console.log(coloredRoles)
+        
     }
 
     if (msg.content.toLowerCase().startsWith("sbs ")) {
