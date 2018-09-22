@@ -80,7 +80,7 @@ module.exports = {
                 if (player.player_level > 5) {
                     monsterName = "Steakdragon"
                     monsterhp = 12 + 9 * Math.ceil(player.player_level) + 3 * Math.ceil(player.player_level)
-                    monsteratk = 4 + 3 * Math.ceil(player.player_level)
+                    monsteratk = 4 + 3 * Math.ceil(player.player_level/2)
                 }
                 else if (player.player_level > 2) {
                     monsterName = "Steakorc"
