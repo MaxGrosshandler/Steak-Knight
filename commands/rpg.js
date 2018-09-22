@@ -70,6 +70,8 @@ module.exports = {
 
         if (args[0] == "find") {
             let monsterName = "";
+            let monsterhp = 0;
+            let monsteratk = 0;
             if (typeof player == "undefined") {
                 msg.channel.createMessage({ embed: { description: "You haven't started your adventure yet! Use `sk rpg`" } })
 
@@ -77,15 +79,21 @@ module.exports = {
             else {
                 if (player.player_level > 5) {
                     monsterName = "Steakdragon"
+                    monsterhp = 12 + 9 * Math.ceil(player.player_level) + 3 * Math.ceil(player.player_level)
+                    monsteratk = 4 + 3 * Math.ceil(player.player_level)
                 }
                 else if (player.player_level > 2) {
                     monsterName = "Steakorc"
+                    monsterhp = 11 + 7 * Math.ceil(player.player_level) + 2 * Math.ceil(player.player_level)
+                    monsteratk = 3 + 2 * Math.ceil(player.player_level)
                 }
                 else {
                     monsterName = "Steakgoblin"
+                    monsterhp = 10 + 5 * Math.ceil(player.player_level) + 1 * Math.ceil(player.player_level)
+                    monsteratk = 2 + 1 * Math.ceil(player.player_level)
                 }
                 if (typeof monster == "undefined") {
-                    client.query("INSERT INTO monsters (monster_name, monster_id, monster_level, player_id, hp,  atk ) values ($1, $2, $3, $4, $5, $6)", [monsterName, 1234, Math.ceil(player.player_level), msg.author.id, 8 + 5 * Math.ceil(player.player_level) + 2 * Math.ceil(player.player_level), 2 + 1 * Math.ceil(player.player_level)])
+                    client.query("INSERT INTO monsters (monster_name, monster_id, monster_level, player_id, hp,  atk ) values ($1, $2, $3, $4, $5, $6)", [monsterName, 1234, Math.ceil(player.player_level), msg.author.id, monsterhp, monsteratk])
                     monster = await getMonster(msg.author.id)
                     msg.channel.createMessage({ embed: { description: "You found a " + monster.monster_name + "! It is level " + monster.monster_level + ", has " + monster.hp + " health, and has an attack of 2d3+" + monster.atk + "." } })
                 }
