@@ -6,3 +6,5 @@ Items - item_name varchar (20), item_type varchar (20), item_value varchar (10),
 Monsters - monster_name varchar (30), monster_id int, monster_level int, player_id varchar (20), hp int, atk int
 Players - player_id varchar(20), player_level int, player_hp int, player_atk int, player_xp in, player_next_level int, player_maxhp int
 Shop - item_name varchar (20), item_type varchar (20), item_value varchar(10), cost int
+
+Some notes: these are not all the tables I use, just the relevant ones. Additionally, monster_id serves no purpose rn
