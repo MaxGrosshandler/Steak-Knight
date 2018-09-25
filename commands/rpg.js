@@ -284,7 +284,7 @@ module.exports = {
             })
             msg.channel.createMessage({
                 embed: {
-                    description: shopList + "\n You can buy an item with `sk rpg buy <item>`"
+                    description: shopList + "\n You can buy an item with `sk rpg buy <item>` ! If the item is attack-type, it deals extra damage to monsters. If the item is defense-type, it makes you take less damage from monsters. The potential benefit of each item gets better as the items get more expensive."
                 }
             })
         }
@@ -356,7 +356,7 @@ module.exports = {
     
                         items.forEach(function (item) {
                             if (typeof item !== "undefined")
-                                pItems += item.item_name + " | ";
+                                pItems += item.item_name + ", " + item.item_type+ ", "+ item.item_value+ " | ";
     
                         })
                         pItems += "\n"
@@ -392,7 +392,7 @@ module.exports = {
 
                 items.forEach(function (item) {
                     if (typeof item !== "undefined")
-                        pItems += item.item_name + " | ";
+                        pItems += item.item_name + ", " + item.item_type+ ", "+ item.item_value+ " | ";
 
                 })
                 pItems += "\n"
