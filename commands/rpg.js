@@ -309,7 +309,7 @@ module.exports = {
             })
             msg.channel.createMessage({
                 embed: {
-                    description: shopList + "\n You can buy an item with `sk rpg buy <item>`"
+                    description: shopList + "\n You can buy an item with `sk rpg buy <item>` ! If the item is attack-type, it deals extra damage to monsters. If the item is defense-type, it makes you take less damage from monsters. The potential benefit of each item gets better as the items get more expensive."
                 }
             })
         }
@@ -324,7 +324,7 @@ module.exports = {
 
             })
             shopItems.forEach(function (item) {
-                if (item.item_name == args[1].toLowerCase()) {
+                if (item.item_name.toLowerCase() == args[1].toLowerCase()) {
                     if (!(ownedItems.includes(args[1].toLowerCase()))) {
                         client.query("SELECT * from currency where id = $1", [msg.author.id]).then(cur => {
                             c = cur.rows[0]

@@ -124,7 +124,7 @@ function readCommands() {
 
 
 
-                let hiddenCommands = ['eval', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role', 'o', 'sleuth', 'gnar']
+                let hiddenCommands = ['eval', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role', 'o', 'clue', 'gnar']
                 if (!(hiddenCommands.includes(command.name))) {
                     helpCommands.push(newCommand);
                 }
