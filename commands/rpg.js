@@ -95,7 +95,12 @@ module.exports = {
         let shopList = "";
         var attack = "";
         var defense = "";
-
+switch (args[0]){
+    case 'find':
+        console.log("booops!")
+    case 'fight':
+        console.log("spooops!")
+}
 
         if (args[0] == "find") {
             let monsterName = "";

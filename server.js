@@ -4,7 +4,7 @@ const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
 const Taihou = require('taihou');
-const weebSH = new Taihou(process.env.WOLKE, true, {
+const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/4.0.0'
 });
 async function getcolor(member) {
@@ -15,7 +15,7 @@ const sf = require("snekfetch");
 var pg = require("pg");
 
 var bot = new Eris.Client(
-    process.env.TOKEN, {
+    process.env.token, {
         restMode: true
     }
 );
@@ -59,7 +59,7 @@ bot.on("guildMemberAdd", async (guild, member) => {
     }
 })
 
-let client = new pg.Client(process.env.URL);
+let client = new pg.Client(process.env.url);
 
 function pgConnect() {
     client.connect(function (err) {
@@ -299,7 +299,7 @@ async function postStats() {
     try {
         await sf
             .post("https://bots.discord.pw/api/bots/397898847906430976/stats")
-            .set({ Authorization: process.env.DBOTS })
+            .set({ Authorization: process.env.dbots })
             .send({ server_count: bot.guilds.size });
         console.log("Stats have been posted to Discord Bots.");
     }
@@ -312,7 +312,7 @@ async function carbon() {
     try {
         await sf
             .post("https://www.carbonitex.net/discord/data/botdata.php")
-            .send({ servercount: bot.guilds.size, key: process.env.CARBON });
+            .send({ servercount: bot.guilds.size, key: process.env.carbon });
         console.log("Stats have been posted to Carbon.")
     }
     catch (err) {
