@@ -1,4 +1,4 @@
-const serv = require("../server.js");
+const serv = require("../server.js"); 
 let client = serv.client;
 let droll = serv.droll;
 let bot = serv.bot;
