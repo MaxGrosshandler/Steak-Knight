@@ -53,6 +53,34 @@ async function heal(player, value) {
     client.query("Update players set player_hp = players.player_hp + $1 where player_id = $2", [value, player.player_id])
 }
 
+function serializePlayerDescription({player, items, playerClass, name}) {
+    let output = [`${name ? name + " is" : "You are"} ${player.player_level}, have ${player.player_hp} out of ${player.player_maxhp} hp, and have an attack of 2d6+${player.player_atk}.`];
+    
+    if (items) {
+        for (const item of items) {
+            if (item.item_type == "attack") {
+                output.push(`You wield a mighty ${item.item_name} which does ${item.item_value} damage.`);
+            }
+            else if (item.item_type == "defense") {
+                output.push(`At your side is your trusty ${item.item_name} which blocks ${item.item_value} damage.`);                
+            }
+        }
+    }
+    if (playerClass) {
+        if (playerClass.class_type === "Attacker") {
+            output.push(`Additionally, you inflict ${playerClass.class_value} extra damage thanks to your ${playerClass.class_skill}.`);
+            let aval = droll.roll(`${playerClass.class_value}`).total + Math.floor(player.player_level/2);
+            playerHit += aval;
+            attack += ", and you dealt " + aval + " damage thanks to your " + playerClass.class_skill
+        }
+        else if (playerClass.class_type === "Defender") {
+            output.push(`Additionally, you block ${playerClass.class_value} extra damage thanks to your ${playerClass.class_skill}.`);
+        }
+    }
+    output.push(""); // empty line
+    output.push(`You have ${player.player_xp} xp and you hit the next level at ${player.player_next_level} xp.`);
+    return output.join('\n');
+}
 
 module.exports = {
     func: async (msg, args) => {
@@ -143,7 +171,7 @@ module.exports = {
                         if (playerClass.class_type === "Attacker") {
                             let aval = droll.roll(`${playerClass.class_value}`).total + Math.floor(player.player_level/2);
                             playerHit += aval;
-                            attack += ", and you dealt " + playerHit + " damage thanks to your " + playerClass.class_skill
+                            attack += ", and you dealt " + aval + " damage thanks to your " + playerClass.class_skill
                         }
                         else if (playerClass.class_type === "Defender") {
                             let dval = droll.roll(`${playerClass.class_value}`).total + Math.floor(player.player_level/2);
@@ -348,30 +376,26 @@ module.exports = {
             let items = await getItems(id)
             let playerClass = await getClass(id)
             if (typeof player !== "undefined"){
-                bot.getRESTUser(id).then(user => {
-                    if (typeof user !== "undefined") {
-                        if (typeof playerClass !== "undefined") {
-                            pClass = playerClass.class_name
-                        }
-    
-                        items.forEach(function (item) {
-                            if (typeof item !== "undefined")
-                                pItems += item.item_name + " | ";
-    
-                        })
-                        pItems += "\n"
-    
-    
-                        msg.channel.createMessage({
-                            embed: {
-                                description: user.username + " is level " + player.player_level + ", has " + player.player_hp + " out of " + player.player_maxhp + " hp, and has an attack of 2d6+" + player.player_atk + ".\n"
-                                    + "They have " + player.player_xp + " xp and they hit the next level at " + player.player_next_level + " xp.\n"
-                                    + "Items: " + pItems + "Class: " + pClass
-                            }
-                        })
-    
+                let user = await bot.getRESTUser(id);
+                if (typeof user !== "undefined") {
+                    if (typeof playerClass !== "undefined") {
+                        pClass = playerClass.class_name
                     }
-                })
+
+                    items.forEach(function (item) {
+                        if (typeof item !== "undefined")
+                            pItems += item.item_name + " | ";
+
+                    })
+                    pItems += "\n"
+
+
+                    msg.channel.createMessage({
+                        embed: {
+                            description: serializePlayerDescription({player, items, playerClass, name: user.username})
+                        }
+                    })
+                }
             }
             else {
                 msg.channel.createMessage("That user doesn't exist in the rpg database!")
@@ -386,22 +410,9 @@ module.exports = {
                 msg.channel.createMessage({ embed: { description: "You are level 1, have 50 hp, and have an attack of 2d6+1. You haven't done anything yet, so you have 0xp." } })
             }
             else {
-                if (typeof playerClass !== "undefined") {
-                    pClass = playerClass.class_name;
-                }
-
-                items.forEach(function (item) {
-                    if (typeof item !== "undefined")
-                        pItems += item.item_name + " | ";
-
-                })
-                pItems += "\n"
-
                 msg.channel.createMessage({
                     embed: {
-                        description: "You are level " + player.player_level + ", have " + player.player_hp + " out of " + player.player_maxhp + " hp, and have an attack of 2d6+" + player.player_atk + ".\n"
-                            + "You have " + player.player_xp + " xp and you hit the next level at " + player.player_next_level + " xp.\n"
-                            + "Items: " + pItems + "Class: " + pClass
+                        description: serializePlayerDescription({player, items, playerClass})
                     }
                 })
             }
