@@ -54,8 +54,12 @@ async function heal(player, value) {
 }
 
 function serializePlayerDescription({player, items, playerClass, name}) {
-    let output = [`${name ? name + " is" : "You are"} ${player.player_level}, have ${player.player_hp} out of ${player.player_maxhp} hp, and have an attack of 2d6+${player.player_atk}.`];
-    
+    let level;
+    if (playerClass) {
+        level = `a level ${player.player_level} ${playerClass.class_name}`;
+    } else level = `level ${player.player_level}`;
+    let output = [`${name ? name + " is" : "You are"} ${level}, have ${player.player_hp} out of ${player.player_maxhp} hp, and have an attack of 2d6+${player.player_atk}.`];
+
     if (items) {
         for (const item of items) {
             if (item.item_type == "attack") {
