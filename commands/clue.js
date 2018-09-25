@@ -1,21 +1,21 @@
 const serv = require("../server.js");
 let client = serv.client;
-async function getPlayerClue (id) {
+async function getPlayerClue(id) {
     return client.query("SELECT * from player_clues where player_id = $1", [id]).then(p => {
         return p.rows[0];
     })
 }
-async function getPlayerLocation (id) {
+async function getPlayerLocation(id) {
     return client.query("SELECT * from player_locations where player_id = $1", [id]).then(p => {
         return p.rows[0];
     })
 }
-async function setPlayerLocation (id, name){
+async function setPlayerLocation(id, name) {
     let newLoc = await client.query("Select * from locations where location_name = $1", [name]).then(r => {
         return r.rows[0];
     })
     client.query("update player_locations set (location_name, location_description) = ($1, $2) where player_id = $3", [newLoc.location_name, newLoc.location_description, id])
-    
+
 }
 
 async function setFirstLocation(id) {
@@ -23,9 +23,9 @@ async function setFirstLocation(id) {
 }
 async function getLocations() {
     let newArr = [];
-     let locArr = await client.query("SELECT * FROM locations").then(s => {
-         return s.rows;
-        
+    let locArr = await client.query("SELECT * FROM locations").then(s => {
+        return s.rows;
+
     })
     locArr.forEach(function (location) {
         newArr.push(location)
@@ -34,77 +34,77 @@ async function getLocations() {
     return newArr;
 }
 module.exports = {
-  func: async (msg, args) => {
-      let command = args[0]
-      let playerClue = await getPlayerClue(msg.author.id)
-      let playerLocation = await getPlayerLocation(msg.author.id)
-      let locations = await getLocations();
-      let locationList = "";
-    // ping
-    if (command == null){
-        msg.channel.createMessage("You are a sleuth indeed!")
-    }
-    if (command == 'hint'){
-        
-        if (typeof playerClue !== "undefined"){
-            msg.channel.createMessage(playerClue.clue_hint)
+    func: async (msg, args) => {
+        let command = args[0]
+        let playerClue = await getPlayerClue(msg.author.id)
+        let playerLocation = await getPlayerLocation(msg.author.id)
+        let locations = await getLocations();
+        let locationList = "";
+        // ping
+        if (command == null) {
+            msg.channel.createMessage("You are a sleuth indeed!")
         }
-        else {
-            msg.channel.createMessage("You are no detective!")
-        }
-    }
-    if (command == 'solve'){
-        if (typeof playerClue !== "undefined"){
-            if (playerClue.clue_solution == args[1]){
-                msg.channel.createMessage("You've cracked the case!")
+        if (command == 'hint') {
+
+            if (typeof playerClue !== "undefined") {
+                msg.channel.createMessage(playerClue.clue_hint)
             }
             else {
-                msg.channel.createMessage("You need more evidence!")
+                msg.channel.createMessage("You are no detective!")
             }
         }
-        else {
-            msg.channel.createMessage("You have nothing to solve!")
+        if (command == 'solve') {
+            if (typeof playerClue !== "undefined") {
+                if (playerClue.clue_solution == args[1]) {
+                    msg.channel.createMessage("You've cracked the case!")
+                }
+                else {
+                    msg.channel.createMessage("You need more evidence!")
+                }
+            }
+            else {
+                msg.channel.createMessage("You have nothing to solve!")
+            }
         }
-    }
-    if (command == "search"){
-        if (typeof playerLocation !== "undefined"){
-            msg.channel.createMessage({embed:{title: playerLocation.location_name, description: playerLocation.location_description}})
+        if (command == "search") {
+            if (typeof playerLocation !== "undefined") {
+                msg.channel.createMessage({ embed: { title: playerLocation.location_name, description: playerLocation.location_description } })
+            }
+            else {
+                setFirstLocation(msg.author.id)
+                playerLocation = await getPlayerLocation(msg.author.id)
+                msg.channel.createMessage({ embed: { title: playerLocation.location_name, description: playerLocation.location_description } })
+            }
         }
-        else {
-            setFirstLocation(msg.author.id)
-            playerLocation = await getPlayerLocation(msg.author.id)
-            msg.channel.createMessage({embed:{title: playerLocation.location_name, description: playerLocation.location_description}})
-        }
-    }
-    if (command == 'map'){
-        console.log(locations)
-        locations.forEach(function (location) {
-            locationList += location.location_name + "\n";
+        if (command == 'map') {
+            console.log(locations)
+            locations.forEach(function (location) {
+                locationList += location.location_name + "\n";
 
-        })
-        msg.channel.createMessage({
-            embed: {
-                title: "Locations",
-                description: locationList
+            })
+            msg.channel.createMessage({
+                embed: {
+                    title: "Locations",
+                    description: locationList
+                }
+            })
+        }
+        if (command == "move") {
+            console.log(locations)
+            if (locations.includes(args[1])) {
+                args.shift();
+                setPlayerLocation(msg.author.id, args.join(" "))
+                msg.channel.createMessage("Moved to " + args.join(" "))
             }
-        })
-    }
-    if (command == "move"){
-        console.log(locations)
-        if (locations.includes(args[1])){
-            args.shift();
-            setPlayerLocation(msg.author.id, args.join(" "))
-            msg.channel.createMessage("Moved to " + args.join(" "))
+            else {
+                msg.channel.createMessage("Didn't move anywhere!")
+            }
         }
-        else {
-            msg.channel.createMessage("Didn't move anywhere!")
-        }
-    }
-},
-  options: {
-    description: "Solve a mystery!",
-    fullDescription: "`pink panther theme intensifies`",
-    usage: "`sk clue`"
-  },
-  name: "clue"
+    },
+    options: {
+        description: "Solve a mystery!",
+        fullDescription: "`pink panther theme intensifies`",
+        usage: "`sk clue`"
+    },
+    name: "clue"
 };

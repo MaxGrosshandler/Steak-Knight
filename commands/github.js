@@ -1,5 +1,5 @@
 module.exports = {
-  func: async (msg, args) => {
+  func: async (msg) => {
     msg.channel.createMessage(
       "https://github.com/MaxGrosshandler/Steak-Knight"
     );

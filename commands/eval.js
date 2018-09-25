@@ -3,8 +3,8 @@ const bot = serv.bot;
 let alexia = "cute";
 module.exports = {
   func: async (msg, args) => {
-   if ( process.env.ids.includes(msg.author.id)
- 
+    if (process.env.ids.includes(msg.author.id)
+
     ) {
       let toExecute;
       let code = args.join(" ");

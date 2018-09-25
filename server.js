@@ -4,7 +4,7 @@ const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
 const Taihou = require('taihou');
-const weebSH = new Taihou(process.env.wolke, true, {
+const weebSH = new Taihou(process.env.WOLKE, true, {
     userAgent: 'Steak Knight/4.0.0'
 });
 async function getcolor(member) {
@@ -15,7 +15,7 @@ const sf = require("snekfetch");
 var pg = require("pg");
 
 var bot = new Eris.Client(
-    process.env.token, {
+    process.env.TOKEN, {
         restMode: true
     }
 );
@@ -40,9 +40,9 @@ bot.on("guildCreate", async guild => {
         }
     }
 });
-bot.on("guildMemberAdd", async(guild, member) => {
+bot.on("guildMemberAdd", async (guild, member) => {
     if (guild.id === "481243726392328192") {
-        let command = commands.find(function(cmd) {
+        let command = commands.find(function (cmd) {
             return cmd.name == "currency"
         })
         let message = await bot.getMessage("491702554707886081", "491702602573152256").then(msg => {
@@ -59,14 +59,14 @@ bot.on("guildMemberAdd", async(guild, member) => {
     }
 })
 
-let client = new pg.Client(process.env.url);
+let client = new pg.Client(process.env.URL);
 
 function pgConnect() {
-    client.connect(function(err) {
+    client.connect(function (err) {
         if (err) {
             return console.error("could not connect to postgres", err);
         }
-        client.query('SELECT NOW() AS "theTime"', function(err, result) {
+        client.query('SELECT NOW() AS "theTime"', function (err, result) {
             if (err) {
                 return console.error("error running query", err);
             }
@@ -76,7 +76,7 @@ function pgConnect() {
     });
 }
 const CronJob = require('cron').CronJob;
-const job = new CronJob('00 00 00 * * 0-6', function() {
+const job = new CronJob('00 00 00 * * 0-6', function () {
     const d = new Date();
     console.log('reset at , ' + d)
     client.query('DELETE FROM waiting');
@@ -167,15 +167,15 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
 bot.on("messageCreate", async msg => {
     if (msg.author.bot) return;
-    if (msg.content.toLowerCase() == "sk color"){
+    if (msg.content.toLowerCase() == "sk color") {
         let coloredRoles = msg.member.roles
         console.log(coloredRoles)
-        
+
     }
 
     if (msg.content.toLowerCase().startsWith("sbs ")) {
 
-        let command = commands.find(function(cmd) {
+        let command = commands.find(function (cmd) {
             return cmd.name == "bottle"
         })
 
@@ -189,7 +189,7 @@ bot.on("messageCreate", async msg => {
     }
     else if (msg.content.toLowerCase().startsWith("sbss ")) {
 
-        let command = commands.find(function(cmd) {
+        let command = commands.find(function (cmd) {
             return cmd.name == "bottle"
         })
 
@@ -202,14 +202,14 @@ bot.on("messageCreate", async msg => {
         return;
     }
     if (msg.content.toLowerCase() == "srf") {
-        let command = commands.find(function(cmd) {
+        let command = commands.find(function (cmd) {
             return cmd.name == "rpg"
         })
         let args = ["fight"];
         command.func(msg, args);
     }
     if (msg.content.toLowerCase() == "sboi") {
-        let command = commands.find(function(cmd) {
+        let command = commands.find(function (cmd) {
             return cmd.name == "bottle"
         })
         let args = ["opt-in"]
@@ -217,7 +217,7 @@ bot.on("messageCreate", async msg => {
 
     }
     if (msg.content.toLowerCase() == "sboo") {
-        let command = commands.find(function(cmd) {
+        let command = commands.find(function (cmd) {
             return cmd.name == "bottle"
         })
         let args = ["opt-out"]
@@ -283,7 +283,7 @@ bot.on("messageCreate", async msg => {
         }
 
         else {
-            commands.forEach(function(command) {
+            commands.forEach(function (command) {
                 if (command.name == c) {
                     stuff.shift();
                     command.func(msg, stuff)
@@ -299,7 +299,7 @@ async function postStats() {
     try {
         await sf
             .post("https://bots.discord.pw/api/bots/397898847906430976/stats")
-            .set({ Authorization: process.env.dbots })
+            .set({ Authorization: process.env.DBOTS })
             .send({ server_count: bot.guilds.size });
         console.log("Stats have been posted to Discord Bots.");
     }
@@ -312,7 +312,7 @@ async function carbon() {
     try {
         await sf
             .post("https://www.carbonitex.net/discord/data/botdata.php")
-            .send({ servercount: bot.guilds.size, key: process.env.carbon });
+            .send({ servercount: bot.guilds.size, key: process.env.CARBON });
         console.log("Stats have been posted to Carbon.")
     }
     catch (err) {
@@ -335,7 +335,6 @@ bot.on("ready", () => {
 module.exports.client = client;
 module.exports.bot = bot;
 module.exports.sf = sf;
-module.exports.weebSH = weebSH;
 module.exports.helpCommands = helpCommands;
 module.exports.droll = droll;
 app.use(express.static(__dirname + "/public"));
