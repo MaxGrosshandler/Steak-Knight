@@ -375,18 +375,6 @@ module.exports = {
             if (typeof player !== "undefined"){
                 let user = await bot.getRESTUser(id);
                 if (typeof user !== "undefined") {
-                    if (typeof playerClass !== "undefined") {
-                        pClass = playerClass.class_name
-                    }
-
-                    items.forEach(function (item) {
-                        if (typeof item !== "undefined")
-                            pItems += item.item_name + " | ";
-
-                    })
-                    pItems += "\n"
-
-
                     msg.channel.createMessage({
                         embed: {
                             description: serializePlayerDescription({player, items, playerClass, name: user.username})
