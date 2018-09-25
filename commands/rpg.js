@@ -69,9 +69,6 @@ function serializePlayerDescription({player, items, playerClass, name}) {
     if (playerClass) {
         if (playerClass.class_type === "Attacker") {
             output.push(`Additionally, you inflict ${playerClass.class_value} extra damage thanks to your ${playerClass.class_skill}.`);
-            let aval = droll.roll(`${playerClass.class_value}`).total + Math.floor(player.player_level/2);
-            playerHit += aval;
-            attack += ", and you dealt " + aval + " damage thanks to your " + playerClass.class_skill
         }
         else if (playerClass.class_type === "Defender") {
             output.push(`Additionally, you block ${playerClass.class_value} extra damage thanks to your ${playerClass.class_skill}.`);
@@ -79,7 +76,7 @@ function serializePlayerDescription({player, items, playerClass, name}) {
     }
     output.push(""); // empty line
     output.push(`You have ${player.player_xp} xp and you hit the next level at ${player.player_next_level} xp.`);
-    return output.join('\n');
+    return output.join("\n");
 }
 
 module.exports = {
