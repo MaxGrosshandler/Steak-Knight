@@ -235,6 +235,25 @@ module.exports = {
                 msg.channel.createMessage("That player doesn't exist!")
             }
         }
+        if (args[0] == "guard") {
+            let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
+            let player = getPlayer(id)
+           
+            if (typeof player !== "undefined") {
+                if (playerClass.class_name == 'Guardian') {
+                    let user = await bot.getRESTUser(player.player_id).then(user => {
+                    return user})
+
+                    msg.channel.createMessage("You gave " +user.username + " a shield!")
+                }
+                else {
+                    msg.channel.createMessage("You aren't a guardian!")
+                }
+            }
+            else {
+                msg.channel.createMessage("That player doesn't exist!")
+            }
+        }
         if (args[0] == "class") {
             let classList = await getClassList();
             let classDisplay = "";
