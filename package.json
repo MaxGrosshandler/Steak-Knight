@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "async": "^2.6.1",
+    "big-integer": "^1.6.36",
     "cron": "^1.4.1",
     "droll": "^0.2.1",
     "eris": "^0.9.0",
