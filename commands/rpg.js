@@ -143,7 +143,7 @@ module.exports = {
                         if (playerClass.class_type === "Attacker") {
                             let aval = droll.roll(`${playerClass.class_value}`).total + Math.floor(player.player_level/2);
                             playerHit += aval;
-                            attack += ", and you dealt " + playerHit + " damage thanks to your " + playerClass.class_skill
+                            attack += ", and you dealt " + aval + " damage thanks to your " + playerClass.class_skill
                         }
                         else if (playerClass.class_type === "Defender") {
                             let dval = droll.roll(`${playerClass.class_value}`).total + Math.floor(player.player_level/2);
@@ -299,7 +299,7 @@ module.exports = {
 
             })
             shopItems.forEach(function (item) {
-                if (item.item_name == args[1].toLowerCase()) {
+                if (item.item_name.toLowerCase() == args[1].toLowerCase()) {
                     if (!(ownedItems.includes(args[1].toLowerCase()))) {
                         client.query("SELECT * from currency where id = $1", [msg.author.id]).then(cur => {
                             c = cur.rows[0]
