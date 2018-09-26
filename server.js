@@ -21,12 +21,12 @@ const num = Math.random();
 
 /* BEGIN ZOMBIEWATCH */
 
-const ZombieWatch = require('./ZombieWatch');
-const zombieWatch = new ZombieWatch(bot);
-bot.zombieWatch = zombieWatch;
+//const ZombieWatch = require('./ZombieWatch');
+//const zombieWatch = new ZombieWatch(bot);
+//bot.zombieWatch = zombieWatch;
 
 /* END ZOMBIEWATCH */
-
+/*
 bot.on("guildCreate", async guild => {
     for (const [id, channel] of guild.channels) {
         if (channel.type === 0) { // check if text channel
@@ -38,6 +38,7 @@ bot.on("guildCreate", async guild => {
         }
     }
 });
+
 bot.on("guildMemberAdd", async (guild, member) => {
     if (guild.id === "481243726392328192") {
         let command = commands.find(function (cmd) {
@@ -56,6 +57,13 @@ bot.on("guildMemberAdd", async (guild, member) => {
         })
     }
 })
+*/
+bot.on("guildCreate", async guild => {
+    bot.editStatus("online", { name: `${bot.guilds.size} servers`, type: 3 });
+})
+bot.on("guildDelete", async guild => {
+    bot.editStatus("online", { name: `${bot.guilds.size} servers`, type: 3 });
+})
 
 let client = new pg.Client(process.env.url);
 
@@ -73,6 +81,7 @@ function pgConnect() {
         });
     });
 }
+/*
 const CronJob = require('cron').CronJob;
 const job = new CronJob('00 00 00 * * 0-6', function () {
     const d = new Date();
@@ -80,7 +89,7 @@ const job = new CronJob('00 00 00 * * 0-6', function () {
     client.query('DELETE FROM waiting');
 });
 job.start();
-
+*/
 //const pkill = new CronJob('0 */40 * * * *', function () {
 //  process.exit();
 
@@ -165,7 +174,8 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
 bot.on("messageCreate", async msg => {
     if (msg.author.bot) return;
-
+    if (!process.env.ids.includes(msg.author.id)) return;
+/*
     if (msg.content == "skhello"){
         idun.downcase(msg,'HELLO')
     }
@@ -233,8 +243,8 @@ bot.on("messageCreate", async msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         idun.send(msg,"Midna is the best girl.");
     }
-
-    if (msg.content.toLowerCase().startsWith("sk ")) {
+*/
+    if (msg.content.toLowerCase().startsWith("raw ")) {
         let stuff = msg.content.split(" ")
         let c = stuff[1];
         stuff.shift()
@@ -270,14 +280,14 @@ bot.on("messageCreate", async msg => {
                 if (command.name == c) {
                     stuff.shift();
                     command.func(msg, stuff)
-                    console.log("Command was sk " + command.name + " and was invoked by " + msg.author.username + " with the id of " + msg.author.id + " with a channel id of "+ msg.channel.id)
+                    //console.log("Command was sk " + command.name + " and was invoked by " + msg.author.username + " with the id of " + msg.author.id + " with a channel id of "+ msg.channel.id)
                 }
 
             })
         }
     }
 });
-
+/*
 async function postStats() {
     try {
         await sf
@@ -302,17 +312,18 @@ async function carbon() {
         console.error(err);
     }
 }
+*/
 pgConnect();
 readCommands();
 bot.connect();
 bot.on("ready", () => {
 
-    bot.createMessage("479687321948520448", "I started up!");
-    console.log("this instance number is " + num)
+    //bot.createMessage("479687321948520448", "I started up!");
+    //console.log("this instance number is " + num)
     console.log("Ready!");
-    postStats();
-    carbon();
-    bot.editStatus("online", { name: `${bot.guilds.size} servers | sk help`, type: 3 });
+   // postStats();
+    //carbon();
+    bot.editStatus("online", { name: `${bot.guilds.size} servers`, type: 3 });
 });
 module.exports.client = client;
 module.exports.bot = bot;
