@@ -28,6 +28,7 @@ bot.zombieWatch = zombieWatch;
 /* END ZOMBIEWATCH */
 
 bot.on("guildCreate", async guild => {
+    bot.editStatus("online", { name: `${bot.guilds.size} servers`, type: 3 });
     for (const [id, channel] of guild.channels) {
         if (channel.type === 0) { // check if text channel
             let perms = channel.permissionsOf(bot.user.id).json;
@@ -38,6 +39,9 @@ bot.on("guildCreate", async guild => {
         }
     }
 });
+bot.on("guildDelete", async guild => {
+    bot.editStatus("online", { name: `${bot.guilds.size} servers`, type: 3 });
+})
 bot.on("guildMemberAdd", async (guild, member) => {
     if (guild.id === "481243726392328192") {
         let command = commands.find(function (cmd) {
