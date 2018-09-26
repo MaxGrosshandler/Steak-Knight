@@ -1,5 +1,5 @@
 applications:
-  - name: sk
+  - name: bleed
     memory: 2G
     instances: 1
     random-route: true
