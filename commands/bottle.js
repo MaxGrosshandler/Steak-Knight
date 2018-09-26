@@ -6,12 +6,12 @@ module.exports = {
 
 
     if (args[0] == "opt-in") {
-      let exists = await client.query("Select from bottles where id = $1", [msg.author.id])
+      let exists = await client.query("Select from bottle where id = $1", [msg.author.id])
       if (typeof exists.rows[0] !== "undefined") {
         msg.channel.createMessage("You are already on the bottle list!")
       }
       else {
-        client.query("INSERT INTO bottles(id) VALUES($1)", [msg.author.id])
+        client.query("INSERT INTO bottle(id) VALUES($1)", [msg.author.id])
         msg.channel.createMessage(
           "Opted into bottles! You can now send and receive bottles. You can use either `sk bottle send <message>` or `sbs <message>` to send your first bottle. \nIf you get a bottle that contains advertisements or prohibited content, please DM Xamtheking#2099 or MaxGrosshandler#6592 so I can take care of the issue. Happy bottling!"
         );
@@ -19,7 +19,7 @@ module.exports = {
 
     }
     if (args[0] == "opt-out") {
-      client.query("delete from bottles where id = ($1)", [msg.author.id])
+      client.query("delete from bottle where id = ($1)", [msg.author.id])
       msg.channel.createMessage(
         "Opted out of bottles. You will no longer receive or be able to send any bottles."
       )
@@ -48,7 +48,7 @@ module.exports = {
     let names = [];
     let send = false;
     if (args[0] == "send") {
-      client.query("SELECT * FROM bottles").then(res => {
+      client.query("SELECT * FROM bottle").then(res => {
         for (item of res.rows) {
           names.push(item.id);
         }

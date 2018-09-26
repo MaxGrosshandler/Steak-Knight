@@ -7,10 +7,7 @@ const Taihou = require('taihou');
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/4.0.0'
 });
-async function getcolor(member) {
-    roles = member.roles
-    return roles;
-}
+
 const sf = require("snekfetch");
 var pg = require("pg");
 
@@ -167,11 +164,6 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
 bot.on("messageCreate", async msg => {
     if (msg.author.bot) return;
-    if (msg.content.toLowerCase() == "sk color") {
-        let coloredRoles = msg.member.roles
-        console.log(coloredRoles)
-
-    }
 
     if (msg.content.toLowerCase().startsWith("sbs ")) {
 
@@ -237,20 +229,7 @@ bot.on("messageCreate", async msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         msg.channel.createMessage("Midna is the best girl.");
     }
-    /*
-    if (msg.content == "sk socket") {
-        createServer(function connectionListener (ws) {
-            ws.send('welcome!')
-            ws.on('message', (data) => {
-              ws.send(data.toString()) // echo-server
-            })
-          })
-          .listen(4443, function () {
-            const {address, port} = this.address() // this is the http[s].Server
-            console.log('listening on http://%s:%d (%s)', /::/.test(address) ? '0.0.0.0' : address, port)
-          })
-    }
-    */
+
     if (msg.content.toLowerCase().startsWith("sk ")) {
         let stuff = msg.content.split(" ")
         let c = stuff[1];
@@ -331,11 +310,9 @@ bot.on("ready", () => {
     carbon();
     bot.editStatus("online", { name: `${bot.guilds.size} servers | sk help`, type: 3 });
 });
-
 module.exports.client = client;
 module.exports.bot = bot;
 module.exports.sf = sf;
 module.exports.helpCommands = helpCommands;
 module.exports.droll = droll;
-app.use(express.static(__dirname + "/public"));
-app.listen(process.env.PORT)
+app.listen(process.env.PORT);
