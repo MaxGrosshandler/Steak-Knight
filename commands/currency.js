@@ -142,19 +142,15 @@ module.exports = {
         else if (args[0] == "bal") {
             let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
             let bal = await balance(id)
+            bot.getRESTUser(id).then(user => {
             if (typeof bal !== "undefined") {
-                bot.getRESTUser(id).then(user => {
-                    if (typeof bal == "undefined") {
-                        msg.channel.createMessage(user.username + " has 0 <:steak:481449443204530197>")
-                    }
-                    else {
+            
                         msg.channel.createMessage(user.username + " has " + bal.money + " <:steak:481449443204530197>")
-                    }
-                })
-            }
+                }
             else {
-                msg.channel.createMessage("You need to mention someone or use their id to check their balance!")
+                msg.channel.createMessage(user.username + " has 0 <:steak:481449443204530197>")
             }
+        })
         }
 
 

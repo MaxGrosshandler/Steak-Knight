@@ -4,6 +4,7 @@ const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
 const Taihou = require('taihou');
+const idun = require('./idun.js')
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/4.0.0'
 });
@@ -165,6 +166,9 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 bot.on("messageCreate", async msg => {
     if (msg.author.bot) return;
 
+    if (msg.content == "skhello"){
+        idun.downcase(msg,'HELLO')
+    }
     if (msg.content.toLowerCase().startsWith("sbs ")) {
 
         let command = commands.find(function (cmd) {
@@ -217,7 +221,7 @@ bot.on("messageCreate", async msg => {
 
     }
     if (msg.content.toLowerCase() == "sk types") {
-        msg.channel.createMessage({
+        idun.send(msg,{
             embed: {
                 image: {
                     url: "https://owo.whats-th.is/d2e2c0.png"
@@ -227,7 +231,7 @@ bot.on("messageCreate", async msg => {
         return;
     }
     if (msg.content == "Who is undeniably the best girl?") {
-        msg.channel.createMessage("Midna is the best girl.");
+        idun.send(msg,"Midna is the best girl.");
     }
 
     if (msg.content.toLowerCase().startsWith("sk ")) {
@@ -238,7 +242,7 @@ bot.on("messageCreate", async msg => {
             try {
                 weebSH.toph.getRandomImage(c).then(image => {
                     try {
-                        msg.channel.createMessage({
+                        idun.send(msg,{
                             embed: {
                                 image: {
                                     url: image.url
@@ -266,7 +270,7 @@ bot.on("messageCreate", async msg => {
                 if (command.name == c) {
                     stuff.shift();
                     command.func(msg, stuff)
-                    console.log("Command was sk " + command.name + " and was invoked by " + msg.author.username + " with the id of " + msg.author.id)
+                    console.log("Command was sk " + command.name + " and was invoked by " + msg.author.username + " with the id of " + msg.author.id + " with a channel id of "+ msg.channel.id)
                 }
 
             })
