@@ -5,9 +5,9 @@ module.exports = {
         let str = "";
         if (typeof args[0] == "undefined") {
             helpCommands.forEach(cmd => {
-                str += "sk " + cmd[0] + " - " + cmd[1] + "\n";
+                str += "raw " + cmd[0] + " - " + cmd[1] + "\n";
             });
-            str += "Use `sk help <command>` for more detailed information.";
+            str += "Use `raw help <command>` for more detailed information.";
             msg.channel.createMessage({
                 embed: {
                     description: str,
