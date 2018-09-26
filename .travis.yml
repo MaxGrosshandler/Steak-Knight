@@ -6,8 +6,6 @@ deploy:
   api: https://api.run.pivotal.io
   organization: maxgrosshandler-org
   space: bleeding
-   on:
-    branch: bleeding
 language: node_js
 node_js:
   - "node"
