@@ -287,7 +287,7 @@ module.exports = {
             let classDisplay = "";
             if (typeof args[1] !== "undefined") {
 
-                if (classArray.includes(cap(args[1]))) {
+                if (classList.includes(cap(args[1]))) {
                     if (typeof playerClass == "undefined") {
                         if (player.player_level > 4) {
                             classList.forEach(function (c) {
