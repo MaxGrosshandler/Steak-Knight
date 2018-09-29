@@ -156,7 +156,7 @@ module.exports = {
     fullDescription:
       "Use this command to opt-in or opt-out of bottles, or to send a bottle. It now supports attachments!",
     usage:
-      "`sk bottle opt-in` or `sboi`, `sk bottle opt-out` or `sboo`,`sk bottle send <yourmessagehere>` or `sbs <message>"
+      "`sk bottle opt-in` or `sboi`, `sk bottle opt-out` or `sboo`,`sk bottle send <yourmessagehere>` or `sbs <message>`"
       + "\nAdditionally, you can use `sk bottle send sign <yourmessagehere>` or `sbss <yourmessagehere>` to send the bottle and let"
       + "the recipient know who sent it!"
   },
