@@ -384,7 +384,7 @@ module.exports = {
 
 
         if (args[0] == "help") {
-            msg.channel.createMessage({ embed: { description: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` or `srf` to fight a monster, 'sk rpg class` to see available classes, and `sk rpg shop` to see what you can buy! Please use `sk rpg` first!" } });
+            msg.channel.createMessage({ embed: { description: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, `sk rpg fight` or `srf` to fight a monster, 'sk rpg class` to see available classes, `sk currency` to see your current amount of steaks, and `sk rpg shop` to see what you can buy! Please use `sk rpg` first!" } });
         }
         if (args[0] == "lookup") {
             let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
@@ -423,7 +423,7 @@ module.exports = {
     },
     options: {
         description: "Fight some baddies for loot and glory!",
-        fullDescription: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, and `sk rpg fight` or `srf` to fight a monster, 'sk rpg class` to see available classes, and `sk rpg shop` to see what you can buy! Please use `sk rpg` first!",
+        fullDescription: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, `sk rpg fight` or `srf` to fight a monster, 'sk rpg class` to see available classes, `sk currency` to see your current amount of steaks, and `sk rpg shop` to see what you can buy! Please use `sk rpg` first!",
         usage: "`sk rpg`"
     },
     name: "rpg"
