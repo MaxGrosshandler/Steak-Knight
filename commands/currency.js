@@ -1,3 +1,4 @@
+//the currency handler of the bot
 const serv = require("../server.js");
 let client = serv.client;
 let bot = serv.bot;

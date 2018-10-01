@@ -1,3 +1,4 @@
+//messages in a bottle!
 const serv = require("../server.js");
 let client = serv.client;
 let bot = serv.bot;

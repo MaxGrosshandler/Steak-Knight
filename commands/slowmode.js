@@ -1,3 +1,4 @@
+//slowmode on discord!
 const Endpoints = require('eris/lib/rest/Endpoints');
 const serv = require ("../server.js")
 const bot = serv.bot;

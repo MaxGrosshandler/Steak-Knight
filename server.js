@@ -1,5 +1,7 @@
+//window dressing for express, which Cloud Foundry needs to run
 var express = require("express");
 var app = express();
+
 const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
@@ -323,4 +325,6 @@ module.exports.bot = bot;
 module.exports.sf = sf;
 module.exports.helpCommands = helpCommands;
 module.exports.droll = droll;
+
+//this bit is window dressing for express
 app.listen(process.env.PORT);

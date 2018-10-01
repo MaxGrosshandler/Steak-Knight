@@ -1,3 +1,4 @@
+//a work in progress command!
 const serv = require("../server.js");
 let client = serv.client;
 async function getPlayerClue(id) {

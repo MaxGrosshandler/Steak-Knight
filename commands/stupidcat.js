@@ -1,3 +1,4 @@
+//fun command
 const serv = require("../server.js");
 const bot = serv.bot;
 module.exports = {

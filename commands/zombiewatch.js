@@ -1,3 +1,4 @@
+//isn't really needed now but is nice as a backup
 const serv = require("../server.js");
 const bot = serv.bot;
 let alexia = "cute";

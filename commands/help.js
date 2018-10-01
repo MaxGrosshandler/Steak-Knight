@@ -1,3 +1,4 @@
+//the help command!
 const serv = require("../server.js")
 const helpCommands = serv.helpCommands;
 module.exports = {

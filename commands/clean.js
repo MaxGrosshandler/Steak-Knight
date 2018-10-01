@@ -1,3 +1,4 @@
+//currently out of comission
 const serv = require("../server.js");
 let bot = serv.bot;
 module.exports = {

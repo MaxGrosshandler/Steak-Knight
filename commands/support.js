@@ -1,3 +1,4 @@
+//lists the support server
 module.exports = {
   func(msg) {
     msg.channel.createMessage("Join my support server at https://discord.gg/4xbwxe6")

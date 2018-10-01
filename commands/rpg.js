@@ -1,3 +1,4 @@
+//main rpg command
 const serv = require("../server.js");
 let client = serv.client;
 let droll = serv.droll;

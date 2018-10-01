@@ -1,3 +1,4 @@
+//owner-only commands
 const serv = require("../server.js");
 let client = serv.client;
 let bot = serv.bot;

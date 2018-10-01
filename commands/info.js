@@ -1,3 +1,4 @@
+//displays information about the bot!
 var moment = require("moment");
 var server = require("../server.js");
 const bot = server.bot;

@@ -1,3 +1,4 @@
+//provides a link to my paypal!
 module.exports = {
   func: async (msg, args) => {
     msg.channel.createMessage(

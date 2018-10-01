@@ -1,3 +1,4 @@
+//currently out of commission
 module.exports = {
   // checks permissions
   func: async (msg, args) => {

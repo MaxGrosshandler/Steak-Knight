@@ -1,3 +1,4 @@
+//gives a role; not used much
 const server = require("../server.js");
 const bot = server.bot;
 module.exports = {

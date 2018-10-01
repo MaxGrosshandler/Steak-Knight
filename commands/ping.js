@@ -1,4 +1,4 @@
-
+//returns the latency of the bot
 module.exports = {
   func: async (msg) => {
     // ping

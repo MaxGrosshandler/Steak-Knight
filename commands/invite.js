@@ -1,3 +1,4 @@
+//provides the invite for the bot!
 module.exports = {
   func: async (msg, args) => {
     msg.channel.createMessage(

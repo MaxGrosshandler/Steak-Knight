@@ -1,3 +1,4 @@
+//an owner only command for evaluating javascript
 const serv = require("../server.js");
 const bot = serv.bot;
 let alexia = "cute";

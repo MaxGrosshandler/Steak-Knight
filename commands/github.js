@@ -1,3 +1,4 @@
+//provides a link to the github
 module.exports = {
   func: async (msg) => {
     msg.channel.createMessage(

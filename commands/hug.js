@@ -7,7 +7,7 @@ module.exports = {
             }
           }
         });
-    // so on and so forth
+    // hugs a user with a static gif
   },
   options: {
     description: "Gives a hug!",

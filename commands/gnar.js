@@ -1,4 +1,4 @@
-
+//this command is used for determing the shard of a given server
 const bi = require('big-integer')
 module.exports = {
   func: async (msg, args) => {

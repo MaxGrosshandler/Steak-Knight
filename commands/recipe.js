@@ -1,3 +1,4 @@
+//prints a random steak recipe
 const serv = require("../server.js");
 let sf = serv.sf;
 module.exports = {
