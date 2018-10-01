@@ -10,9 +10,6 @@ module.exports = {
               console.log("I'm muted in that channel!")
             }
 },
-downcase: async (msg, args) => {
-   console.log(msg.content.toLowerCase().startsWith(args + " "))
 
-},
   name: "idun"
 };
