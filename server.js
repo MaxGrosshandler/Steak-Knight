@@ -237,6 +237,9 @@ bot.on("messageCreate", async msg => {
     if (msg.content == "Who is undeniably the best girl?") {
         idun.send(msg,"Midna is the best girl.");
     }
+    if (msg.content == "Mirror mirror on the wall, who's the cutest of them all?"){
+        idun.send(msg, "Alexia and Julia, duh")
+    }
 
     if (msg.content.toLowerCase().startsWith("sk ")) {
         let stuff = msg.content.split(" ")
