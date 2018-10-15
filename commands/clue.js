@@ -40,6 +40,7 @@ module.exports = {
         let playerLocation = await getPlayerLocation(msg.author.id)
         let locations = await getLocations();
         let locationList = "";
+        let didNotMove = true;
         // ping
         if (command == null) {
             msg.channel.createMessage("You are a sleuth indeed!")
@@ -90,17 +91,17 @@ module.exports = {
             })
         }
         if (command == "move") {
-           let moved = false;
+          
             for (location of locations){
                 if (location.location_name === args[1]){
                 setPlayerLocation(msg.author.id, args[1])
                 msg.channel.createMessage("Moved to " + args[1])
-                moved = true;
-
+                didNotMove = false;
                 }
             }
-            if (moved === false){
-                msg.channel.createMessage("You didn't go anywhere!")
+            if (didNotMove) {
+                msg.channel.createMessage("Henlo you didn't move")
+
             }
         }
     },
