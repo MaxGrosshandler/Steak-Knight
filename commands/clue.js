@@ -91,13 +91,12 @@ module.exports = {
         }
         if (command == "move") {
             console.log(locations)
-            if (locations.includes(args[1])) {
-                args.shift();
-                setPlayerLocation(msg.author.id, args.join(" "))
-                msg.channel.createMessage("Moved to " + args.join(" "))
-            }
-            else {
-                msg.channel.createMessage("Didn't move anywhere!")
+            for (location of locations){
+                if (location.location_name === args[1]){
+                setPlayerLocation(msg.author.id, args[1])
+                msg.channel.createMessage("Moved to " + args[1])
+
+                }
             }
         }
     },
