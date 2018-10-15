@@ -90,13 +90,17 @@ module.exports = {
             })
         }
         if (command == "move") {
-            console.log(locations)
+           let moved = false;
             for (location of locations){
                 if (location.location_name === args[1]){
                 setPlayerLocation(msg.author.id, args[1])
                 msg.channel.createMessage("Moved to " + args[1])
+                moved = true;
 
                 }
+            }
+            if (!moved){
+                msg.channel.createMessage("You didn't go anywhere!")
             }
         }
     },
