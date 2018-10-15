@@ -99,7 +99,7 @@ module.exports = {
 
                 }
             }
-            if (!moved){
+            if (moved === false){
                 msg.channel.createMessage("You didn't go anywhere!")
             }
         }
