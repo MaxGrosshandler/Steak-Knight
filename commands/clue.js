@@ -100,7 +100,7 @@ module.exports = {
                 }
             }
             if (didNotMove) {
-                msg.channel.createMessage("Henlo you didn't move")
+                msg.channel.createMessage("You didn't move anywhere! Make sure you have the name of the location exactly!")
 
             }
         }
