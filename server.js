@@ -228,14 +228,6 @@ bot.on("messageCreate", async msg => {
 
 }
 
-if (msg.content == "sk awaitage"){
-    msg.channel.createMessage("How old are you?")
-    awaitMessage(msg, msg2 => isNaN(msg2.content) === false)
-    .then(msg2 => {
-       msg.channel.createMessage("Ok, you are "+ msg2.content + " years old.")
-    });
-
-}
 
     if (msg.content.toLowerCase().startsWith("sbs ")) {
 
@@ -390,4 +382,5 @@ module.exports.bot = bot;
 module.exports.sf = sf;
 module.exports.helpCommands = helpCommands;
 module.exports.droll = droll;
+module.exports.awaitedMessages = awaitedMessages;
 app.listen(process.env.PORT);
