@@ -11,7 +11,7 @@ function awaitMessage(msg, callback, timeout = 300000) {
         if (timeout >= 0) {
             timer = setTimeout(function() {
                 delete awaitedMessages[msg.channel.id][msg.author.id];
-                reject(new Error(`Request timed out (${timeout}ms)`));
+                msg.channel.createMessage("You didn't give an age!")
             }, timeout);
         }
         
@@ -39,7 +39,7 @@ function awaitMessage(msg, callback, timeout = 300000) {
     module.exports = {
   func: async (msg) => {
     msg.channel.createMessage("How old are you?")
-    awaitMessage(msg, msg2 => isNaN(msg2.content) === false)
+    awaitMessage(msg, msg2 => isNaN(msg2.content) === false, timeout = 20000)
     .then(msg2 => {
        msg.channel.createMessage("Ok, you are "+ msg2.content + " years old.")
     });

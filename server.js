@@ -4,7 +4,7 @@ const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
 const Taihou = require('taihou');
-const idun = require('./idun.js')
+const idun = require('./idun.js');
 const weebSH = new Taihou(process.env.wolke, true, {
     userAgent: 'Steak Knight/4.0.0'
 });
@@ -19,6 +19,7 @@ var bot = new Eris.Client(
 );
 const num = Math.random();
 
+    
 /* BEGIN ZOMBIEWATCH */
 
 const ZombieWatch = require('./ZombieWatch');
@@ -120,13 +121,13 @@ function readCommands() {
                     command.func,
                     command.hidden
                 ];
-                if (command.name !== "kick" && command.name !== "ban" && command.name !== "role") {
+                if (command.name !== "kick" && command.name !== "ban" && command.name !== "role" && command.name !== "steak") {
                     commands.push(command)
                 }
 
 
 
-                let hiddenCommands = ['eval', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role', 'o', 'clue', 'gnar']
+                let hiddenCommands = ['eval', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role', 'o', 'clue', 'gnar', 'steak']
                 if (!(hiddenCommands.includes(command.name))) {
                     helpCommands.push(newCommand);
                 }
@@ -144,52 +145,6 @@ function readCommands() {
     });
 }
 var awaitedMessages = {};
-
-/**
- * @description This functions takes a message object, and a verification callback.
- * The callback is used to verify input, rather than return a result.
- * You may expand this as needed.
- * @param {Message} msg The message object
- * @param {Function} callback A verification callback, taking a new Message object and returning a boolean
- * @param {Number} timeout Amount of time in milliseconds before rejecting the request. Defaults to 300000 (5 minutes). Set to -1 to never expire.
- * @returns {Promise}
- */
-function awaitMessage(msg, callback, timeout = 300000) {
-    return new Promise((resolve, reject) => {
-        /* Verify the contents of the object */
-        if (!awaitedMessages[msg.channel.id])
-            awaitedMessages[msg.channel.id] = {};
-
-        /* Create an optional timeout */
-        let timer;
-        if (timeout >= 0) {
-            timer = setTimeout(function() {
-                delete awaitedMessages[msg.channel.id][msg.author.id];
-                reject(new Error(`Request timed out (${timeout}ms)`));
-            }, timeout);
-        }
-        
-        /* Check for an existing entry, and remove if neccesary */
-        if (awaitedMessages[msg.channel.id][msg.author.id]) {
-            awaitedMessages[msg.channel.id][msg.author.id].reject();   
-        }
-        
-        /* Create an empty entry for the user, overwriting any old one */
-        awaitedMessages[msg.channel.id][msg.author.id] = {
-            /* Resolving function */
-            resolve: function(msg2) {
-                clearTimeout(timer);
-                resolve(msg2);
-            },
-            /* Rejecting function */
-            reject: function() {
-                clearTimeout(timer);
-                reject(new Error('Request was overwritten'));
-            },
-            callback
-        };
-    });
-}
 let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
     'bite', 'blush', 'clagwimoth', 'cry', 'cuddle',
@@ -227,6 +182,8 @@ bot.on("messageCreate", async msg => {
 
 
 }
+
+
 
 
     if (msg.content.toLowerCase().startsWith("sbs ")) {
