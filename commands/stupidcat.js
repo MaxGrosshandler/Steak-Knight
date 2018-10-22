@@ -3,7 +3,7 @@ const bot = serv.bot;
 module.exports = {
   func: async (msg, args) => {
     await msg.channel.createMessage("Pong!").then(m => {
-      return m.edit(`stupid cat is an adorable ball of fur`);
+      return m.edit(`stupid cat is an adorable and cute ball of fur`);
     });
   },
 
