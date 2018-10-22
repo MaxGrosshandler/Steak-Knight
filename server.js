@@ -34,7 +34,7 @@ bot.on("guildCreate", async guild => {
         if (channel.type === 0) { // check if text channel
             let perms = channel.permissionsOf(bot.user.id).json;
             if (perms.readMessages && perms.sendMessages) {
-                await channel.createMessage('Hi, my name is Steak Knight! Thanks for inviting me to your server! You can look at my commands with `sk help`. If you have trouble and/or the bot is not working as he should (I have been doing a lot of testing lately) please head over to the support server at https://discordapp.com/invite/4xbwxe6 Additionally, if you join the support server, you get 100 steaks! Doesn\'t that sound nice? Have a steak-tastic day!');
+                await channel.createMessage('Hi, my name is Steak Knight! Thanks for inviting me to your server! You can look at my commands with `sk help`. If you have trouble and/or the bot is not working as he should (I have been doing a lot of testing lately) please head over to the support server at https://discordapp.com/invite/4xbwxe6 Additionally, if you join the support server, you get 100 steaks! Doesn\'t that sound nice? Have a steak-tastic day! \n Disclaimer: Please do not join and then immediately leave or I will get rid of your steaks, thanks!');
                 break;
             }
         }
