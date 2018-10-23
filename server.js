@@ -121,13 +121,13 @@ function readCommands() {
                     command.func,
                     command.hidden
                 ];
-                if (command.name !== "kick" && command.name !== "ban" && command.name !== "role" && command.name !== "steak") {
+                if (command.name !== "kick" && command.name !== "ban" && command.name !== "role" && command.name !== "steak" && command.name !== "age") {
                     commands.push(command)
                 }
 
 
 
-                let hiddenCommands = ['eval', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role', 'o', 'clue', 'gnar', 'steak']
+                let hiddenCommands = ['eval', 'help', 'zombiewatch', 'stupidcat', 'kick', 'ban', 'role', 'o', 'clue', 'gnar', 'steak', 'age']
                 if (!(hiddenCommands.includes(command.name))) {
                     helpCommands.push(newCommand);
                 }
