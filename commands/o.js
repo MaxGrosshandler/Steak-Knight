@@ -1,5 +1,6 @@
 const serv = require("../server.js");
 let client = serv.client;
+const config = require("../config.json")
 let bot = serv.bot;
 async function createItem(vals){
     client.query("insert into shop (item_name, item_type, item_value, cost) values ($1, $2, $3, $4)", [vals[0], vals[1], vals[2], vals [3]]);
@@ -24,7 +25,7 @@ async function heal(player, value) {
 }
 module.exports = {
   func: async (msg, args) => {
-    if (process.env.ids.includes(msg.author.id)){
+    if (config.ids.includes(msg.author.id)){
         let c = args[0]
         args.shift()
         if (c == "ci") {

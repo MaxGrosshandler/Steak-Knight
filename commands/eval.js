@@ -1,14 +1,15 @@
 const serv = require("../server.js");
 const bot = serv.bot;
 let alexia = "cute";
+const config = require("../config.json")
 module.exports = {
   func: async (msg, args) => {
-    if (process.env.ids.includes(msg.author.id)
+    if (config.ids.includes(msg.author.id)
 
     ) {
       let toExecute;
       let code = args.join(" ");
-      if (code == "process.env.token") code = "\"nah, fam\""
+      if (code == "config.token") code = "\"nah, fam\""
       if (code.split("\n").length === 1)
         toExecute = eval(`async () => ${code}`);
       else toExecute = eval(`async () => { ${code} }`);

@@ -1,5 +1,6 @@
 const serv = require("../server.js");
 let sf = serv.sf;
+const config = require("../config.json")
 module.exports = {
   func: async (msg) => {
     let recipe;
@@ -7,7 +8,7 @@ module.exports = {
 
     try {
         await sf
-            .get("https://api.edamam.com/search?app_id=c7c6731b&app_key=" +process.env.recipe+"&q=steak&from=0&to=50")
+            .get("https://api.edamam.com/search?app_id=c7c6731b&app_key=" +config.recipe+"&q=steak&from=0&to=50")
             .then(r=> recipe = r.body)
             for (item of recipe.hits[parseInt(Math.random()* 50)].recipe.ingredientLines){
                 reStr += "\n*"+item

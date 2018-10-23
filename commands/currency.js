@@ -1,6 +1,7 @@
 const serv = require("../server.js");
 let client = serv.client;
 let bot = serv.bot;
+const config = require("../config.json")
 async function add(id, money) {
     return client.query("insert into currency (id, money)"
         + " values ($1, $2) ON CONFLICT (id)"
@@ -17,7 +18,7 @@ async function balance(id) {
 
 module.exports = {
     func: async (msg, args) => {
-        if (args[0] == "add" && process.env.ids.includes(msg.author.id)) {
+        if (args[0] == "add" && config.ids.includes(msg.author.id)) {
             if (!isNaN(args[2])) {
                 let values = [];
                 let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
@@ -34,7 +35,7 @@ module.exports = {
                 msg.channel.createMessage("That isn't a number!")
             }
         }
-        else if (args[0] == "remove" && process.env.ids.includes(msg.author.id)) {
+        else if (args[0] == "remove" && config.ids.includes(msg.author.id)) {
             if (!isNaN(args[2])) {
                 let values = [];
                 let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
