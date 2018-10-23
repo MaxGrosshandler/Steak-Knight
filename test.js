@@ -1,1 +1,0 @@
-return "Hello, this is a cake";
