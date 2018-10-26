@@ -11,3 +11,5 @@ Features of the bot:
 `sk rpg` - a cool rpg system where you can fight monsters and get Steak!
 
 `sk wayback` - go back in time to see old websites!
+
+![mmm delicious](https://media.giphy.com/media/8BDrjcJxybobe/giphy.gif)
