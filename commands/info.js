@@ -15,7 +15,7 @@ module.exports = {
         }
         , "color": 3553599,
         "description": "​\n**Steak Knight is a multipurpose bot for all your steak related needs!**"
-          + "\nHe's got some image commands, like slap/bite, a unique message-in-a-bottle system, a radical rpg, steaks as currency and more coming soon! Join the support server to get 100 steaks!\n\n"
+          + "\nHe's got some image commands, like slap/bite, a unique message-in-a-bottle system, a radical rpg, steaks as currency and more coming soon! Join and remain a member of the support server to get 100 steaks!\n\n"
           + "[Invite](https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot) - [Server](https://discord.gg/4xbwxe6) - [Github](https://github.com/MaxGrosshandler/Steak-Knight) - [Donate](https://www.paypal.me/MaxGrosshandler)​ ​​ ​​ ​​ ​​ ​—​ ​​ ​​ ​​ ​​ ​*Run​ ​ ​`sk help` to learn more.*\n​",
 
         footer: { "text": "Servers: " + bot.guilds.size + " | Uptime: " + hours + "h " + minutes + "min " + seconds + "s | Powered by Eris and grandmother's steak recipe." }
