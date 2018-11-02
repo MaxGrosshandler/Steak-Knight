@@ -35,7 +35,7 @@ module.exports = {
     // get a random message from the pool
     let message = messages[getRandomInt(0, messages.length)];
     // get a random number of milliseconds, between 5s and 10s
-    let timeout = getRandomInt(5000, 10000);
+    let timeout = getRandomInt(2500, 5000);
     await sleep(timeout);
     return m.edit(message);
   },
