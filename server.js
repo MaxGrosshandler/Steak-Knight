@@ -1,4 +1,5 @@
-
+var express = require("express");
+var app = express();
 const fs = require("fs");
 const Eris = require("eris")
 const droll = require('droll');
@@ -342,3 +343,4 @@ module.exports.sf = sf;
 module.exports.helpCommands = helpCommands;
 module.exports.droll = droll;
 module.exports.awaitedMessages = awaitedMessages;
+app.listen(process.env.PORT);

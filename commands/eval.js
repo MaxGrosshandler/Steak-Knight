@@ -1,6 +1,5 @@
 const serv = require("../server.js");
 const bot = serv.bot;
-let alexia = "cute";
 const config = require("../config.json")
 module.exports = {
   func: async (msg, args) => {
