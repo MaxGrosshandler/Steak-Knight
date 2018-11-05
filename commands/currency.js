@@ -127,10 +127,21 @@ module.exports = {
 
             client.query("SELECT * FROM WAITING WHERE id = $1", spoop).then(result => {
                 if (typeof result.rows[0] == "undefined") {
-                    add(id, 50)
-                    msg.channel.createMessage("You got your daily 50 <:steak:481449443204530197> !")
+                    if (msg.channel.guild.id === "481243726392328192"){
+                        add(id, 100)
+                        msg.channel.createMessage("You got your daily 100 <:steak:481449443204530197> thanks to being on the support server!")
+    
+                        client.query("INSERT INTO waiting (id) values ($1)", spoop)
 
-                    client.query("INSERT INTO waiting (id) values ($1)", spoop)
+                    }
+                    else {
+                        add(id, 50)
+                        msg.channel.createMessage("You got your daily 50 <:steak:481449443204530197> !")
+    
+                        client.query("INSERT INTO waiting (id) values ($1)", spoop)
+
+                    }
+                   
 
                 }
                 else {
