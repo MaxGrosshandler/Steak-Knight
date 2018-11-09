@@ -386,6 +386,23 @@ module.exports = {
         if (args[0] == "help") {
             msg.channel.createMessage({ embed: { description: "You can use `sk rpg` to check your stats, `sk rpg find` to find a monster to fight, `sk rpg fight` or `srf` to fight a monster, 'sk rpg class` to see available classes, `sk currency` to see your current amount of steaks, and `sk rpg shop` to see what you can buy! Please use `sk rpg` first!" } });
         }
+        if (args[0] == "use") {
+            if (args[1] === "potion"){
+                let ownedItems = [];
+                let items = await getItems(msg.author.id)
+    
+                items.forEach(function (item) {
+                    if (typeof item !== "undefined") ownedItems.push(item.item_name)
+    
+                })
+                if ((ownedItems.includes("potion"))) {
+                client.query("delete from items where item_name = $1 and player_id = $2", ["potion", msg.author.id])
+                let amountHealed =  droll.roll("1d6").total
+                heal(player, amountHealed)
+
+            }
+        }
+    }
         if (args[0] == "lookup") {
             let id = args[1].replace(/[^a-zA-Z0-9]/g, '');
             let player = await getPlayer(id)
