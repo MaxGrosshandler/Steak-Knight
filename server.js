@@ -171,6 +171,7 @@ let weebArray = ['animal_cat', 'animal_dog', 'awoo', 'bang', 'banghead',
 
 
 bot.on("messageCreate", async msg => {
+
     if (msg.author.bot) return;
 
     if (awaitedMessages.hasOwnProperty(msg.channel.id)

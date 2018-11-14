@@ -1,8 +1,8 @@
 
 module.exports = {
-  func: async (msg) => {
+  func: (msg) => {
     // ping
-    await msg.channel.createMessage("Pong!").then(m => {
+    msg.channel.createMessage("Pong!").then(m => {
       let time = m.timestamp - msg.timestamp;
       return m.edit(`Pong! **${time}**ms`);
     });
