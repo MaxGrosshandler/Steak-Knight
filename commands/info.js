@@ -3,10 +3,6 @@ var server = require("../server.js");
 const bot = server.bot;
 module.exports = {
   func: async (msg) => {
-    let time = moment.duration(moment() - bot.startTime);
-    let hours = time.hours();
-    let minutes = time.minutes();
-    let seconds = time.seconds();
     msg.channel.createMessage({
       embed: {
         "author":
@@ -18,7 +14,7 @@ module.exports = {
           + "\nHe's got some image commands, like slap/bite, a unique message-in-a-bottle system, a radical rpg, steaks as currency and more coming soon! Join and remain a member of the support server to get 100 steaks!\n\n"
           + "[Invite](https://discordapp.com/api/oauth2/authorize?client_id=397898847906430976&permissions=0&scope=bot) - [Server](https://discord.gg/4xbwxe6) - [Github](https://github.com/MaxGrosshandler/Steak-Knight) - [Donate](https://www.paypal.me/MaxGrosshandler)​ ​​ ​​ ​​ ​​ ​—​ ​​ ​​ ​​ ​​ ​*Run​ ​ ​`sk help` to learn more.*\n​",
 
-        footer: { "text": "Servers: " + bot.guilds.size + " | Uptime: " + hours + "h " + minutes + "min " + seconds + "s | Powered by Eris and grandmother's steak recipe." }
+        footer: { "text": "Servers: " + bot.guilds.size + " | Powered by Eris and steak sauce" }
       }
     }
     );
