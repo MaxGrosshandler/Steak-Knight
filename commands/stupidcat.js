@@ -7,6 +7,18 @@ const messages = [
   'stupid cat is an adorable and cute ball of fur',
   'stupid cat is very cute',
   'stupid cat is great',
+  'stupid cat is actually smart',
+  'stupid cat is neat',
+  'stupid cat likes steak',
+  'stupid cat is a cat',
+  // negatives	
+  'stupid cat is awful awful garbage',	
+  'stupid cat was a mistake',	
+  'stupid cat is worthless',
+  'stupid cat should not exist',
+  'stupid cat is disgusting',
+  'stupid cat is never worth it',
+  'stupid cat should just go die'
 ]
 
 /**
