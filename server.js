@@ -122,7 +122,7 @@ function readCommands() {
                     command.func,
                     command.hidden
                 ];
-                if (command.name !== "kick" && command.name !== "ban" && command.name !== "role" && command.name !== "steak" && command.name !== "age") {
+                if (command.name !== "kick" && command.name !== "ban" && command.name !== "stupidcat" && command.name !== "role" && command.name !== "steak" && command.name !== "age") {
                     commands.push(command)
                 }
 
