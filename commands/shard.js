@@ -7,8 +7,8 @@ module.exports = {
   },
   options: {
     description: "You shouldn't see this",
-    fullDescription: "Gives a shard for gnar",
-    usage: "`sk gnar <serverid>`"
+    fullDescription: "Gives a shard for a bot",
+    usage: "`sk shard <serverid>`"
   },
-  name: "gnar"
+  name: "shard"
 };
