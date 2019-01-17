@@ -305,7 +305,7 @@ bot.on("messageCreate", async msg => {
 async function postStats() {
     try {
         await sf
-            .post("https://discord.bots.gg/api/v1/bots/3978988479064309766/stats")
+            .post("https://discord.bots.gg/api/v1/bots/397898847906430976/stats")
             .set({ Authorization: config.dbots })
             .send({ guildCount: bot.guilds.size });
         console.log("Stats have been posted to Discord Bots.");
